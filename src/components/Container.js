@@ -8,7 +8,7 @@ function Container() {
     <section>
       <main>
         <Switch>
-          {routes.map(route => {
+          {routes.map((route) => {
             const pageRoute = pageRoutes[route.path];
 
             return (
@@ -21,8 +21,8 @@ function Container() {
 
                   return (
                     <pageRoute.component
-                      {...props}
-                      {...pageRoute.props}
+                      {...props} // eslint-disable-line react/jsx-props-no-spreading
+                      {...pageRoute.props} // eslint-disable-line react/jsx-props-no-spreading
                     />
                   );
                 }}
@@ -38,7 +38,7 @@ function Container() {
         </Switch>
       </main>
     </section>
-  )
-};
+  );
+}
 
 export default Container;

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import Container from 'components/Container';
@@ -7,14 +7,14 @@ import Navigation from 'components/Navigation';
 
 function GradedMetrics() {
   return (
-    <React.Fragment>
-      <Navigation/>
-      <Container/>
+    <>
+      <Navigation />
+      <Container />
       <p>I love James</p>
-      <Footer/>
-    </React.Fragment>
-  )
-};
+      <Footer />
+    </>
+  );
+}
 
 ReactDOM.render(
   (
@@ -24,5 +24,5 @@ ReactDOM.render(
       </BrowserRouter>
     </React.StrictMode>
   ),
-  document.getElementById('GradedMetrics')
+  document.getElementById('GradedMetrics'),
 );

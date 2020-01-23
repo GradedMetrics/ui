@@ -10,5 +10,5 @@ export const paths = {
 export default [{
   path: paths.home,
   exact: true,
-  title: 'Home'
+  title: 'Home',
 }];

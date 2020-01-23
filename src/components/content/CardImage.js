@@ -1,13 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function CardImage({
   cardId,
   description,
-  setId
+  setId,
 }) {
   return (
-    <img src={`https://i.gradedmetrics.com/raw/${setId}/${cardId}.jpg`} alt={description}/>
-  )
+    <img src={`https://i.gradedmetrics.com/raw/${setId}/${cardId}.jpg`} alt={description} />
+  );
+}
+
+CardImage.propTypes = {
+  // The ID of the card.
+  cardId: PropTypes.number.isRequired,
+
+  // A description of the card (used as the image's `alt` tag).
+  description: PropTypes.isRequired,
+
+  // The ID of the set the card belongs to.
+  setId: PropTypes.isRequired,
 };
 
 export default CardImage;
