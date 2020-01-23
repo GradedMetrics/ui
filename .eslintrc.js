@@ -21,6 +21,12 @@ module.exports = {
   plugins: [
     'react',
   ],
+  settings: {
+    "import/resolver": {
+      "babel-module": {},
+    },
+  },
   rules: {
+    "react/jsx-filename-extension": "off",
   },
 };
