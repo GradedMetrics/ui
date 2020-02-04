@@ -1,5 +1,6 @@
 import React from 'react';
 import Breadcrumb from 'components/content/Breadcrumb';
+import SetsTable from 'components/content/Sets/SetsTable';
 
 function Sets() {
   return (
@@ -18,6 +19,7 @@ function Sets() {
 
       <h2>Sets</h2>
 
+      <SetsTable/>
     </>
   );
 }
