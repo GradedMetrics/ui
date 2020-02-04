@@ -3,14 +3,20 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import Container from 'components/Container';
 import Footer from 'components/Footer';
-import Navigation from 'components/Navigation';
+import Header from 'components/Header';
+
+import { ThemeContext, themes } from "contexts/theme";
+
+// Theme.
+import { createTheming } from 'react-jss';
+const { ThemeProvider } = createTheming(ThemeContext);
+
 
 function GradedMetrics() {
   return (
     <>
-      <Navigation />
+      <Header/>
       <Container />
-      <p>I love James</p>
       <Footer />
     </>
   );
@@ -18,11 +24,15 @@ function GradedMetrics() {
 
 ReactDOM.render(
   (
-    <React.StrictMode>
-      <BrowserRouter>
-        <GradedMetrics />
-      </BrowserRouter>
-    </React.StrictMode>
+    <ThemeProvider theme={{
+      ...themes.dark
+    }}>
+      <React.StrictMode>
+        <BrowserRouter>
+          <GradedMetrics />
+        </BrowserRouter>
+      </React.StrictMode>
+    </ThemeProvider>
   ),
   document.getElementById('GradedMetrics'),
 );

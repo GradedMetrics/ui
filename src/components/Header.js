@@ -3,22 +3,21 @@ import { ThemeContext } from 'contexts/theme';
 
 // Theme.
 import { createUseStyles } from 'react-jss'
-import style from 'styles/pages/Error404';
+import style from 'styles/components/Header';
 
 const useStyles = createUseStyles(style);
 
-function Error404() {
+function Navigation() {
+  
   const classes = useStyles(useContext(ThemeContext));
+
   return (
     <React.Fragment>
-      <h1 className={classes.heading}>
-        404 &mdash; Sorry.
-      </h1>
-      <p className={classes.subheading}>
-        This page does not exist.
-      </p>
+      <header className={classes.header}>
+        <h1>Graded Metrics</h1>
+      </header>
     </React.Fragment>
   );
 }
 
-export default Error404;
+export default Navigation;

@@ -1,21 +1,42 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { ThemeContext } from 'contexts/theme';
+
+// Theme.
+import { createUseStyles } from 'react-jss'
+import style from 'styles/components/Breadcrumb';
+
+const useStyles = createUseStyles(style);
 
 function Breadcrumb({
   links,
 }) {
-  return links.map(({ path, text }, index) => {
+  const classes = useStyles(useContext(ThemeContext));
+
+  const breadcrumb = links.map(({ path, text }, index) => {
     if (links.length - 1 === index) {
       return (
-        <span key={path}>{text}</span>
+        <li key={path} className={classes.breadcrumb}>
+          {text}
+        </li>
       );
     }
     return (
       <>
-        <a href={path} key={path}>{text}</a>
-        {' > '}
+        <li key={path} className={classes.breadcrumb}>
+          <a href={path} key={path}>{text}</a>
+        </li>
+          <span>{' > '}</span>
       </>
     );
   });
+
+  return (
+    <React.Fragment>
+      <ul>
+        {breadcrumb}
+      </ul>
+    </React.Fragment>
+  )
 }
 
 export default Breadcrumb;
