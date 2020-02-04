@@ -7,7 +7,7 @@ export const paths = {
   home: '/',
   sets: '/sets',
   set: '/set',
-  card: '/card'
+  card: '/card',
 };
 
 export default [{

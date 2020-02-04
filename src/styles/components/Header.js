@@ -1,6 +1,6 @@
 export default {
-  header: ({header: headerTheme}) => ({
+  header: ({ header: headerTheme }) => ({
     height: '80px',
-    background: headerTheme.background
-  })
+    background: headerTheme.background,
+  }),
 };

@@ -1,6 +1,4 @@
 import React from 'react';
-import CardImage from 'components/content/CardImage';
-import Breadcrumb from 'components/content/Breadcrumb';
 
 function Home() {
   return (

@@ -19,7 +19,7 @@ function Sets() {
 
       <h2>Sets</h2>
 
-      <SetsTable/>
+      <SetsTable />
     </>
   );
 }

@@ -1,14 +1,15 @@
 /**
- * The theme context controls which style theme to apply to the site (dark or light (to be implemented in phase 2)).
+ * The theme context controls which style theme to apply to the site (dark or light (to be
+ * implemented in phase 2)).
  * @module [{contexts}theme]
  * @default theme.dark
  * @example import { ThemeContext, themes } from "context/theme";
  */
-import React from "react";
+import React from 'react';
 
 const shared = {
   brandPrimary: '#D97800',
-  brandSecondary: '#009734'
+  brandSecondary: '#009734',
 };
 
 /**
@@ -22,7 +23,7 @@ export const themes = {
     header: {
       background: shared.brandPrimary,
     },
-  }
+  },
 };
 
 /**
@@ -30,5 +31,5 @@ export const themes = {
  */
 export const ThemeContext = React.createContext({
   ...themes.dark,
-  changeTheme: () => {}
+  changeTheme: () => {},
 });

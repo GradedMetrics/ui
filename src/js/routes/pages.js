@@ -24,11 +24,11 @@ const routes = {
   [paths.sets]: {
     component: Sets,
   },
-  
+
   [paths.set]: {
     component: Set,
   },
-  
+
   [paths.card]: {
     component: Card,
   },

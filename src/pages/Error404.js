@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { ThemeContext } from 'contexts/theme';
 
 // Theme.
-import { createUseStyles } from 'react-jss'
+import { createUseStyles } from 'react-jss';
 import style from 'styles/pages/Error404';
 
 const useStyles = createUseStyles(style);
@@ -10,14 +10,14 @@ const useStyles = createUseStyles(style);
 function Error404() {
   const classes = useStyles(useContext(ThemeContext));
   return (
-    <React.Fragment>
+    <>
       <h1 className={classes.heading}>
         404 &mdash; Sorry.
       </h1>
       <p className={classes.subheading}>
         This page does not exist.
       </p>
-    </React.Fragment>
+    </>
   );
 }
 

@@ -1,18 +1,17 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { ThemeContext } from 'contexts/theme';
 
 // Theme.
-import { createUseStyles } from 'react-jss'
+import { createUseStyles } from 'react-jss';
 import style from 'styles/components/Header';
 
 const useStyles = createUseStyles(style);
 
 function SetsTable() {
-  
   const classes = useStyles(useContext(ThemeContext));
 
   return (
-    <React.Fragment>
+    <>
       <table>
         <thead>
           <tr>
@@ -27,19 +26,18 @@ function SetsTable() {
             <td>
               <span>Pokemon Japanese Venusaur/Charizard/Blastoise Random Constructed Starter Deck</span>
               <span>1999 - 123 cards</span>
-              </td>
+            </td>
             <td>
               <span>71,064</span>
               <span>Quality: 94.  Difficulty: 63.  Popularity: 12.</span>
             </td>
             <td>graph placeholder</td>
-            <td></td>
+            <td />
           </tr>
         </tbody>
       </table>
-    </React.Fragment>
+    </>
   );
 }
 
 export default SetsTable;
-      

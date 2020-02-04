@@ -1,14 +1,15 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { ThemeContext } from 'contexts/theme';
+import PropTypes from 'prop-types';
 
 // Theme.
-import { createUseStyles } from 'react-jss'
+import { createUseStyles } from 'react-jss';
 import style from 'styles/components/Breadcrumb';
 
 const useStyles = createUseStyles(style);
 
 function Breadcrumb({
-  links,
+  links = [],
 }) {
   const classes = useStyles(useContext(ThemeContext));
 
@@ -25,18 +26,25 @@ function Breadcrumb({
         <li key={path} className={classes.breadcrumb}>
           <a href={path} key={path}>{text}</a>
         </li>
-          <span>{' > '}</span>
+        <span>{' > '}</span>
       </>
     );
   });
 
   return (
-    <React.Fragment>
+    <>
       <ul>
         {breadcrumb}
       </ul>
-    </React.Fragment>
-  )
+    </>
+  );
 }
+
+Breadcrumb.propTypes = {
+  links: PropTypes.arrayOf(PropTypes.shape({
+    path: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  })).isRequired,
+};
 
 export default Breadcrumb;
