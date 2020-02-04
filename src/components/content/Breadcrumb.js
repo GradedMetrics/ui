@@ -22,12 +22,10 @@ function Breadcrumb({
       );
     }
     return (
-      <>
-        <li key={path} className={classes.breadcrumb}>
-          <a href={path} key={path}>{text}</a>
-        </li>
+      <li key={path} className={classes.breadcrumb}>
+        <a href={path} key={path}>{text}</a>
         <span>{' > '}</span>
-      </>
+      </li>
     );
   });
 
