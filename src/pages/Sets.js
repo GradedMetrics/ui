@@ -5,16 +5,16 @@ import keys from 'js/keys.json';
 import sets from 'js/sets.json';
 
 function Sets() {
-  const formattedSets = Object.values(sets).map( set => {
-    return Object.entries(set).reduce((obj, [ key, value ]) => {
-      const k = Object.entries(keys).find(entry => entry[1] === key);
+  const formattedSets = (
+    Object.values(sets).map((set) => Object.entries(set).reduce((obj, [key, value]) => {
+      const k = Object.entries(keys).find((entry) => entry[1] === key);
       console.warn(k);
       return {
         ...obj,
-        [k[0]]: value
+        [k[0]]: value,
       };
-    }, {})
-  });
+    }, {}))
+  );
   console.log(formattedSets);
 
   return (
@@ -33,17 +33,17 @@ function Sets() {
 
       <h2>Sets</h2>
 
-      <GenericTable 
+      <GenericTable
         tableHeaders={[{
           sr: 'Name',
-          value: 'Name'
+          value: 'Name',
         }, {
           sr: 'GM Score',
-          value: 'GM Score'
+          value: 'GM Score',
         }, {
-          sr: 'Graph'
+          sr: 'Graph',
         }, {
-          sr: 'Actions'
+          sr: 'Actions',
         }]}
         tableData={formattedSets.map(({
           cards,
@@ -53,28 +53,43 @@ function Sets() {
           popularity = 0,
           quality,
           score = 0,
-          total,
           variant,
-          year
-        }) => {
-          return [
-            <>
-              <span>Pokemon {name}
-                {variant ? ` (${variant})` : ''}
-              </span>
-              <span>
-              {/* <Year value={year} /> */}
-              {` - ${cards} cards`}</span>
-            </>,
-            <>
-              <span>{score}</span>
-              <span>{`Quality: ${quality}. Difficulty: ${difficulty}. Popularity: ${popularity}.`}</span>
-            </>,
-            <></>,
-            <></>
-          ]
-        })}
-        />
+          year,
+        }) => ({
+          key: `set-${id}`,
+          value: [{
+            key: `set-${id}-name`,
+            value: (
+              <>
+                <span>
+                  {'Pokemon '}
+                  {name}
+                  {variant ? ` (${variant})` : ''}
+                </span>
+                <span>
+                  {year}
+                  {/* <Year value={year} /> */}
+                  {` - ${cards} cards`}
+                </span>
+              </>
+            ),
+          }, {
+            key: `set-${id}-score`,
+            value: (
+              <>
+                <span>{score}</span>
+                <span>{`Quality: ${quality}. Difficulty: ${difficulty}. Popularity: ${popularity}.`}</span>
+              </>
+            ),
+          }, {
+            key: `set-${id}-graph`,
+            value: undefined,
+          }, {
+            key: `set-${id}-actions`,
+            value: undefined,
+          }],
+        }))}
+      />
     </>
   );
 }

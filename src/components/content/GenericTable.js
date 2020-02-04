@@ -15,26 +15,22 @@ function GenericTable({
 
   const headers = tableHeaders.map(({
     sr,
-    value = ''
-  }) => {
-    return (
-      <th key={sr}>
-        <span className={classes.srOnly}>{sr}</span>
-        {value}
-      </th>
-    );
-  });
-  const rowData = tableData.map((data, rowIndex) => {
-    return (
-      <tr key={`row-${rowIndex}`}>
-        {data.map((entry, cellIndex) => (
-          <td key={`cell-${cellIndex}`}>
-            {entry}
-          </td>
-        ))}
-      </tr>
-    );
-  });
+    value = '',
+  }) => (
+    <th key={sr}>
+      <span className={classes.srOnly}>{sr}</span>
+      {value}
+    </th>
+  ));
+  const row = tableData.map(({ key: rowKey, value: rowData }) => (
+    <tr key={`row-${rowKey}`}>
+      {rowData.map(({ key: cellKey, value: cellData }) => (
+        <td key={`cell-${cellKey}`}>
+          {cellData}
+        </td>
+      ))}
+    </tr>
+  ));
 
   return (
     <table>
@@ -44,7 +40,7 @@ function GenericTable({
         </tr>
       </thead>
       <tbody>
-          {rowData}
+        {row}
       </tbody>
     </table>
   );
@@ -55,11 +51,17 @@ GenericTable.propTypes = {
     sr: PropTypes.string.isRequired,
     value: PropTypes.string,
   })).isRequired,
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.number,
-    PropTypes.string,
-  ]))).isRequired,
-}
+  tableData: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    value: PropTypes.arrayOf(PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.number,
+        PropTypes.string,
+      ]),
+    })),
+  })).isRequired,
+};
 
 export default GenericTable;
