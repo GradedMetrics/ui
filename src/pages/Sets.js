@@ -17,7 +17,7 @@ function Sets() {
 
   const [data, setData] = useState();
 
-  useEffect( () => {
+  useEffect(() => {
     (async () => {
       const keys = await apiGet('keys');
       const sets = await apiGet('sets');
@@ -26,80 +26,77 @@ function Sets() {
   }, []);
 
   let content;
-  console.log(data);
-  
+
   if (!data) {
     content = <p>Loading...</p>;
-  }
-  else if ( !data.length ) {
-    content = <p>No data found.</p>
-  }
-  else {
+  } else if (!data.length) {
+    content = <p>No data found.</p>;
+  } else {
     content = (
       <GenericTable
-      tableHeaders={[{
-        sr: 'Name',
-        value: 'Name',
-      }, {
-        sr: 'GM Score',
-        value: 'GM Score',
-      }, {
-        sr: 'Graph',
-      }, {
-        sr: 'Actions',
-      }]}
-      tableData={data.map(({
-        cards,
-        difficulty,
-        id,
-        name,
-        popularity = 0,
-        quality,
-        score = 0,
-        variant,
-        year,
-      }) => ({
-        key: `set-${id}`,
-        value: [{
-          key: `set-${id}-name`,
-          value: (
-            <>
-              <span className={classes.name}>
-                {'Pokemon '}
-                {name}
-                {variant ? ` (${variant})` : ''}
-              </span>
-              <span className={classes.yearCards}>
-                {`${formatYear(year)} · ${cards} cards`}
-              </span>
-            </>
-          ),
+        tableHeaders={[{
+          sr: 'Name',
+          value: 'Name',
         }, {
-          key: `set-${id}-score`,
-          value: (
-            <>
-              <span className={classes.score}>{score}</span>
-              <span className={classes.metrics}>{`Quality: ${quality}.`}</span>
-              {' '}
-              <span className={classes.metrics}>{`Difficulty: ${difficulty}.`}</span>
-              {' '}
-              <span className={classes.metrics}>{`Popularity: ${popularity}.`}</span>
-            </>
-          ),
+          sr: 'GM Score',
+          value: 'GM Score',
         }, {
-          key: `set-${id}-graph`,
-          value: (
-            <span>Graph Placeholder</span>
-          ),
+          sr: 'Graph',
         }, {
-          key: `set-${id}-actions`,
-          value: (
-            <a className={classes.buttons}>View</a>
-          ),
-        }],
-      }))}
-    />
-    )
+          sr: 'Actions',
+        }]}
+        tableData={data.map(({
+          cards,
+          difficulty,
+          id,
+          name,
+          popularity = 0,
+          quality,
+          score = 0,
+          variant,
+          year,
+        }) => ({
+          key: `set-${id}`,
+          value: [{
+            key: `set-${id}-name`,
+            value: (
+              <>
+                <span className={classes.name}>
+                  {'Pokemon '}
+                  {name}
+                  {variant ? ` (${variant})` : ''}
+                </span>
+                <span className={classes.yearCards}>
+                  {`${formatYear(year)} · ${cards} cards`}
+                </span>
+              </>
+            ),
+          }, {
+            key: `set-${id}-score`,
+            value: (
+              <>
+                <span className={classes.score}>{score}</span>
+                <span className={classes.metrics}>{`Quality: ${quality}.`}</span>
+                {' '}
+                <span className={classes.metrics}>{`Difficulty: ${difficulty}.`}</span>
+                {' '}
+                <span className={classes.metrics}>{`Popularity: ${popularity}.`}</span>
+              </>
+            ),
+          }, {
+            key: `set-${id}-graph`,
+            value: (
+              <span>Graph Placeholder</span>
+            ),
+          }, {
+            key: `set-${id}-actions`,
+            value: (
+              <button type="button" className={classes.buttons}>View</button>
+            ),
+          }],
+        }))}
+      />
+    );
   }
 
   return (
