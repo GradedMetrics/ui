@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { apiGet, getVersion } from 'js/api';
+import Progress from 'components/content/Progress';
+import { apiGet, delay, getVersion } from 'js/api';
 
 function SplashScreen({
   isPreLoad = true,
@@ -10,8 +11,13 @@ function SplashScreen({
   const [bannerMessage, setBannerMessage] = useState('');
   const [progress, setProgress] = useState([]);
   const [step, setStep] = useState(0);
+  const delayDuration = 750;
 
   useEffect(() => {
+    if (!progress.length) {
+      return;
+    }
+
     setStep(progress.length);
   }, [progress]);
 
@@ -38,49 +44,69 @@ function SplashScreen({
       return;
     }
 
-    if (step === 0) {
-      // Firstly clear the currently cached data.
-      const oldVersion = getVersion();
-      if (oldVersion === -1) {
-        setBannerMessage('Welcome to Graded Metrics! We\'re just setting a few things up. This shouldn\'t take long at all.');
-      } else {
-        setBannerMessage(`Welcome back to Graded Metrics! One sec whilst we update you from version 1.${oldVersion} to version 1.${newVersion}.`);
+    (async () => {
+      if (step === 0) {
+        // Firstly clear the currently cached data.
+        const oldVersion = getVersion();
+        if (oldVersion === -1) {
+          setBannerMessage('Welcome to Graded Metrics! We\'re just setting a few things up. This shouldn\'t take long at all.');
+        } else {
+          setBannerMessage(`Welcome back to Graded Metrics! One sec whilst we update you from version 1.${oldVersion} to version 1.${newVersion}.`);
+        }
+
+        await delay(delayDuration);
+
+        localStorage.removeItem('api');
+        updateProgress('Removing old data');
+        return;
       }
 
-      localStorage.removeItem('api');
-      updateProgress('Removing old data');
-      return;
-    }
-
-    (async () => {
       if (step === 1) {
         // Fetch the new Pokémon list.
-        await apiGet('pokemon');
+        await apiGet('pokemon', false, newVersion, delayDuration);
         updateProgress('Searching for Pokémon in the wild');
         return;
       }
 
       if (step === 2) {
         // Fetch the new sets list.
+        await apiGet('sets', false, newVersion, delayDuration);
         updateProgress('Updating all the sets');
-        await apiGet('sets');
         return;
       }
 
       if (step === 3) {
-        // Fetch the energy card, stadium card and trainer card lists.
-        updateProgress('Showing some love for trainer cards');
-        await apiGet('energies');
-        await apiGet('stadiums');
-        await apiGet('trainers');
+        // Fetch the trainer cards list.
+        await apiGet('trainers', false, newVersion, delayDuration / 2);
+        updateProgress('Shuffling trainer cards');
         return;
       }
 
       if (step === 4) {
-        // We're done. Update the cached API version to match the new version.
-        localStorage.setItem('version', newVersion);
-        onDataReady();
+        // Fetch the stadium cards list.
+        await apiGet('stadiums', false, newVersion, delayDuration / 2);
+        updateProgress('Trading stadiums cards');
+        return;
       }
+
+      if (step === 5) {
+        // Fetch the energy cards list.
+        await apiGet('energies', false, newVersion, delayDuration / 2);
+        updateProgress('Hoarding energy cards');
+        return;
+      }
+
+      if (step === 6) {
+        // Fetch the keys.
+        await apiGet('keys', false, newVersion, delayDuration);
+        updateProgress('Putting everything together');
+        return;
+      }
+
+      await delay(delayDuration * 3);
+      // We're done. Update the cached API version to match the new version.
+      localStorage.setItem('version', newVersion);
+      onDataReady();
     })();
   }, [isPreLoad, step]);
 
@@ -88,6 +114,9 @@ function SplashScreen({
     <section>
       {/* The main message. */}
       {bannerMessage}
+
+      {/* Progress bar */}
+      <Progress target={7} value={step} />
 
       {/* Progress (lets the user know something is happening in the background). */}
       {progress.length ? (
