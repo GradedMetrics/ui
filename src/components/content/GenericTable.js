@@ -30,7 +30,7 @@ function GenericTable({
       ))}
     </tr>
   ));
-  console.log(tableData);
+
   return (
     <table className={classes.table}>
       <thead>
