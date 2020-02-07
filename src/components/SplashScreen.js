@@ -131,7 +131,7 @@ function SplashScreen({
       <p className={classes.bannerMessage}>{bannerMessage}</p>
 
       {/* Progress bar */}
-      <Progress target={7} value={step} />
+      {isPreLoad ? undefined : (<Progress target={7} value={step} />)}
 
       {/* Progress (lets the user know something is happening in the background). */}
       {progress.length ? (

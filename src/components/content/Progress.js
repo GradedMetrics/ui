@@ -14,6 +14,7 @@ function Progress({
         display: 'block',
         height: '100%',
         width: `${percentage}%`,
+        transition: 'width 0.5s ease-out',
       }}
       />
     </div>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
-import style from 'styles/components/GenericTable';
+import style from 'styles/components/content/GenericTable';
 
 const useStyles = createUseStyles(style);
 
