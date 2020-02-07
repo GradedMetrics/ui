@@ -24,14 +24,14 @@ function Breadcrumb({
     return (
       <li key={path} className={classes.breadcrumb}>
         <a href={path} key={path}>{text}</a>
-        <span>{' > '}</span>
+        <span className={classes.separator}>{' > '}</span>
       </li>
     );
   });
 
   return (
     <>
-      <ul>
+      <ul className={classes.breadcrumbWrapper}>
         {breadcrumb}
       </ul>
     </>

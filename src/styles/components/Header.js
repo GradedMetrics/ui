@@ -1,6 +1,8 @@
 export default {
   header: ({ header: headerTheme }) => ({
-    height: '80px',
     background: headerTheme.background,
+    height: '80px',
+    lineHeight: '75px',
+    paddingLeft: '25px',
   }),
 };

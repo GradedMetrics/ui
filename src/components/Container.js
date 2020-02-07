@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import routes from 'js/routes';
 import pageRoutes from 'js/routes/pages';
+import { ThemeContext } from 'contexts/theme';
+
+// Theme.
+import { createUseStyles } from 'react-jss';
+import style from 'styles/components/Container';
+
+const useStyles = createUseStyles(style);
 
 function Container() {
+  const classes = useStyles(useContext(ThemeContext));
+
   return (
     <section>
-      <main>
+      <main className={classes.container}>
         <Switch>
           {routes.map((route) => {
             const pageRoute = pageRoutes[route.path];

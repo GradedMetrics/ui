@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
-import style from 'styles/components/Header';
+import style from 'styles/components/GenericTable';
 
 const useStyles = createUseStyles(style);
 
@@ -17,25 +17,24 @@ function GenericTable({
     sr,
     value = '',
   }) => (
-    <th key={sr}>
-      <span className={classes.srOnly}>{sr}</span>
-      {value}
+    <th key={sr} aria-label={sr} className={classes.cells}>
+      <span aria-hidden="true">{value}</span>
     </th>
   ));
   const row = tableData.map(({ key: rowKey, value: rowData }) => (
-    <tr key={`row-${rowKey}`}>
+    <tr key={`row-${rowKey}`} className={classes.rowSeparator}>
       {rowData.map(({ key: cellKey, value: cellData }) => (
-        <td key={`cell-${cellKey}`}>
+        <td key={`cell-${cellKey}`} className={classes.cells}>
           {cellData}
         </td>
       ))}
     </tr>
   ));
-
+  console.log(tableData);
   return (
-    <table>
+    <table className={classes.table}>
       <thead>
-        <tr>
+        <tr className={classes.header}>
           {headers}
         </tr>
       </thead>
@@ -51,10 +50,16 @@ GenericTable.propTypes = {
     sr: PropTypes.string.isRequired,
     value: PropTypes.string,
   })).isRequired,
+
+  /** This is the table data which is an array of rows. */
   tableData: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
+
+    /** This is the row data which is an array of cells. */
     value: PropTypes.arrayOf(PropTypes.shape({
       key: PropTypes.string.isRequired,
+
+      /** This is the cell data. */
       value: PropTypes.oneOfType([
         PropTypes.element,
         PropTypes.number,

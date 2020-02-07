@@ -1,32 +1,40 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Breadcrumb from 'components/content/Breadcrumb';
 import GenericTable from 'components/content/GenericTable';
+import { ThemeContext } from 'contexts/theme';
 import keys from 'js/keys.json';
 import sets from 'js/sets.json';
+import { formatYear } from 'js/formats';
+
+// Theme.
+import { createUseStyles } from 'react-jss';
+import style from 'styles/components/Sets';
+
+const useStyles = createUseStyles(style);
 
 function Sets() {
+  const classes = useStyles(useContext(ThemeContext));
+
   const formattedSets = (
     Object.values(sets).map((set) => Object.entries(set).reduce((obj, [key, value]) => {
       const k = Object.entries(keys).find((entry) => entry[1] === key);
-      console.warn(k);
       return {
         ...obj,
         [k[0]]: value,
       };
     }, {}))
   );
-  console.log(formattedSets);
 
   return (
     <>
       <Breadcrumb
         links={[
           {
-            text: 'foo',
-            path: '/foo',
+            text: 'Home',
+            path: '/home',
           }, {
-            text: 'bar',
-            path: '/bar',
+            text: 'Sets',
+            path: '/sets',
           },
         ]}
       />
@@ -61,15 +69,13 @@ function Sets() {
             key: `set-${id}-name`,
             value: (
               <>
-                <span>
+                <span className={classes.name}>
                   {'Pokemon '}
                   {name}
                   {variant ? ` (${variant})` : ''}
                 </span>
-                <span>
-                  {year}
-                  {/* <Year value={year} /> */}
-                  {` - ${cards} cards`}
+                <span className={classes.yearCards}>
+                  {`${formatYear(year)} · ${cards} cards`}
                 </span>
               </>
             ),
@@ -77,8 +83,8 @@ function Sets() {
             key: `set-${id}-score`,
             value: (
               <>
-                <span>{score}</span>
-                <span>{`Quality: ${quality}. Difficulty: ${difficulty}. Popularity: ${popularity}.`}</span>
+                <span className={classes.score}>{score}</span>
+                <span className={classes.metrics}>{`Quality: ${quality}. Difficulty: ${difficulty}. Popularity: ${popularity}.`}</span>
               </>
             ),
           }, {
