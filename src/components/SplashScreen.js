@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Progress from 'components/content/Progress';
 import { apiGet, delay, getVersion } from 'js/api';
+import { ThemeContext } from 'contexts/theme';
+
+// Theme.
+import { createUseStyles } from 'react-jss';
+import style from 'styles/components/SplashScreen';
+
+const useStyles = createUseStyles(style);
 
 function SplashScreen({
   isPreLoad = true,
   newVersion = -1,
   onDataReady = () => {},
 }) {
+  const classes = useStyles(useContext(ThemeContext));
+
+  const [bannerTitle, setBannerTitle] = useState('');
   const [bannerMessage, setBannerMessage] = useState('');
   const [progress, setProgress] = useState([]);
   const [step, setStep] = useState(0);
@@ -49,9 +59,11 @@ function SplashScreen({
         // Firstly clear the currently cached data.
         const oldVersion = getVersion();
         if (oldVersion === -1) {
-          setBannerMessage('Welcome to Graded Metrics! We\'re just setting a few things up. This shouldn\'t take long at all.');
+          setBannerTitle('Welcome to Graded Metrics!');
+          setBannerMessage('We\'re just setting a few things up. This shouldn\'t take long.');
         } else {
-          setBannerMessage(`Welcome back to Graded Metrics! One sec whilst we update you from version 1.${oldVersion} to version 1.${newVersion}.`);
+          setBannerTitle('Welcome back to Graded Metrics!');
+          setBannerMessage(`One sec whilst we update you from version 1.${oldVersion} to version 1.${newVersion}.`);
         }
 
         await delay(delayDuration);
@@ -112,17 +124,20 @@ function SplashScreen({
 
   return (
     <section>
+      {/* The main message title. */}
+      <h1 className={classes.bannerTitle}>{bannerTitle}</h1>
+
       {/* The main message. */}
-      {bannerMessage}
+      <p className={classes.bannerMessage}>{bannerMessage}</p>
 
       {/* Progress bar */}
       <Progress target={7} value={step} />
 
       {/* Progress (lets the user know something is happening in the background). */}
       {progress.length ? (
-        <ul>
+        <ul className={classes.progressList}>
           {progress.map((entry) => (
-            <li key={entry}>
+            <li key={entry} className={classes.progressListEntries}>
               {entry}
             </li>
           ))}

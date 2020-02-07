@@ -12,5 +12,5 @@ export default {
   },
   cells: {
     padding: '15px',
-  }
+  },
 };

@@ -26,7 +26,7 @@ function GradedMetrics() {
   useEffect(() => {
     (async () => {
       const userVersion = getVersion();
-      const { v: version } = await apiGet('version');
+      const { v: version } = await apiGet('version', true);
 
       if (userVersion === version) {
         // The user's version is up to date, we're good to go.

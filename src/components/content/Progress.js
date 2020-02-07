@@ -10,7 +10,7 @@ function Progress({
   return (
     <div role="presentation" style={{ background: '#fff', height: '4px', width: '100%' }}>
       <span style={{
-        background: 'red',
+        background: '#009734',
         display: 'block',
         height: '100%',
         width: `${percentage}%`,
