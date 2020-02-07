@@ -5,9 +5,10 @@
 export const paths = {
   // Core pages.
   home: '/',
+  card: (setId = ':setId', cardId = ':cardId') => `/set/${setId}/card/${cardId}`,
+  search: (result = ':result') => `/search/${result}`,
   sets: '/sets',
-  set: '/set',
-  card: '/card',
+  set: (setId = ':setId', setName = '') => `/set/${setId}${setName ? `/${setName}` : ''}`,
 };
 
 export default [{
@@ -15,12 +16,13 @@ export default [{
   exact: true,
   title: 'Home',
 }, {
+  path: paths.card(),
+  title: 'Card',
+}, {
   path: paths.sets,
+  exact: true,
   title: 'Sets',
 }, {
-  path: paths.set,
+  path: paths.set(),
   title: 'Set',
-}, {
-  path: paths.card,
-  title: 'Card',
 }];

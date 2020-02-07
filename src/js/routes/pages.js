@@ -21,16 +21,16 @@ const routes = {
     component: Home,
   },
 
+  [paths.card()]: {
+    component: Card,
+  },
+
   [paths.sets]: {
     component: Sets,
   },
 
-  [paths.set]: {
+  [paths.set()]: {
     component: Set,
-  },
-
-  [paths.card]: {
-    component: Card,
   },
 };
 

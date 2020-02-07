@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import GlobalSearch from 'components/data/GlobalSearch';
 import { ThemeContext } from 'contexts/theme';
 
 // Theme.
@@ -11,11 +12,12 @@ function Navigation() {
   const classes = useStyles(useContext(ThemeContext));
 
   return (
-    <>
-      <header className={classes.header}>
-        <h1>Graded Metrics</h1>
-      </header>
-    </>
+    <header className={classes.header}>
+      <h1 className={classes.title}>Graded Metrics</h1>
+      <div className={classes.search}>
+        <GlobalSearch />
+      </div>
+    </header>
   );
 }
 
