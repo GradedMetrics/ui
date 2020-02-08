@@ -11,6 +11,8 @@ export const paths = {
   set: (setId = ':setId', setName = '') => `/set/${setId}${setName ? `/${setName}` : ''}`,
 };
 
+export const urlFriendlyName = (name) => encodeURIComponent(name.replace(/ /g, '_'));
+
 export default [{
   path: paths.home,
   exact: true,

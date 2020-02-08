@@ -27,7 +27,9 @@ function TypeAhead({
     return data.reduce((arr, {
       entries,
       format,
-      matchKey,
+      searchField,
+      searchKey,
+      sort,
       title,
     }) => [
       ...arr,
@@ -35,12 +37,16 @@ function TypeAhead({
         entries: [...entries.filter((entry) => {
           if (typeof entry === 'string') {
             // If it's a string, perform a string match.
-            return entry.indexOf(query) !== -1;
+            return entry.toLowerCase().indexOf(query.toLowerCase()) !== -1;
           }
 
           // If it's an object, perform a match on the primary field.
-          return entry[matchKey].indexOf(query) !== -1;
+          return entry[searchField].toLowerCase().indexOf(query.toLowerCase()) !== -1;
         })].sort((a, b) => {
+          if (typeof sort === 'function') {
+            return sort(a, b);
+          }
+
           let aSorter;
           let bSorter;
 
@@ -48,15 +54,16 @@ function TypeAhead({
             aSorter = a;
             bSorter = b;
           } else {
-            aSorter = a[matchKey];
-            bSorter = b[matchKey];
+            aSorter = a[searchField];
+            bSorter = b[searchField];
           }
 
           if (aSorter === bSorter) return 0;
           return aSorter > bSorter ? 1 : -1;
         }),
         format,
-        matchKey,
+        searchField,
+        searchKey,
         title,
       },
     ], []).filter(({ entries }) => entries.length);
@@ -100,7 +107,7 @@ function TypeAhead({
           {matches.map(({
             entries,
             format,
-            matchKey,
+            searchKey,
             title,
           }) => (
             <li
@@ -115,13 +122,7 @@ function TypeAhead({
                 role="listbox"
               >
                 {entries.map((entry) => {
-                  let key;
-
-                  if (typeof entry === 'string') {
-                    key = entry;
-                  } else {
-                    key = entry[matchKey];
-                  }
+                  const key = searchKey ? entry[searchKey] : entry;
 
                   return (
                     <li
@@ -144,7 +145,7 @@ function TypeAhead({
 TypeAhead.propTypes = {
   /** The data to search through. */
   data: PropTypes.arrayOf(PropTypes.shape({
-    /** An array of strings or objects. If objects, there must be a `matchKey`. */
+    /** An array of strings or objects. If objects, there must be a `searchField`. */
     entries: PropTypes.arrayOf(PropTypes.oneOfType([
       PropTypes.shape({}),
       PropTypes.string,
@@ -154,7 +155,13 @@ TypeAhead.propTypes = {
     format: PropTypes.func,
 
     /** If `entries` contains objects, this specifies which key to use for the search matching. */
-    matchKey: PropTypes.string,
+    searchField: PropTypes.string,
+
+    /** If `entries` contains objects, this specifies which key to use as the React key. */
+    searchKey: PropTypes.string,
+
+    /** A custom sorter for the search results. */
+    sortSet: PropTypes.func,
 
     /** The title of the data subset. */
     title: PropTypes.string.isRequired,

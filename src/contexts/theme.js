@@ -23,6 +23,12 @@ export const themes = {
     header: {
       background: shared.brandPrimary,
     },
+
+    tag: {
+      background: '#eee',
+      color: '#333',
+      shadow: '#e0e0e0',
+    },
   },
 };
 

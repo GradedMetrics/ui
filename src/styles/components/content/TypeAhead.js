@@ -43,11 +43,11 @@ export default {
     margin: [0, 0, 8],
   },
   result: {
-    alignItems: 'center',
-    display: 'flex',
+    boxSizing: 'border-box',
+    display: 'block',
     fontSize: 14,
     lineHeight: '17px',
-    padding: [2, 8],
+    padding: [2, 0, 2, 8],
     width: '100%',
   },
 };

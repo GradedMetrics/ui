@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
 import GenericTable from 'components/content/GenericTable';
 import { ThemeContext } from 'contexts/theme';
 import { formatYear } from 'js/formats';
 import { formatObjectArray } from 'js/keys';
 import { apiGet } from 'js/api';
+import { paths } from 'js/routes';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
@@ -91,7 +93,12 @@ function Sets() {
           }, {
             key: `set-${id}-actions`,
             value: (
-              <button type="button" className={classes.buttons}>View</button>
+              <Link
+                to={paths.set(id, name)}
+                className={classes.buttons}
+              >
+                View
+              </Link>
             ),
           }],
         }))}
