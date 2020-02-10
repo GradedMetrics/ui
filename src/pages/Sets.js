@@ -64,8 +64,12 @@ function Sets() {
             value: (
               <>
                 <span className={classes.name}>
-                  {'Pokemon '}
-                  {name}
+                  <Link
+                    to={paths.set(id, name)}
+                  >
+                    {'Pokemon '}
+                    {name}
+                  </Link>
                   {variant ? ` (${variant})` : ''}
                 </span>
                 <span className={classes.yearCards}>
@@ -110,12 +114,12 @@ function Sets() {
     <>
       <Breadcrumb
         links={[
-          {
-            text: 'Home',
-            path: '/home',
-          }, {
-            text: 'Sets',
-            path: '/sets',
+        {
+          text: 'Home',
+          path: paths.home,
+        }, {
+          text: 'Sets',
+          path: paths.sets,
           },
         ]}
       />
