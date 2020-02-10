@@ -16,10 +16,10 @@ CardImage.propTypes = {
   cardId: PropTypes.number.isRequired,
 
   // A description of the card (used as the image's `alt` tag).
-  description: PropTypes.isRequired,
+  description: PropTypes.string.isRequired,
 
   // The ID of the set the card belongs to.
-  setId: PropTypes.isRequired,
+  setId: PropTypes.number.isRequired,
 };
 
 export default CardImage;

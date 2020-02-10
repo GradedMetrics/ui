@@ -30,7 +30,7 @@ function Set() {
       }));
     })();
   }, [setId]);
-console.log(data);
+  
   let content;
   
   if (!data) {
