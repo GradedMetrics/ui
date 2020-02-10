@@ -114,12 +114,12 @@ function Sets() {
     <>
       <Breadcrumb
         links={[
-        {
-          text: 'Home',
-          path: paths.home,
-        }, {
-          text: 'Sets',
-          path: paths.sets,
+          {
+            text: 'Home',
+            path: paths.home,
+          }, {
+            text: 'Sets',
+            path: paths.sets,
           },
         ]}
       />
