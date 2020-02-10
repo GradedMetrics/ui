@@ -69,8 +69,8 @@ function Sets() {
                   >
                     {'Pokemon '}
                     {name}
+                    {variant ? ` (${variant})` : ''}
                   </Link>
-                  {variant ? ` (${variant})` : ''}
                 </span>
                 <span className={classes.yearCards}>
                   {`${formatYear(year)} · ${cards} cards`}
