@@ -31,14 +31,33 @@ function Set() {
     })();
   }, [setId]);
 
-  let content;
-
   if (!data) {
-    content = <p>Loading...</p>;
-  // } else if (!data.length) {
-  //   content = <p>No data found.</p>;
-  } else {
-    content = (
+    return <p>Loading...</p>;
+  }
+
+  const {
+    name: setName,
+  } = data;
+
+  return (
+    <>
+      <Breadcrumb
+        links={[
+          {
+            text: 'Home',
+            path: paths.home,
+          }, {
+            text: 'Sets',
+            path: paths.sets
+          }, {
+            text: data ? setName : '...',
+            path: '/set',
+          },
+        ]}
+      />
+
+      <h2>Set</h2>
+
       <GenericTable
         tableHeaders={[{
           sr: 'Number',
@@ -62,7 +81,7 @@ function Set() {
           popularity = 0,
           quality,
           score = 0,
-          variant,
+          variants,
         }) => ({
           key: `set-${id}`,
           value: [{
@@ -77,9 +96,7 @@ function Set() {
                 <span className={classes.name}>
                   {name}
                 </span>
-                <span className={classes.metrics}>
-                  {variant ? ` (${variant})` : ''}
-                </span>
+                {variants ? <span className={classes.metrics}>{variants.join(', ')}</span> : ''}
               </>
             ),
           }, {
@@ -112,29 +129,6 @@ function Set() {
           }],
         }))}
       />
-    );
-  }
-
-  return (
-    <>
-      <Breadcrumb
-        links={[
-          {
-            text: 'Home',
-            path: '/',
-          }, {
-            text: 'Sets',
-            path: '/sets',
-          }, {
-            text: data ? data.name : '...',
-            path: '/set',
-          },
-        ]}
-      />
-
-      <h2>Set</h2>
-
-      {content}
     </>
   );
 }
