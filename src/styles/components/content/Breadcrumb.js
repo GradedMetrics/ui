@@ -2,7 +2,7 @@ export default {
   breadcrumb: {
     display: 'inline-block',
     fontFamily: '\'Barlow Condensed\', sans-serif',
-    fontSize: '20px',
+    fontSize: '14px',
   },
   breadcrumbWrapper: {
     marginLeft: '0',
@@ -10,6 +10,6 @@ export default {
   },
   separator: {
     display: 'inline-block',
-    padding: '0 15px',
+    padding: '0 10px',
   },
 };

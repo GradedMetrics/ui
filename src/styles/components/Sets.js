@@ -19,11 +19,11 @@ export default {
   },
   name: {
     display: 'block',
-    fontSize: '18px',
+    fontSize: '16px',
   },
   yearCards: {
     color: '#C1BEBE',
-    fontSize: '14px',
+    fontSize: '12px',
   },
   score: {
     display: 'block',
