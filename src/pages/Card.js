@@ -28,12 +28,12 @@ function Card() {
 
       setData(formatObject(keys, {
         set: sets[setId],
-        ...formatObject(keys, set).cards.find( ({id}) => id === cardId ),
+        ...formatObject(keys, set).cards.find(({ id }) => id === cardId),
         ...card,
       }));
     })();
   }, []);
-  
+
   if (!data) {
     return <p>Loading...</p>;
   }
@@ -41,7 +41,7 @@ function Card() {
   const {
     set = {},
   } = data;
-  
+
   const {
     name: setName,
   } = set;
@@ -65,6 +65,8 @@ function Card() {
           },
         ]}
       />
+
+      <p className={classes.someClass}>Some content</p>
 
       <CardImage
         setId={parseInt(setId, 36)}

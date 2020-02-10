@@ -30,9 +30,9 @@ function Set() {
       }));
     })();
   }, [setId]);
-  
+
   let content;
-  
+
   if (!data) {
     content = <p>Loading...</p>;
   // } else if (!data.length) {
@@ -48,7 +48,7 @@ function Set() {
           value: 'Entry',
         }, {
           sr: 'Set Score',
-          value: 'Set Score'
+          value: 'Set Score',
         }, {
           sr: 'Graph',
         }, {
