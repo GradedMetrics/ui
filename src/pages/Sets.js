@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
 import GenericTable from 'components/content/GenericTable';
+import SetIcon from 'components/content/SetIcon';
 import { ThemeContext } from 'contexts/theme';
 import { formatYear } from 'js/formats';
 import { formatObjectArray } from 'js/keys';
@@ -50,6 +51,7 @@ function Sets() {
         tableData={data.map(({
           cards,
           difficulty,
+          icon,
           id,
           name,
           popularity = 0,
@@ -64,6 +66,13 @@ function Sets() {
             value: (
               <>
                 <span className={classes.name}>
+                  {icon
+                    ? (
+                      <>
+                        <SetIcon filename={icon} set={name} />
+                        {' '}
+                      </>
+                    ) : undefined}
                   <Link
                     to={paths.set(id, name)}
                   >

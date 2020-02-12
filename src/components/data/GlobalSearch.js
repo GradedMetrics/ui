@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import SetIcon from 'components/content/SetIcon';
 import TypeAhead from 'components/content/TypeAhead';
 import { apiGet } from 'js/api';
 import { formatYear } from 'js/formats';
@@ -74,6 +75,7 @@ function GlobalSearch() {
    * @param {Object} set - A matched set object.
    */
   function formatSet({
+    icon,
     id,
     name,
     variant,
@@ -87,6 +89,13 @@ function GlobalSearch() {
         &nbsp;
         ·
         &nbsp;
+        {icon
+          ? (
+            <>
+              <SetIcon filename={icon} set={name} />
+              {' '}
+            </>
+          ) : undefined}
         <Link to={paths.set(id, urlFriendlyName(name))}>
           {name}
         </Link>
@@ -98,10 +107,12 @@ function GlobalSearch() {
   }
 
   formatSet.defaultProps = {
+    icon: undefined,
     variant: undefined,
   };
 
   formatSet.propTypes = {
+    icon: PropTypes.string,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     variant: PropTypes.string,

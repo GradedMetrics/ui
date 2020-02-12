@@ -3,7 +3,7 @@ module.exports = (env, argv) => ({
     contentBase: './dist',
     historyApiFallback: true,
     host: '127.0.0.1',
-    port: 7002,
+    port: 7001,
   },
   entry: {
     app: ['@babel/polyfill', 'whatwg-fetch', './src/index.js'],
