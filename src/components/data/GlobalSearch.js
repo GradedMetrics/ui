@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TypeAhead from 'components/content/TypeAhead';
 import { apiGet } from 'js/api';
@@ -56,6 +57,18 @@ function GlobalSearch() {
     );
   }
 
+  formatResult.defaultProps = {
+    language: undefined,
+    translation: undefined,
+  };
+
+  formatResult.propTypes = {
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+    language: PropTypes.string,
+    translation: PropTypes.string,
+  };
+
   /**
    * Format set objects.
    * @param {Object} set - A matched set object.
@@ -83,6 +96,17 @@ function GlobalSearch() {
       </>
     );
   }
+
+  formatSet.defaultProps = {
+    variant: undefined,
+  };
+
+  formatSet.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    variant: PropTypes.string,
+    year: PropTypes.string.isRequired,
+  };
 
   /**
    * Sort matching data results.
