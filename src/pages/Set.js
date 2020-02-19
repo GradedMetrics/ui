@@ -6,10 +6,11 @@ import { ThemeContext } from 'contexts/theme';
 import { formatObject } from 'js/keys';
 import { apiGet } from 'js/api';
 import { paths } from 'js/routes';
+import { formatYear } from 'js/formats';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
-import style from 'styles/components/Sets';
+import style from 'styles/components/Set';
 
 const useStyles = createUseStyles(style);
 
@@ -37,7 +38,14 @@ function Set() {
 
   const {
     name: setName,
+    year,
+    cards,
+    difficulty,
+    popularity,
+    quality,
+    score = 0,
   } = data;
+  console.log(data);
 
   return (
     <>
@@ -56,7 +64,15 @@ function Set() {
         ]}
       />
 
-      <h2>Set</h2>
+      <h2 className={classes.setName}>{setName}</h2>
+      <p className={classes.setInfo}>{`${formatYear(year)} · ${cards.length} cards`}</p>
+
+      <dl className={classes.setMetricsGroup}>
+        <dt className={classes.gmScore}>GM Score <span className={classes.score}>{score}</span></dt>
+        <dd className={classes.setMetrics}>{`Quality: ${quality}.`}</dd>
+        <dd className={classes.setMetrics}>{`Difficulty: ${difficulty}.`}</dd>
+        <dd className={classes.setMetrics}>{`Popularity: ${popularity}.`}</dd>
+      </dl>
 
       <GenericTable
         tableHeaders={[{
