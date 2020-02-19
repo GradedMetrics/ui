@@ -94,7 +94,11 @@ function Set() {
             value: (
               <>
                 <span className={classes.name}>
-                  {name}
+                  <Link
+                  to={paths.card(setId, id)}
+                  >
+                    {name}
+                  </Link>
                 </span>
                 {variants ? <span className={classes.metrics}>{variants.join(', ')}</span> : ''}
               </>

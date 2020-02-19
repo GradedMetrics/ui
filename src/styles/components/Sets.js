@@ -32,6 +32,6 @@ export default {
   metrics: {
     color: '#C1BEBE',
     display: 'inline-block',
-    fontSize: '14px',
+    fontSize: '13px',
   },
 };
