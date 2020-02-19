@@ -95,7 +95,7 @@ function Set() {
               <>
                 <span className={classes.name}>
                   <Link
-                  to={paths.card(setId, id)}
+                    to={paths.card(setId, id)}
                   >
                     {name}
                   </Link>
