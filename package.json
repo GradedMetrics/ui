@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode=development --open",
-    "lint": "eslint 'src/**/*.js' --fix"
+    "lint": "eslint \"src/**/*.js\" --fix"
   },
   "author": "Jenny Cooke",
   "license": "ISC",
