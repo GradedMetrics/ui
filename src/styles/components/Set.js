@@ -1,54 +1,27 @@
+import GenericTable from 'styles/components/content/GenericTable';
 export default {
-  buttons: {
-    background: '#009734',
-    borderRadius: '4px',
-    color: '#FFF',
-    display: 'block',
-    fontSize: '16px',
-    height: '35px',
-    lineHeight: '35px',
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    width: '125px',
-
-    '&:hover': {
-      background: '#D97800',
-      color: '#FFF',
-      cursor: 'pointer',
-    },
-  },
-  name: {
-    display: 'block',
-    fontSize: '16px',
-  },
+  ...GenericTable,
   setName: {
+    margin: 0,
     paddingBottom: 0,
   },
   setInfo: {
     color: '#D97800',
-    fontFamily: '\'Barlow Condensed\', sans-serif',
-    fontSize: 18,
-    margin: 0,
+    fontSize: 16,
+    marginTop: 0,
   },
-  setMetricsGroup: {
+  setScore: {
     fontFamily: '\'Barlow Condensed\', sans-serif',
-  },
-  gmScore: {
     fontSize: 24,
   },
-  score: {
+  setScoreNumber: {
     fontFamily: '\'Roboto Mono\', monospace',
-    fontSize: 24,
-  },
-  metrics: {
-    color: '#C1BEBE',
-    display: 'inline-block',
-    fontSize: '13px',
+    fontSize: 26,
   },
   setMetrics: {
-    color: '#C1BEBE',
     display: 'inline-block',
-    fontSize: 18,
+    fontFamily: '\'Barlow Condensed\', sans-serif',
+    fontSize: 16,
     margin: 0,
   },
 };

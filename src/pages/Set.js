@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
+import LinkButton from 'components/content/LinkButton';
 import GenericTable from 'components/content/GenericTable';
 import { ThemeContext } from 'contexts/theme';
 import { formatObject } from 'js/keys';
@@ -45,7 +46,6 @@ function Set() {
     quality,
     score = 0,
   } = data;
-  console.log(data);
 
   return (
     <>
@@ -67,11 +67,13 @@ function Set() {
       <h2 className={classes.setName}>{setName}</h2>
       <p className={classes.setInfo}>{`${formatYear(year)} · ${cards.length} cards`}</p>
 
-      <dl className={classes.setMetricsGroup}>
-        <dt className={classes.gmScore}>GM Score <span className={classes.score}>{score}</span></dt>
-        <dd className={classes.setMetrics}>{`Quality: ${quality}.`}</dd>
-        <dd className={classes.setMetrics}>{`Difficulty: ${difficulty}.`}</dd>
-        <dd className={classes.setMetrics}>{`Popularity: ${popularity}.`}</dd>
+      <dl>
+        <dt className={classes.setScore}>GM Score <span className={classes.setScoreNumber}>{score}</span></dt>
+        <dd className={classes.setMetrics}>{`Quality: ${quality}`}</dd>
+        {' · '}
+        <dd className={classes.setMetrics}>{`Difficulty: ${difficulty}`}</dd>
+        {' · '}
+        <dd className={classes.setMetrics}>{`Popularity: ${popularity}`}</dd>
       </dl>
 
       <GenericTable
@@ -139,12 +141,10 @@ function Set() {
           }, {
             key: `set-${id}-actions`,
             value: (
-              <Link
-                to={paths.card(setId, id)}
-                className={classes.buttons}
-              >
-                View
-              </Link>
+              <LinkButton
+                path={paths.card(setId, id)}
+                text="View"
+              />
             ),
           }],
         }))}

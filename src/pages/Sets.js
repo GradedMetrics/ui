@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
+import LinkButton from 'components/content/LinkButton';
 import GenericTable from 'components/content/GenericTable';
 import SetIcon from 'components/content/SetIcon';
 import { ThemeContext } from 'contexts/theme';
@@ -106,12 +107,10 @@ function Sets() {
           }, {
             key: `set-${id}-actions`,
             value: (
-              <Link
-                to={paths.set(id, name)}
-                className={classes.buttons}
-              >
-                View
-              </Link>
+              <LinkButton
+                path={paths.set(id, name)}
+                text="View"
+              />
             ),
           }],
         }))}
