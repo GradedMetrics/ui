@@ -41,10 +41,10 @@ function Set() {
     name: setName,
     year,
     cards,
-    difficulty,
-    popularity,
-    quality,
-    score = 0,
+    difficulty: setDifficulty,
+    popularity: setPopularity,
+    quality: setQuality,
+    score: setScore = 0,
   } = data;
 
   return (
@@ -68,12 +68,15 @@ function Set() {
       <p className={classes.setInfo}>{`${formatYear(year)} · ${cards.length} cards`}</p>
 
       <dl>
-        <dt className={classes.setScore}>GM Score <span className={classes.setScoreNumber}>{score}</span></dt>
-        <dd className={classes.setMetrics}>{`Quality: ${quality}`}</dd>
+        <dt className={classes.setScore}>
+          GM Score
+          <span className={classes.setScoreNumber}>{setScore}</span>
+        </dt>
+        <dd className={classes.setMetrics}>{`Quality: ${setQuality}`}</dd>
         {' · '}
-        <dd className={classes.setMetrics}>{`Difficulty: ${difficulty}`}</dd>
+        <dd className={classes.setMetrics}>{`Difficulty: ${setDifficulty}`}</dd>
         {' · '}
-        <dd className={classes.setMetrics}>{`Popularity: ${popularity}`}</dd>
+        <dd className={classes.setMetrics}>{`Popularity: ${setPopularity}`}</dd>
       </dl>
 
       <GenericTable
