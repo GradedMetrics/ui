@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
+import LinkButton from 'components/content/LinkButton';
 import GenericTable from 'components/content/GenericTable';
 import { ThemeContext } from 'contexts/theme';
 import { formatObject } from 'js/keys';
 import { apiGet } from 'js/api';
 import { paths } from 'js/routes';
+import { formatYear } from 'js/formats';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
-import style from 'styles/components/Sets';
+import style from 'styles/components/Set';
 
 const useStyles = createUseStyles(style);
 
@@ -37,6 +39,12 @@ function Set() {
 
   const {
     name: setName,
+    year,
+    cards,
+    difficulty: setDifficulty,
+    popularity: setPopularity,
+    quality: setQuality,
+    score: setScore = 0,
   } = data;
 
   return (
@@ -56,7 +64,20 @@ function Set() {
         ]}
       />
 
-      <h2>Set</h2>
+      <h2 className={classes.setName}>{setName}</h2>
+      <p className={classes.setInfo}>{`${formatYear(year)} · ${cards.length} cards`}</p>
+
+      <dl>
+        <dt className={classes.setScore}>
+          GM Score
+          <span className={classes.setScoreNumber}>{setScore}</span>
+        </dt>
+        <dd className={classes.setMetrics}>{`Quality: ${setQuality}`}</dd>
+        {' · '}
+        <dd className={classes.setMetrics}>{`Difficulty: ${setDifficulty}`}</dd>
+        {' · '}
+        <dd className={classes.setMetrics}>{`Popularity: ${setPopularity}`}</dd>
+      </dl>
 
       <GenericTable
         tableHeaders={[{
@@ -123,12 +144,10 @@ function Set() {
           }, {
             key: `set-${id}-actions`,
             value: (
-              <Link
-                to={paths.card(setId, id)}
-                className={classes.buttons}
-              >
-                View
-              </Link>
+              <LinkButton
+                path={paths.card(setId, id)}
+                text="View"
+              />
             ),
           }],
         }))}
