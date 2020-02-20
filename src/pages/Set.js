@@ -1,4 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+} from 'recharts';
 import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
 import LinkButton from 'components/content/LinkButton';
@@ -47,6 +50,8 @@ function Set() {
     score: setScore = 0,
   } = data;
 
+  console.log(data);
+
   return (
     <>
       <Breadcrumb
@@ -70,7 +75,7 @@ function Set() {
       <dl>
         <dt className={classes.setScore}>
           GM Score
-          <span className={classes.setScoreNumber}>{setScore}</span>
+          <span className={classes.setScoreNumber}> {setScore}</span>
         </dt>
         <dd className={classes.setMetrics}>{`Quality: ${setQuality}`}</dd>
         {' · '}
@@ -103,6 +108,8 @@ function Set() {
           quality,
           score = 0,
           variants,
+          total,
+          history = [],
         }) => ({
           key: `set-${id}`,
           value: [{
@@ -139,7 +146,16 @@ function Set() {
           }, {
             key: `set-${id}-graph`,
             value: (
-              <span>Graph Placeholder</span>
+              <LineChart width={300} height={50} data={[
+                total,
+                ...history
+              ].reverse().map(entry => ({
+                name: 'Total',
+                total: entry
+              }))}>
+                <Tooltip cursor={false} />
+                <Line type="monotone" dataKey="total" stroke="#D97800" strokeWidth={2} />
+              </LineChart>
             ),
           }, {
             key: `set-${id}-actions`,

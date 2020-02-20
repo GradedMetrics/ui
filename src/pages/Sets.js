@@ -30,7 +30,7 @@ function Sets() {
   }, []);
 
   let content;
-
+console.log(data);
   if (!data) {
     content = <p>Loading...</p>;
   } else if (!data.length) {
