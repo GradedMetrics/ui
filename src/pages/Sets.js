@@ -106,11 +106,11 @@ function Sets() {
             key: `set-${id}-graph`,
             value: (
               <Chart
-              data={[
-                total,
-                ...history,
-              ].reverse()}
-            />
+                data={[
+                  total,
+                  ...history,
+                ].reverse()}
+              />
             ),
           }, {
             key: `set-${id}-actions`,
