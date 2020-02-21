@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
-import LinkButton from 'components/content/LinkButton';
+import Chart from 'components/content/Chart';
 import GenericTable from 'components/content/GenericTable';
+import LinkButton from 'components/content/LinkButton';
 import SetIcon from 'components/content/SetIcon';
 import { ThemeContext } from 'contexts/theme';
 import { formatYear } from 'js/formats';
@@ -45,7 +46,7 @@ function Sets() {
           sr: 'GM Score',
           value: 'GM Score',
         }, {
-          sr: 'Graph',
+          sr: 'Total cards graded over time',
         }, {
           sr: 'Actions',
         }]}
@@ -60,6 +61,8 @@ function Sets() {
           score = 0,
           variant,
           year,
+          total,
+          history = [],
         }) => ({
           key: `set-${id}`,
           value: [{
@@ -102,7 +105,12 @@ function Sets() {
           }, {
             key: `set-${id}-graph`,
             value: (
-              <span>Graph Placeholder</span>
+              <Chart
+              data={[
+                total,
+                ...history,
+              ].reverse()}
+            />
             ),
           }, {
             key: `set-${id}-actions`,
