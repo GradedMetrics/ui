@@ -17,7 +17,7 @@ function GenericTable({
     sr,
     value = '',
   }) => (
-    <th key={sr} aria-label={sr} className={classes.cells}>
+    <th key={sr || value} aria-label={sr || value} className={classes.cells}>
       <span aria-hidden="true">{value}</span>
     </th>
   ));
@@ -47,7 +47,7 @@ function GenericTable({
 
 GenericTable.propTypes = {
   tableHeaders: PropTypes.arrayOf(PropTypes.shape({
-    sr: PropTypes.string.isRequired,
+    sr: PropTypes.string,
     value: PropTypes.string,
   })).isRequired,
 

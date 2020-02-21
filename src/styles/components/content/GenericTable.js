@@ -4,13 +4,13 @@ export default {
     width: '100%',
   },
   header: {
-    borderBottom: '1px solid #6F6F6F',
+    borderBottom: '1px solid #232323',
     fontFamily: '\'Barlow Condensed\', sans-serif',
     fontSize: '20px',
     textAlign: 'left',
   },
   rowSeparator: {
-    borderBottom: '1px solid #6F6F6F',
+    borderBottom: '1px solid #232323',
   },
   cells: {
     fontWeight: 400,

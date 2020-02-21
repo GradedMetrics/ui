@@ -30,6 +30,7 @@ export default {
     position: 'absolute',
     top: '100%',
     width: '100%',
+    zIndex: 2,
   },
   heading: {
     fontSize: 12,

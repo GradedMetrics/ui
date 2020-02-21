@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
+import Chart from 'components/content/Chart';
 import LinkButton from 'components/content/LinkButton';
 import GenericTable from 'components/content/GenericTable';
 import { ThemeContext } from 'contexts/theme';
@@ -70,7 +71,10 @@ function Set() {
       <dl>
         <dt className={classes.setScore}>
           GM Score
-          <span className={classes.setScoreNumber}>{setScore}</span>
+          <span className={classes.setScoreNumber}>
+            {' '}
+            {setScore}
+          </span>
         </dt>
         <dd className={classes.setMetrics}>{`Quality: ${setQuality}`}</dd>
         {' · '}
@@ -84,13 +88,11 @@ function Set() {
           sr: 'Number',
           value: '#',
         }, {
-          sr: 'Entry',
           value: 'Entry',
         }, {
-          sr: 'Set Score',
           value: 'Set Score',
         }, {
-          sr: 'Graph',
+          value: 'Total cards graded over time',
         }, {
           sr: 'Actions',
         }]}
@@ -103,6 +105,8 @@ function Set() {
           quality,
           score = 0,
           variants,
+          total,
+          history = [],
         }) => ({
           key: `set-${id}`,
           value: [{
@@ -139,7 +143,12 @@ function Set() {
           }, {
             key: `set-${id}-graph`,
             value: (
-              <span>Graph Placeholder</span>
+              <Chart
+                data={[
+                  total,
+                  ...history,
+                ].reverse()}
+              />
             ),
           }, {
             key: `set-${id}-actions`,
