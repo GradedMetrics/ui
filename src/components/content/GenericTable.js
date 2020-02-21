@@ -17,7 +17,7 @@ function GenericTable({
     sr,
     value = '',
   }) => (
-    <th key={sr || value} aria-label={sr} className={classes.cells}>
+    <th key={sr || value} aria-label={sr || value} className={classes.cells}>
       <span aria-hidden="true">{value}</span>
     </th>
   ));

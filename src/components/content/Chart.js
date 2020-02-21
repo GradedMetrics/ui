@@ -12,8 +12,7 @@ function Chart({ data }) {
 
   /**
    * Delay function for the rendering of the charts.  Adds a span element to the page and checks
-   * if it is visible on the screen.  If the span elements are not visible then the chart will
-   * not load.
+   * if it is visible on the screen.  If the span element is visible the chart will render.
    */
   useEffect(() => {
     if (!elem.current) { return; }
