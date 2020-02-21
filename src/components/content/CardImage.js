@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
+import { ThemeContext } from 'contexts/theme';
+// Theme.
+import { createUseStyles } from 'react-jss';
+import style from 'styles/components/content/CardImage';
+
+const useStyles = createUseStyles(style);
 
 function CardImage({
   cardId,
   description,
   setId,
 }) {
+  const classes = useStyles(useContext(ThemeContext));
+
   return (
-    <img src={`https://i.gradedmetrics.com/raw/${setId}/${cardId}.jpg`} alt={description} />
+    <img className={classes.cardImage} src={`https://i.gradedmetrics.com/raw/${setId}/${cardId}.jpg`} alt={description} />
   );
 }
 
