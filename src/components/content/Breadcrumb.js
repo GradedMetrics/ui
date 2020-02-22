@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { ThemeContext } from 'contexts/theme';
 import PropTypes from 'prop-types';
 
@@ -23,7 +24,7 @@ function Breadcrumb({
     }
     return (
       <li key={path} className={classes.breadcrumb}>
-        <a href={path} key={path}>{text}</a>
+        <Link to={path}>{text}</Link>
         <span className={classes.separator}>{' > '}</span>
       </li>
     );
