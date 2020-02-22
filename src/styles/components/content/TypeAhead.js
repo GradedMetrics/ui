@@ -3,13 +3,14 @@ export default {
     position: 'relative',
     width: '100%',
   },
-  input: {
+  input: (theme) => ({
     boxSizing: 'border-box',
     fontFamily: '\'Roboto Mono\', monospace',
     display: 'block',
+    outlineColor: theme.brandSecondary,
     padding: [4, 8],
     width: '100%',
-  },
+  }),
   dropdown: {
     background: '#fff',
     boxShadow: {
@@ -48,7 +49,25 @@ export default {
     display: 'block',
     fontSize: 14,
     lineHeight: '17px',
-    padding: [2, 0, 2, 8],
     width: '100%',
   },
+  resultButton: (theme) => ({
+    border: 'none',
+    cursor: 'pointer',
+    display: 'block',
+    padding: [2, 0, 2, 16],
+    margin: [0, -8],
+    textAlign: 'left',
+    width: 'calc(100% + 32px)',
+
+    '&:hover': {
+      background: theme.brandSecondary,
+      color: '#fff',
+    },
+
+    '&:focus': {
+      background: theme.brandSecondary,
+      color: '#fff',
+    },
+  }),
 };
