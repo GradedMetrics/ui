@@ -213,6 +213,7 @@ function TypeAhead({
         if (setListElem.parentNode.querySelector('li:first-child > ul').parentNode === setListElem) {
           // The first button is focussed. Select the input field.
           inputElem.current.focus();
+          inputElem.current.setSelectionRange(query.length, query.length);
           return;
         }
 

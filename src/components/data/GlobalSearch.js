@@ -75,6 +75,7 @@ function GlobalSearch() {
    */
   function formatSet({
     icon,
+    language,
     name,
     variant,
     year,
@@ -97,6 +98,10 @@ function GlobalSearch() {
         <strong>
           {name}
         </strong>
+        {' '}
+        {language ? (
+          <span className={classes.languageTag}>{language}</span>
+        ) : undefined}
         {variant ? (
           <span className={classes.tag}>{variant}</span>
         ) : undefined}

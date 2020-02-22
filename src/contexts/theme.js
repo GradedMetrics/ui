@@ -24,10 +24,16 @@ export const themes = {
       background: shared.brandPrimary,
     },
 
+    languageTag: {
+      background: '#ffd5a2',
+      color: '#333',
+      shadow: shared.brandPrimary,
+    },
+
     tag: {
       background: '#eee',
       color: '#333',
-      shadow: '#e0e0e0',
+      shadow: '#ccc',
     },
   },
 };
