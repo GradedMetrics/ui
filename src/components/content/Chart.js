@@ -18,6 +18,11 @@ function Chart({ data }) {
     if (!elem.current) { return; }
 
     timer.current = window.setInterval(() => {
+      if (!elem.current) {
+        window.clearInterval(timer.current);
+        return;
+      }
+
       const { bottom, top } = elem.current.getBoundingClientRect();
       const isVisible = top >= 0 && bottom <= window.innerHeight;
 
