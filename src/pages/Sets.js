@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
 import Chart from 'components/content/Chart';
@@ -23,16 +25,20 @@ function Sets() {
   const classes = useStyles(useContext(ThemeContext));
   const history = useHistory();
   const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const initialPage = query.get('page') || 1;
-  const initialSortBy = query.get('sort') || 'year';
-  const initialSortOrder = query.get('order') || 'asc';
+  const initialPage = useRef();
+  const initialSortBy = useRef();
+  const initialSortOrder = useRef();
 
   const [data, setData] = useState();
   const [paginatedData, setPaginatedData] = useState();
   const [sortedData, setSortedData] = useState();
 
   useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    initialPage.current = query.get('page') || 1;
+    initialSortBy.current = query.get('sort') || 'year';
+    initialSortOrder.current = query.get('order') || 'asc';
+
     (async () => {
       const keys = await apiGet('keys');
       const sets = await apiGet('sets');
@@ -94,6 +100,7 @@ function Sets() {
         tableData={paginatedData.map(({
           cards,
           difficulty,
+          difficultySampleSize = 0,
           icon,
           id,
           name,
@@ -187,8 +194,8 @@ function Sets() {
         <Sorter
           callback={handleSorterChange}
           data={data}
-          defaultSortBy={initialSortBy}
-          defaultSortOrder={initialSortOrder}
+          defaultSortBy={initialSortBy.current}
+          defaultSortOrder={initialSortOrder.current}
           fields={[{
             key: 'cards',
             text: 'Cards',
@@ -201,6 +208,9 @@ function Sets() {
           }, {
             key: 'quality',
             text: 'Quality',
+          }, {
+            key: 'score',
+            text: 'Score',
           }, {
             key: 'year',
             format: formatYear,
@@ -215,7 +225,7 @@ function Sets() {
         <Pagination
           callback={handlePageChange}
           data={sortedData}
-          initialPage={initialPage}
+          initialPage={initialPage.current}
         />
       ) : undefined}
     </>
