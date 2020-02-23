@@ -1,5 +1,5 @@
 import React, {
-  useContext, useEffect, useRef, useState,
+  useContext, useEffect, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { ThemeContext } from 'contexts/theme';

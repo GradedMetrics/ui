@@ -111,11 +111,13 @@ function GlobalSearch() {
 
   formatSet.defaultProps = {
     icon: undefined,
+    language: undefined,
     variant: undefined,
   };
 
   formatSet.propTypes = {
     icon: PropTypes.string,
+    language: PropTypes.string,
     name: PropTypes.string.isRequired,
     variant: PropTypes.string,
     year: PropTypes.string.isRequired,
