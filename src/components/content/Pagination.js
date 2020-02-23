@@ -24,11 +24,21 @@ function Pagination({
 
   /** If the data changes after the first load, reset the page to 1.  */
   useEffect(() => {
+    if (!data.length) {
+      setPage(-1);
+      return;
+    }
+
     if (isFirstLoad.current) {
+      setPage(Number(initialPage));
       isFirstLoad.current = false;
       return;
     }
 
+    callback({
+      data: data.slice(0, size),
+      page,
+    });
     setPage(1);
   }, [data]);
 
@@ -36,6 +46,10 @@ function Pagination({
    * When the page changes, determine the new data and send it back to the parent.
    */
   useEffect(() => {
+    if (page === -1) {
+      return;
+    }
+
     const start = (page - 1) * size;
     const end = start + size;
 
@@ -53,6 +67,10 @@ function Pagination({
       page,
     });
   }, [page]);
+
+  if (!data.length) {
+    return <></>;
+  }
 
   // Create the array of page numbers based on the data length and the page size.
   const pages = new Array(Math.round(data.length / size)).fill(1).map((_, index) => index + 1);
@@ -130,6 +148,7 @@ function Pagination({
 }
 
 Pagination.defaultProps = {
+  data: undefined,
   size: 20,
 };
 
@@ -138,7 +157,7 @@ Pagination.propTypes = {
   callback: PropTypes.func.isRequired,
 
   /** The full dataset to apply pagination to. */
-  data: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  data: PropTypes.array, // eslint-disable-line react/forbid-prop-types
 
   /** The page to start on. */
   initialPage: PropTypes.oneOfType([
