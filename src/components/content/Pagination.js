@@ -104,7 +104,7 @@ function Pagination({
           Page
           {' '}
           <select
-            onChange={({ currentTarget }) => setPage(currentTarget.value)}
+            onChange={({ currentTarget }) => setPage(Number(currentTarget.value))}
             value={page}
           >
             {pages.map((number) => (
