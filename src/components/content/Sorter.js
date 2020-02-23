@@ -77,10 +77,10 @@ function Sorter({
             value={sortOrder}
           >
             <option value="asc">
-              ascending
+              ▲ ascending
             </option>
             <option value="desc">
-              descending
+              ▼ descending
             </option>
           </select>
           {' '}
