@@ -5,6 +5,7 @@ import Chart from 'components/content/Chart';
 import GenericTable from 'components/content/GenericTable';
 import LinkButton from 'components/content/LinkButton';
 import Pagination from 'components/content/Pagination';
+import Sorter from 'components/content/Sorter';
 import SetIcon from 'components/content/SetIcon';
 import { ThemeContext } from 'contexts/theme';
 import { formatYear } from 'js/formats';
@@ -25,7 +26,8 @@ function Sets() {
   const initialPage = query.get('page') || 1;
 
   const [data, setData] = useState();
-  const [entries, setEntries] = useState();
+  const [paginatedData, setPaginatedData] = useState();
+  const [sortedData, setSortedData] = useState();
 
   useEffect(() => {
     (async () => {
@@ -36,22 +38,35 @@ function Sets() {
   }, []);
 
   /**
-   * Update the entries state and page query string when the page changes.
+   * Update the paginatedData state and page query string when the page changes.
    * @param {Object} - The pagination object which contains the paginated data and new page number.
    */
   function handlePageChange({
-    data: paginatedData,
+    data: paginated,
     page = 1,
   }) {
     history.push(paths.sets(page));
-    setEntries(paginatedData);
+    setPaginatedData(paginated);
+  }
+
+  /**
+   * Update the sortedData state and sort query string when the sorter changes.
+   * @param {Object} - The sorter object which contains the sorted data and new sort order.
+   */
+  function handleSorterChange({
+    data: sorted,
+    sortBy = 1,
+    sortOrder,
+  }) {
+    // history.push(paths.sets(page));
+    setSortedData(sorted);
   }
 
   let content;
 
-  if (!entries) {
+  if (!paginatedData) {
     content = <p>Loading...</p>;
-  } else if (!entries.length) {
+  } else if (!paginatedData.length) {
     content = <p>No data found.</p>;
   } else {
     content = (
@@ -67,7 +82,7 @@ function Sets() {
         }, {
           sr: 'Actions',
         }]}
-        tableData={entries.map(({
+        tableData={paginatedData.map(({
           cards,
           difficulty,
           icon,
@@ -79,7 +94,7 @@ function Sets() {
           variant,
           year,
           total,
-          history = [],
+          history: setHistory = [],
         }) => ({
           key: `set-${id}`,
           value: [{
@@ -125,7 +140,7 @@ function Sets() {
               <Chart
                 data={[
                   total,
-                  ...history,
+                  ...setHistory,
                 ].reverse()}
               />
             ),
@@ -159,12 +174,38 @@ function Sets() {
 
       <h2>Sets</h2>
 
+      {data && data.length ? (
+        <Sorter
+          callback={handleSorterChange}
+          data={data}
+          defaultSortBy="year"
+          defaultSortOrder="asc"
+          fields={[{
+            key: 'cards',
+            text: 'Cards',
+          }, {
+            key: 'difficulty',
+            text: 'Difficulty',
+          }, {
+            key: 'popularity',
+            text: 'Popularity',
+          }, {
+            key: 'quality',
+            text: 'Quality',
+          }, {
+            key: 'year',
+            format: formatYear,
+            text: 'Year',
+          }]}
+        />
+      ) : undefined}
+
       {content}
 
-      {data && data.length ? (
+      {sortedData && sortedData.length ? (
         <Pagination
           callback={handlePageChange}
-          data={data}
+          data={sortedData}
           initialPage={initialPage}
         />
       ) : undefined}
