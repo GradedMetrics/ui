@@ -30,6 +30,18 @@ export const themes = {
       shadow: shared.brandPrimary,
     },
 
+    pagination: {
+      background: '#323232',
+    },
+
+    paginationButton: {
+      fill: shared.brandSecondary,
+    },
+
+    paginationButtonDisabled: {
+      fill: '#C1BEBE',
+    },
+
     tag: {
       background: '#eee',
       color: '#333',

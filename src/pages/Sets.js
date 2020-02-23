@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
 import Chart from 'components/content/Chart';
 import GenericTable from 'components/content/GenericTable';
 import LinkButton from 'components/content/LinkButton';
+import Pagination from 'components/content/Pagination';
 import SetIcon from 'components/content/SetIcon';
 import { ThemeContext } from 'contexts/theme';
 import { formatYear } from 'js/formats';
@@ -19,8 +20,12 @@ const useStyles = createUseStyles(style);
 
 function Sets() {
   const classes = useStyles(useContext(ThemeContext));
+  const history = useHistory();
+  const query = new URLSearchParams(useLocation().search);
+  const initialPage = query.get('page') || 1;
 
   const [data, setData] = useState();
+  const [entries, setEntries] = useState();
 
   useEffect(() => {
     (async () => {
@@ -30,11 +35,23 @@ function Sets() {
     })();
   }, []);
 
+  /**
+   * Update the entries state and page query string when the page changes.
+   * @param {Object} - The pagination object which contains the paginated data and new page number.
+   */
+  function handlePageChange({
+    data: paginatedData,
+    page = 1,
+  }) {
+    history.push(paths.sets(page));
+    setEntries(paginatedData);
+  }
+
   let content;
 
-  if (!data) {
+  if (!entries) {
     content = <p>Loading...</p>;
-  } else if (!data.length) {
+  } else if (!entries.length) {
     content = <p>No data found.</p>;
   } else {
     content = (
@@ -50,7 +67,7 @@ function Sets() {
         }, {
           sr: 'Actions',
         }]}
-        tableData={data.map(({
+        tableData={entries.map(({
           cards,
           difficulty,
           icon,
@@ -135,7 +152,7 @@ function Sets() {
             path: paths.home,
           }, {
             text: 'Sets',
-            path: paths.sets,
+            path: paths.sets(),
           },
         ]}
       />
@@ -143,6 +160,14 @@ function Sets() {
       <h2>Sets</h2>
 
       {content}
+
+      {data && data.length ? (
+        <Pagination
+          callback={handlePageChange}
+          data={data}
+          initialPage={initialPage}
+        />
+      ) : undefined}
     </>
   );
 }

@@ -32,7 +32,7 @@ function Breadcrumb({
 
   return (
     <>
-      <ul className={classes.breadcrumbWrapper}>
+      <ul className={classes.wrapper}>
         {breadcrumb}
       </ul>
     </>

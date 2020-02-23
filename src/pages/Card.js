@@ -55,7 +55,7 @@ function Card() {
             path: paths.home,
           }, {
             text: 'Sets',
-            path: paths.sets,
+            path: paths.sets(),
           }, {
             text: data ? setName : '...',
             path: paths.set(setId, setName),

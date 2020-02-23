@@ -57,7 +57,7 @@ function Set() {
             path: paths.home,
           }, {
             text: 'Sets',
-            path: paths.sets,
+            path: paths.sets(),
           }, {
             text: data ? setName : '...',
             path: '/set',
