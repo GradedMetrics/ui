@@ -2,9 +2,19 @@ export default {
   header: ({ header: headerTheme }) => ({
     alignItems: 'center',
     background: headerTheme.background,
+    boxShadow: {
+      blur: 3,
+      color: '#0F1113',
+      spread: 2,
+    },
+    boxSizing: 'border-box',
     display: 'flex',
-    height: '80px',
+    height: 64,
     padding: [0, 25],
+    position: 'fixed',
+    top: 0,
+    width: '100%',
+    zIndex: 3,
   }),
   title: {
     flexGrow: 1,

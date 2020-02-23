@@ -22,7 +22,7 @@ function Container() {
   }, [location]);
 
   return (
-    <section>
+    <section className={classes.wrapper}>
       <main className={classes.container}>
         <Switch>
           {routes.map((route) => {
