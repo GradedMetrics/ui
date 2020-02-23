@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import routes from 'js/routes';
 import pageRoutes from 'js/routes/pages';
 import { ThemeContext } from 'contexts/theme';
@@ -12,6 +12,14 @@ const useStyles = createUseStyles(style);
 
 function Container() {
   const classes = useStyles(useContext(ThemeContext));
+  const { location } = useHistory();
+
+  /**
+   * When the page changes, reset the tab position.
+   */
+  useEffect(() => {
+    document.getElementById('GradedMetrics').focus();
+  }, [location]);
 
   return (
     <section>
