@@ -128,7 +128,6 @@ function Sets() {
                   <Link
                     to={paths.set(id, name)}
                   >
-                    {'Pokemon '}
                     {name}
                     {variant ? ` (${variant})` : ''}
                   </Link>
