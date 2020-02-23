@@ -22,8 +22,11 @@ const useStyles = createUseStyles(style);
 function Sets() {
   const classes = useStyles(useContext(ThemeContext));
   const history = useHistory();
-  const query = new URLSearchParams(useLocation().search);
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
   const initialPage = query.get('page') || 1;
+  const initialSortBy = query.get('sort') || 'year';
+  const initialSortOrder = query.get('order') || 'asc';
 
   const [data, setData] = useState();
   const [paginatedData, setPaginatedData] = useState();
@@ -45,7 +48,9 @@ function Sets() {
     data: paginated,
     page = 1,
   }) {
-    history.push(paths.sets(page));
+    const q = new URLSearchParams(location.search);
+    q.set('page', page);
+    history.push(paths.sets(q.toString()));
     setPaginatedData(paginated);
   }
 
@@ -55,10 +60,14 @@ function Sets() {
    */
   function handleSorterChange({
     data: sorted,
-    sortBy = 1,
+    sortBy,
     sortOrder,
   }) {
-    // history.push(paths.sets(page));
+    const q = new URLSearchParams(location.search);
+    q.set('page', 1);
+    q.set('sort', sortBy);
+    q.set('order', sortOrder);
+    history.push(paths.sets(q.toString()));
     setSortedData(sorted);
   }
 
@@ -178,8 +187,8 @@ function Sets() {
         <Sorter
           callback={handleSorterChange}
           data={data}
-          defaultSortBy="year"
-          defaultSortOrder="asc"
+          defaultSortBy={initialSortBy}
+          defaultSortOrder={initialSortOrder}
           fields={[{
             key: 'cards',
             text: 'Cards',

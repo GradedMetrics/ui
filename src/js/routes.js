@@ -7,7 +7,7 @@ export const paths = {
   home: '/',
   card: (setId = ':setId', cardId = ':cardId') => `/set/${setId}/card/${cardId}`,
   search: (result = ':result') => `/search/${result}`,
-  sets: (page = '') => `/sets${page ? `?page=${page}` : ''}`,
+  sets: (queryString = '') => `/sets${queryString ? `?${queryString}` : ''}`,
   set: (setId = ':setId', setName = '') => `/set/${setId}${setName ? `/${setName}` : ''}`,
 };
 
