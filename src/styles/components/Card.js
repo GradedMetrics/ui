@@ -35,4 +35,4 @@ export default {
     flexGrow: 1,
     marginRight: 50,
   },
-}
+};

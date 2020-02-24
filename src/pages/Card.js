@@ -38,7 +38,7 @@ function Card() {
   if (!data) {
     return <p>Loading...</p>;
   }
-console.log(data);
+
   const {
     set = {},
     difficulty,
@@ -51,12 +51,19 @@ console.log(data);
 
   const {
     name: setName,
+    cards: setCards,
     year: setYear,
     score: setScore = 0,
     quality: setQuality,
     difficulty: setDifficulty,
     popularity: setPopularity,
   } = set;
+
+  const variantList = variants.map((entry) => (
+    <dd key={entry}>
+      {entry}
+    </dd>
+  ));
 
   return (
     <>
@@ -80,7 +87,7 @@ console.log(data);
 
       <h2 className={classes.name}>{name}</h2>
       <p className={classes.setInfo}>{`${setName} · ${formatYear(setYear)}`}</p>
-      
+
       <section className={classes.split}>
         <div className={classes.cardGroup}>
           <div>
@@ -100,44 +107,35 @@ console.log(data);
             </dl>
 
             <dl>
-            <dt className={classes.setScore}>
+              <dt className={classes.setScore}>
               Card Score
-              <span className={classes.setScoreNumber}>
-                {' '}
-                {score}
-              </span>
-            </dt>
-            <dd className={classes.setMetrics}>{`Quality: ${quality}`}</dd>
-            {' · '}
-            <dd className={classes.setMetrics}>{`Difficulty: ${difficulty}`}</dd>
-            {' · '}
-            <dd className={classes.setMetrics}>{`Popularity: ${popularity}`}</dd>
-          </dl>
+                <span className={classes.setScoreNumber}>
+                  {' '}
+                  {score}
+                </span>
+              </dt>
+              <dd className={classes.setMetrics}>{`Quality: ${quality}`}</dd>
+              {' · '}
+              <dd className={classes.setMetrics}>{`Difficulty: ${difficulty}`}</dd>
+              {' · '}
+              <dd className={classes.setMetrics}>{`Popularity: ${popularity}`}</dd>
+            </dl>
           </div>
 
           <div>
-          <dl>
-            <dt className={classes.setScore}>
+            <dl>
+              <dt className={classes.setScore}>
               Total graded:
-              <span className={classes.setScoreNumber}>
-                {' '}
-                {score}
-              </span>
-            </dt>
-          </dl>
+                <span className={classes.setScoreNumber}>
+                  {setCards}
+                </span>
+              </dt>
+            </dl>
 
-          <dl>
-            <dt className={classes.setScore}>
-              Variants:
-              <span className={classes.setScoreNumber}>
-                {' '}
-                {score}
-              </span>
-            </dt>
-            <dd>{`Quality: ${quality}`}</dd>
-            <dd>{`Difficulty: ${difficulty}`}</dd>
-            <dd>{`Popularity: ${popularity}`}</dd>
-          </dl>
+            <dl>
+              <dt className={classes.setScore}>Variants:</dt>
+              {variantList}
+            </dl>
           </div>
         </div>
 
