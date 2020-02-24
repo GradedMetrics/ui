@@ -90,10 +90,10 @@ function Sets() {
           sr: 'Name',
           value: 'Name',
         }, {
-          sr: 'GM Score',
-          value: 'GM Score',
+          sr: 'Score',
+          value: 'Score',
         }, {
-          sr: 'Total cards graded over time',
+          value: 'Total cards graded over time',
         }, {
           sr: 'Actions',
         }]}

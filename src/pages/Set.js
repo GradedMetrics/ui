@@ -90,7 +90,7 @@ function Set() {
         }, {
           value: 'Entry',
         }, {
-          value: 'Set Score',
+          value: 'Score',
         }, {
           value: 'Total cards graded over time',
         }, {
