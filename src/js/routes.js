@@ -7,7 +7,7 @@ export const paths = {
   home: '/',
   card: (setId = ':setId', cardId = ':cardId') => `/set/${setId}/card/${cardId}`,
   search: (result = ':result') => `/search/${result}`,
-  sets: '/sets',
+  sets: (queryString = '') => `/sets${queryString ? `?${queryString}` : ''}`,
   set: (setId = ':setId', setName = '') => `/set/${setId}${setName ? `/${setName}` : ''}`,
 };
 
@@ -21,7 +21,7 @@ export default [{
   path: paths.card(),
   title: 'Card',
 }, {
-  path: paths.sets,
+  path: paths.sets(),
   exact: true,
   title: 'Sets',
 }, {

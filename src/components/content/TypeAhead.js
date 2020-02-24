@@ -15,9 +15,13 @@ function TypeAhead({
 }) {
   const classes = useStyles(useContext(ThemeContext));
 
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [matches, setMatches] = useState([]);
   const [query, setQuery] = useState('');
   const inputTimer = useRef();
+  const containerElem = useRef();
+  const dropdownElem = useRef();
+  const inputElem = useRef();
 
   function getMatches() {
     if (query.length < 3) {
@@ -27,6 +31,7 @@ function TypeAhead({
     return data.reduce((arr, {
       entries,
       format,
+      handleSelect,
       searchField,
       searchKey,
       sort,
@@ -62,12 +67,51 @@ function TypeAhead({
           return aSorter > bSorter ? 1 : -1;
         }),
         format,
+        handleSelect,
         searchField,
         searchKey,
         title,
       },
     ], []).filter(({ entries }) => entries.length);
   }
+
+  /**
+   * If the user clicks anywhere on the document and the dropdown is visible, we need to determine
+   * whether we need to close the dropdown. If the user clicks outside of the TypeAhead element,
+   * the dropdown should be closed.
+   * @param {Event} - The DOM event.
+   */
+  function handleDocumentClick({ target }) {
+    if ((
+      !isDropdownVisible
+      || containerElem.current.contains(target)
+    )) {
+      return;
+    }
+
+    setDropdownVisible(false);
+  }
+
+  /**
+   * When the isDropdownVisible state changes, apply or remove an event listener to hide the
+   * dropdown if the user clicks away.
+   */
+  useEffect(() => {
+    if (!dropdownElem.current) {
+      // The dropdown element is no longer visible, remove the event listener.
+      document.removeEventListener('click', handleDocumentClick);
+      return;
+    }
+
+    if (isDropdownVisible) {
+      // The dropdown is visible, add the event listener.
+      document.addEventListener('click', handleDocumentClick, true);
+      return;
+    }
+
+    // The dropdown is not visible, remove the event listener.
+    document.removeEventListener('click', handleDocumentClick);
+  }, [dropdownElem.current, isDropdownVisible]);
 
   /**
    * When the query changes we need to check to see if we want to perform the search.
@@ -80,6 +124,7 @@ function TypeAhead({
 
     if (query.length < 3) {
       if (matches.length) {
+        setDropdownVisible(false);
         setMatches([]);
       }
 
@@ -87,26 +132,155 @@ function TypeAhead({
     }
 
     inputTimer.current = window.setTimeout(() => {
-      setMatches(getMatches());
+      const newMatches = getMatches();
+      setMatches(newMatches);
+
+      if (newMatches.length) {
+        setDropdownVisible(true);
+      } else {
+        setDropdownVisible(false);
+      }
     }, 300);
   }, [query]);
 
+  /**
+   * When the input field is focussed we may need to show the dropdown if the user has already made
+   * a search but closed the dropdown.
+   */
+  function handleInputFocus() {
+    if (isDropdownVisible) {
+      // The dropdown is already visible, do nothing.
+      return;
+    }
+
+    if (!matches.length) {
+      // There are no matches.
+      return;
+    }
+
+    setDropdownVisible(true);
+  }
+
+  /**
+   * When the user selects a result, pass the result through to the parent and reset the TypeAhead
+   * to its original state.
+   * @param {Object} result - The selected result object.
+   * @param {Function} callbackFn - The callback function to call.
+   */
+  function handleResultClick(result, callbackFn) {
+    setDropdownVisible(false);
+    setQuery('');
+    setMatches([]);
+    callbackFn(result);
+  }
+
+  /**
+   * Allow keyboard navigation through the results using the up and down keyboard keys.
+   * We can't destructure the `event` argument as we're calling `event.preventDefault` and for some
+   * reason if that gets destructured it causes a TypeError.
+   * @param {Event} - The DOM event.
+   */
+  function handleNavigate(event) {
+    const { which } = event;
+
+    if ((which !== 38 && which !== 40) || !isDropdownVisible) {
+      return;
+    }
+
+    const { currentTarget } = event;
+
+    if (which === 38) {
+      // The up arrow was pressed.
+      if (currentTarget === inputElem.current) {
+        // The input field is already focussed. Do nothing.
+        return;
+      }
+
+      /**
+       * PreventDefault is called here for 2 reasons:
+       * 1. If we're going back to the input field, this ensures the text cursor position does not
+       *    get set back to the beginning of the text.
+       * 2. If we're going up the results list, this ensures the scroll position does not jump
+       *    around.
+       */
+      event.preventDefault();
+
+      const resultListElem = currentTarget.parentNode;
+      if (resultListElem.parentNode.querySelector('li:first-child') === resultListElem) {
+        // The first result in one of the sets of results is focussed...
+
+        const setListElem = currentTarget.closest('ul').parentNode;
+        if (setListElem.parentNode.querySelector('li:first-child > ul').parentNode === setListElem) {
+          // The first button is focussed. Select the input field.
+          inputElem.current.focus();
+          inputElem.current.setSelectionRange(query.length, query.length);
+          return;
+        }
+
+        // Move back to the previous result list's last result.
+        resultListElem.parentNode.parentNode.previousElementSibling.querySelector('li:last-child').querySelector('button').focus();
+        return;
+      }
+
+      // Select the previous result.
+      resultListElem.previousElementSibling.querySelector('button').focus();
+      return;
+    }
+
+    // The down arrow was pressed...
+
+    // Ensure the scroll position of the list does not jump around.
+    event.preventDefault();
+
+    if (currentTarget === inputElem.current) {
+      // The input field is focussed. Select the first result.
+      containerElem.current.querySelector('button').focus();
+      return;
+    }
+
+    const resultListElem = currentTarget.parentNode;
+    if (resultListElem.parentNode.querySelector('li:last-child') === resultListElem) {
+      // The last result in one of the sets of results is focussed...
+
+      const setListElem = currentTarget.closest('ul').parentNode;
+      if (setListElem.parentNode.querySelector('li:last-child > ul').parentNode === setListElem) {
+        // We're already on the last list. Do nothing.
+        return;
+      }
+
+      // Move on to the next result list's first result.
+      resultListElem.parentNode.parentNode.nextElementSibling.querySelector('button').focus();
+      return;
+    }
+
+    // Select the next result.
+    resultListElem.nextElementSibling.querySelector('button').focus();
+  }
+
   return (
-    <div className={classes.container}>
+    <div
+      className={classes.container}
+      ref={containerElem}
+    >
       <input
-        className={classes.input}
+        className={`${classes.input}${isDropdownVisible ? ` ${classes.inputDropdownVisible}` : ''}`}
         placeholder="Search"
+        ref={inputElem}
         value={query}
         onChange={({ currentTarget }) => setQuery(currentTarget.value)}
+        onKeyDown={handleNavigate}
+        onFocus={handleInputFocus}
       />
-      {matches.length ? (
+      {isDropdownVisible ? (
         <ul
           className={classes.dropdown}
+          ref={dropdownElem}
           role="listbox"
         >
           {matches.map(({
             entries,
             format,
+            handleSelect,
             searchKey,
             title,
           }) => (
@@ -129,7 +303,22 @@ function TypeAhead({
                       className={classes.result}
                       key={`search-result-entry-${key}`}
                     >
-                      {typeof format === 'function' ? format(entry) : entry}
+                      <button
+                        className={classes.resultButton}
+                        type="button"
+                        onClick={() => handleResultClick(entry, handleSelect)}
+                        onKeyDown={(event) => {
+                          if (event.which === 13) {
+                            // The return key was pressed.
+                            handleResultClick(entry, handleSelect);
+                            return;
+                          }
+
+                          handleNavigate(event);
+                        }}
+                      >
+                        {typeof format === 'function' ? format(entry) : entry}
+                      </button>
                     </li>
                   );
                 })}
@@ -153,6 +342,9 @@ TypeAhead.propTypes = {
 
     /** A custom formatter for the search result. */
     format: PropTypes.func,
+
+    /** A callback which is called when an item is selected. */
+    handleSelect: PropTypes.func.isRequired,
 
     /** If `entries` contains objects, this specifies which key to use for the search matching. */
     searchField: PropTypes.string,

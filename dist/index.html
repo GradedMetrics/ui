@@ -8,6 +8,10 @@
   <title>Graded Metrics</title>
   
   <style type="text/css">
+    #GradedMetrics {
+      outline: none;
+    }
+
     html, body {
       background-image: url("https://i.gradedmetrics.com/background.png");
       background-attachment: fixed;
@@ -53,12 +57,16 @@
     a:active {
       color: #FFF;
     }
+
+    svg:not([class^="recharts"]) path {
+      fill: inherit;
+    }
   </style>
 
   <base href="/" />
 </head>
 <body>
-  <section id="GradedMetrics"></section>
+  <section id="GradedMetrics" tabindex="-1"></section>
   <script src="./runtime~app.min.js"></script>
   <script src="./vendor.min.js"></script>
   <script src="./app.min.js"></script>

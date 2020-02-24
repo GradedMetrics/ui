@@ -9,6 +9,7 @@ function Chart({ data }) {
   const elem = useRef();
   const timer = useRef();
   const [isReady, setReady] = useState(false);
+  const chartWidth = 300;
 
   /**
    * Delay function for the rendering of the charts.  Adds a span element to the page and checks
@@ -18,6 +19,11 @@ function Chart({ data }) {
     if (!elem.current) { return; }
 
     timer.current = window.setInterval(() => {
+      if (!elem.current) {
+        window.clearInterval(timer.current);
+        return;
+      }
+
       const { bottom, top } = elem.current.getBoundingClientRect();
       const isVisible = top >= 0 && bottom <= window.innerHeight;
 
@@ -36,13 +42,19 @@ function Chart({ data }) {
 
   if (!isReady) {
     return (
-      <span ref={elem} />
+      <span
+        style={{
+          display: 'block',
+          width: `${chartWidth}px`,
+        }}
+        ref={elem}
+      />
     );
   }
 
   return (
     <LineChart
-      width={300}
+      width={chartWidth}
       height={40}
       data={data.map((entry) => ({
         name: 'Total',

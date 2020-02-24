@@ -25,7 +25,7 @@ const routes = {
     component: Card,
   },
 
-  [paths.sets]: {
+  [paths.sets()]: {
     component: Sets,
   },
 

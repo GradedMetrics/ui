@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import SetIcon from 'components/content/SetIcon';
 import TypeAhead from 'components/content/TypeAhead';
 import { apiGet } from 'js/api';
@@ -17,35 +17,46 @@ const useStyles = createUseStyles(style);
 
 function GlobalSearch() {
   const classes = useStyles(useContext(ThemeContext));
+  const history = useHistory();
 
   const [data, setData] = useState([]);
 
   /**
    * Format data objects.
+   * @param {String} type - The type of data (e.g. 'trainer')
    * @param {Object} data - A matched data object.
    */
-  function formatResult({
+  function formatResult(type, {
     name,
     number,
     language,
     translation,
   }) {
+    let prefix;
+
+    switch (type) {
+      case 'pokemon':
+        prefix = `#${number}`;
+        break;
+
+      default:
+        prefix = type;
+        break;
+    }
+
     return (
       <>
-        {number ? (
-          <>
-            <span className={classes.mono}>
-              #
-              {number}
-            </span>
-            &nbsp;
-            ·
-            &nbsp;
-          </>
-        ) : undefined}
-        <Link to={paths.search(urlFriendlyName(name))}>
+        <>
+          <span className={classes.mono}>
+            {prefix}
+          </span>
+          &nbsp;
+          ·
+          &nbsp;
+        </>
+        <strong>
           {name}
-        </Link>
+        </strong>
         {language ? (
           <>
             &nbsp;
@@ -58,25 +69,13 @@ function GlobalSearch() {
     );
   }
 
-  formatResult.defaultProps = {
-    language: undefined,
-    translation: undefined,
-  };
-
-  formatResult.propTypes = {
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-    language: PropTypes.string,
-    translation: PropTypes.string,
-  };
-
   /**
    * Format set objects.
    * @param {Object} set - A matched set object.
    */
   function formatSet({
     icon,
-    id,
+    language,
     name,
     variant,
     year,
@@ -96,9 +95,13 @@ function GlobalSearch() {
               {' '}
             </>
           ) : undefined}
-        <Link to={paths.set(id, urlFriendlyName(name))}>
+        <strong>
           {name}
-        </Link>
+        </strong>
+        {' '}
+        {language ? (
+          <span className={classes.languageTag}>{language}</span>
+        ) : undefined}
         {variant ? (
           <span className={classes.tag}>{variant}</span>
         ) : undefined}
@@ -108,12 +111,13 @@ function GlobalSearch() {
 
   formatSet.defaultProps = {
     icon: undefined,
+    language: undefined,
     variant: undefined,
   };
 
   formatSet.propTypes = {
     icon: PropTypes.string,
-    id: PropTypes.string.isRequired,
+    language: PropTypes.string,
     name: PropTypes.string.isRequired,
     variant: PropTypes.string,
     year: PropTypes.string.isRequired,
@@ -182,7 +186,8 @@ function GlobalSearch() {
 
       setData([{
         entries: withSearchTranslation(formatObjectArray(keys, Object.values(pokemon))),
-        format: formatResult,
+        format: (result) => formatResult('pokemon', result),
+        handleSelect: ({ name }) => history.push(paths.search(urlFriendlyName(name))),
         searchField: 'search',
         searchKey: 'name',
         sort: sortResult,
@@ -190,27 +195,31 @@ function GlobalSearch() {
       }, {
         entries: formatObjectArray(keys, Object.values(sets)),
         format: formatSet,
+        handleSelect: ({ id, name }) => history.push(paths.set(id, urlFriendlyName(name))),
         searchField: 'name',
         searchKey: 'id',
         sort: sortSet,
         title: 'Sets',
       }, {
         entries: withSearchTranslation(formatObjectArray(keys, Object.values(trainers))),
-        format: formatResult,
+        format: (result) => formatResult('trainer', result),
+        handleSelect: ({ name }) => history.push(paths.search(urlFriendlyName(name))),
         searchField: 'search',
         searchKey: 'name',
         sort: sortResult,
         title: 'Trainer cards',
       }, {
         entries: withSearchTranslation(formatObjectArray(keys, Object.values(stadiums))),
-        format: formatResult,
+        format: (result) => formatResult('stadium', result),
+        handleSelect: ({ name }) => history.push(paths.search(urlFriendlyName(name))),
         searchField: 'search',
         searchKey: 'name',
         sort: sortResult,
         title: 'Stadium cards',
       }, {
         entries: withSearchTranslation(formatObjectArray(keys, Object.values(energies))),
-        format: formatResult,
+        format: (result) => formatResult('energy', result),
+        handleSelect: ({ name }) => history.push(paths.search(urlFriendlyName(name))),
         searchField: 'search',
         searchKey: 'name',
         sort: sortResult,

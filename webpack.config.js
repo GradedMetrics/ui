@@ -11,6 +11,7 @@ module.exports = (env, argv) => ({
   },
   resolve: {
     alias: {
+      assets: `${__dirname}/src/assets`,
       components: `${__dirname}/src/components`,
       contexts: `${__dirname}/src/contexts`,
       js: `${__dirname}/src/js`,
@@ -28,7 +29,20 @@ module.exports = (env, argv) => ({
           loader: 'babel-loader',
         },
       }, {
-        test: /\.(woff2?|eot|svg|ttf|md|jpg|png)$/,
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'react-svg-loader',
+            options: {
+              jsx: true,
+            },
+          },
+        ],
+      }, {
+        test: /\.(woff2?|eot|ttf|md|jpg|png)$/,
         exclude: /node_modules/,
         use: [
           {
@@ -37,7 +51,7 @@ module.exports = (env, argv) => ({
               name: '[hash].[ext]',
               publicPath: argv.mode === 'development'
                 ? '/compiled/'
-                : 'https://i.gradedmetrics.com/',
+                : 'https://gradedmetrics.com/',
             },
           },
         ],

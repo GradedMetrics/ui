@@ -4,8 +4,8 @@ export default {
     fontFamily: '\'Barlow Condensed\', sans-serif',
     fontSize: '14px',
   },
-  breadcrumbWrapper: {
-    marginLeft: '0',
+  wrapper: {
+    margin: [0, 0, 20],
     padding: 0,
   },
   separator: {

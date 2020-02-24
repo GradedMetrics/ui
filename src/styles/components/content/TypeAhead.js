@@ -3,13 +3,14 @@ export default {
     position: 'relative',
     width: '100%',
   },
-  input: {
+  input: (theme) => ({
     boxSizing: 'border-box',
     fontFamily: '\'Roboto Mono\', monospace',
     display: 'block',
+    outlineColor: theme.brandSecondary,
     padding: [4, 8],
     width: '100%',
-  },
+  }),
   dropdown: {
     background: '#fff',
     boxShadow: {
@@ -32,6 +33,13 @@ export default {
     width: '100%',
     zIndex: 2,
   },
+  category: {
+    margin: [0, 0, 8],
+
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
   heading: {
     fontSize: 12,
     fontWeight: 700,
@@ -42,13 +50,41 @@ export default {
     listStyle: 'none',
     padding: 0,
     margin: [0, 0, 8],
+
+    '&:last-child': {
+      marginBottom: 0,
+    },
   },
   result: {
     boxSizing: 'border-box',
     display: 'block',
     fontSize: 14,
     lineHeight: '17px',
-    padding: [2, 0, 2, 8],
     width: '100%',
+  },
+  resultButton: (theme) => {
+    const marginOffset = 8;
+
+    return {
+      border: 'none',
+      cursor: 'pointer',
+      display: 'block',
+      lineHeight: '16px',
+      margin: [0, -marginOffset],
+      outline: 'none',
+      padding: [4, 0, 4, 16],
+      textAlign: 'left',
+      width: `calc(100% + ${marginOffset * 2}px)`,
+
+      '&:hover': {
+        background: theme.brandSecondary,
+        color: '#fff',
+      },
+
+      '&:focus': {
+        background: theme.brandSecondary,
+        color: '#fff',
+      },
+    };
   },
 };
