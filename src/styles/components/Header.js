@@ -5,7 +5,7 @@ export default {
     boxShadow: {
       blur: 3,
       color: '#0F1113',
-      spread: 2,
+      y: 3,
     },
     boxSizing: 'border-box',
     display: 'flex',
@@ -19,11 +19,18 @@ export default {
   title: {
     flexGrow: 1,
   },
-  search: {
-    flex: {
-      basis: 320,
-      grow: 0,
-      shrink: 0,
+  search: ({ header: headerTheme }) => ({
+    background: headerTheme.background,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    boxShadow: {
+      blur: 3,
+      color: '#0F1113',
+      y: 3,
     },
-  },
+    position: 'absolute',
+    right: 25,
+    top: '100%',
+    width: 320,
+  }),
 };

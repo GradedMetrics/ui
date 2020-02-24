@@ -11,7 +11,10 @@ import style from 'styles/components/content/TypeAhead';
 const useStyles = createUseStyles(style);
 
 function TypeAhead({
+  containerClassName,
   data = [],
+  dropdownClassName,
+  inputClassName,
 }) {
   const classes = useStyles(useContext(ThemeContext));
 
@@ -259,11 +262,11 @@ function TypeAhead({
 
   return (
     <div
-      className={classes.container}
+      className={`${classes.container}${containerClassName ? ` ${containerClassName}` : ''}`}
       ref={containerElem}
     >
       <input
-        className={`${classes.input}${isDropdownVisible ? ` ${classes.inputDropdownVisible}` : ''}`}
+        className={`${classes.input}${inputClassName ? ` ${inputClassName}` : ''}`}
         placeholder="Search"
         ref={inputElem}
         value={query}
@@ -273,7 +276,7 @@ function TypeAhead({
       />
       {isDropdownVisible ? (
         <ul
-          className={classes.dropdown}
+          className={`${classes.dropdown}${dropdownClassName ? ` ${dropdownClassName}` : ''}`}
           ref={dropdownElem}
           role="listbox"
         >
@@ -331,7 +334,16 @@ function TypeAhead({
   );
 }
 
+TypeAhead.defaultProps = {
+  containerClassName: undefined,
+  dropdownClassName: undefined,
+  inputClassName: undefined,
+};
+
 TypeAhead.propTypes = {
+  /** A custom class name to apply to the container. */
+  containerClassName: PropTypes.string,
+
   /** The data to search through. */
   data: PropTypes.arrayOf(PropTypes.shape({
     /** An array of strings or objects. If objects, there must be a `searchField`. */
@@ -358,6 +370,12 @@ TypeAhead.propTypes = {
     /** The title of the data subset. */
     title: PropTypes.string.isRequired,
   })).isRequired,
+
+  /** A custom class name to apply to the dropdown. */
+  dropdownClassName: PropTypes.string,
+
+  /** A custom class name to apply to the input field. */
+  inputClassName: PropTypes.string,
 };
 
 export default TypeAhead;

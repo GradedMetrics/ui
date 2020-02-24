@@ -24,6 +24,10 @@ export const themes = {
       background: shared.brandPrimary,
     },
 
+    globalSearch: {
+      borderColor: shared.brandPrimary,
+    },
+
     languageTag: {
       background: '#ffd5a2',
       color: '#333',

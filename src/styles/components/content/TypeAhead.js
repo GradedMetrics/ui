@@ -66,6 +66,7 @@ export default {
     const marginOffset = 8;
 
     return {
+      background: 'transparent',
       border: 'none',
       cursor: 'pointer',
       display: 'block',

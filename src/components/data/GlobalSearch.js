@@ -11,7 +11,7 @@ import { ThemeContext } from 'contexts/theme';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
-import style from 'styles/text';
+import style from 'styles/components/data/GlobalSearch';
 
 const useStyles = createUseStyles(style);
 
@@ -229,7 +229,12 @@ function GlobalSearch() {
   }, []);
 
   return (
-    <TypeAhead data={data} />
+    <TypeAhead
+      containerClassName={classes.typeAhead}
+      data={data}
+      dropdownClassName={classes.dropdown}
+      inputClassName={classes.input}
+    />
   );
 }
 
