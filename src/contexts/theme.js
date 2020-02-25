@@ -9,6 +9,8 @@ import React from 'react';
 
 const shared = {
   brandPrimary: '#D97800',
+  brandPrimaryDark: '#B06100',
+  brandPrimaryLight: '#FC9A23',
   brandSecondary: '#009734',
 };
 
@@ -22,16 +24,19 @@ export const themes = {
 
     header: {
       background: shared.brandPrimary,
-    },
-
-    globalSearch: {
-      borderColor: shared.brandPrimary,
+      borderColor: shared.brandPrimaryLight,
     },
 
     languageTag: {
       background: '#ffd5a2',
       color: '#333',
       shadow: shared.brandPrimary,
+    },
+
+    navLink: {
+      background: shared.brandPrimary,
+      borderColor: shared.brandPrimaryDark,
+      shadow: shared.brandPrimaryLight,
     },
 
     pagination: {

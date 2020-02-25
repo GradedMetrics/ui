@@ -6,6 +6,7 @@ export const paths = {
   // Core pages.
   home: '/',
   card: (setId = ':setId', cardId = ':cardId') => `/set/${setId}/card/${cardId}`,
+  cards: '/cards',
   search: (result = ':result') => `/search/${result}`,
   sets: (queryString = '') => `/sets${queryString ? `?${queryString}` : ''}`,
   set: (setId = ':setId', setName = '') => `/set/${setId}${setName ? `/${setName}` : ''}`,

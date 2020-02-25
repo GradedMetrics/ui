@@ -15,7 +15,7 @@ export default {
     background: '#fff',
     boxShadow: {
       blur: 2,
-      color: '#ccc',
+      color: '#000',
       x: 2,
       y: 2,
     },
