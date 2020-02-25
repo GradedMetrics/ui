@@ -44,12 +44,18 @@ function Sorter({
       return;
     }
 
-    const {
-      format = (value) => value,
-    } = fields.find(({ key }) => key === sortBy);
+    let sortedData;
 
-    callback({
-      data: [...data].sort((a, b) => {
+    if (sortBy === 'index') {
+      // If the sort key is `'index'` return the original array.
+      sortedData = sortOrder === 'asc' ? data : [...data].reverse();
+    } else {
+      // Sort the data by the specified key.
+      const {
+        format = (value) => value,
+      } = fields.find(({ key }) => key === sortBy);
+
+      sortedData = [...data].sort((a, b) => {
         const aValue = format(a[sortBy]);
         const bValue = format(b[sortBy]);
 
@@ -59,7 +65,11 @@ function Sorter({
 
         const direction = sortOrder === 'asc' ? -1 : 1;
         return aValue < bValue ? direction : -direction;
-      }),
+      });
+    }
+
+    callback({
+      data: sortedData,
       sortBy,
       sortOrder,
     });

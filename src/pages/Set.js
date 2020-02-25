@@ -233,13 +233,13 @@ function Set() {
             key: 'difficulty',
             text: 'Difficulty',
           }, {
-            isDefault: true,
             key: 'number',
             text: 'Number',
           }, {
-          //   key: 'popularity',
-          //   text: 'Popularity',
-          // }, {
+            isDefault: true,
+            key: 'index',
+            text: 'PSA Default',
+          }, {
             key: 'quality',
             text: 'Quality',
           }, {
@@ -256,7 +256,7 @@ function Set() {
           callback={handlePageChange}
           data={sortedData}
           initialPage={initialPage.current}
-          size={100}
+          size={50}
         />
       ) : undefined}
     </>
