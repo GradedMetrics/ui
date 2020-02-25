@@ -9,7 +9,7 @@ export const paths = {
   cards: '/cards',
   search: (result = ':result') => `/search/${result}`,
   sets: (queryString = '') => `/sets${queryString ? `?${queryString}` : ''}`,
-  set: (setId = ':setId', setName = '') => `/set/${setId}${setName ? `/${setName}` : ''}`,
+  set: (setId = ':setId', setName = '', queryString = '') => `/set/${setId}${setName ? `/${setName}` : ''}${queryString ? `?${queryString}` : ''}`,
 };
 
 export const urlFriendlyName = (name) => encodeURIComponent(name.replace(/ /g, '_'));

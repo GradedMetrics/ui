@@ -5,7 +5,7 @@ import Breadcrumb from 'components/content/Breadcrumb';
 import { ThemeContext } from 'contexts/theme';
 import { formatObject } from 'js/keys';
 import { apiGet } from 'js/api';
-import { paths } from 'js/routes';
+import { paths, urlFriendlyName } from 'js/routes';
 import { formatYear } from 'js/formats';
 
 // Theme.
@@ -77,7 +77,7 @@ function Card() {
             path: paths.sets(),
           }, {
             text: data ? setName : '...',
-            path: paths.set(setId, setName),
+            path: paths.set(setId, urlFriendlyName(setName)),
           }, {
             text: data ? name : '...',
             path: '/card',
