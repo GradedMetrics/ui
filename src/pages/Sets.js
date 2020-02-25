@@ -1,7 +1,7 @@
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
 import Chart from 'components/content/Chart';
 import GenericTable from 'components/content/GenericTable';
@@ -257,6 +257,7 @@ function Sets() {
           }, {
             key: 'year',
             format: formatYear,
+            isDefault: true,
             text: 'Year',
           }]}
         />
