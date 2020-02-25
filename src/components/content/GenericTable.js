@@ -48,7 +48,10 @@ function GenericTable({
 GenericTable.propTypes = {
   tableHeaders: PropTypes.arrayOf(PropTypes.shape({
     sr: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.string,
+    ]),
   })).isRequired,
 
   /** This is the table data which is an array of rows. */

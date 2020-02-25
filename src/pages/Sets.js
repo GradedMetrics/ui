@@ -9,6 +9,7 @@ import LinkButton from 'components/content/LinkButton';
 import Pagination from 'components/content/Pagination';
 import Sorter from 'components/content/Sorter';
 import SetIcon from 'components/content/SetIcon';
+import Tooltip from 'components/content/Tooltip';
 import { ThemeContext } from 'contexts/theme';
 import { formatYear } from 'js/formats';
 import { formatObjectArray } from 'js/keys';
@@ -91,9 +92,52 @@ function Sets() {
           value: 'Name',
         }, {
           sr: 'Score',
-          value: 'Score',
+          value: (
+            <>
+              Score
+              {' '}
+              <Tooltip
+                id="tooltip-sets-score"
+                position="bottom"
+                text={(
+                  <>
+                    <div>
+                      <strong>Score</strong>
+                      {' '}
+                      is a number between 0 (lowest) and 10 (highest) which determines how difficult it is for PSA 10s to be graded.
+                    </div>
+                    <div>
+                      <strong>Quality</strong>
+                      {' '}
+                      is a percentage of cards which have not received a qualifier grade (like MC &mdash; miscut).
+                    </div>
+                    <div>
+                      <strong>Difficulty</strong>
+                      {' '}
+                      is a percentage comparing PSA 8.5 and 9 grades against PSA 10 grades. The closer this is to 100, the scarcer PSA 10 grades are.
+                    </div>
+                    <div>
+                      <strong>Popularity</strong>
+                      {' '}
+                      is the set&#39;s rank position against all other sets based on the total number of cards graded.
+                    </div>
+                  </>
+                )}
+              />
+            </>
+          ),
         }, {
-          value: 'Total cards graded over time',
+          value: (
+            <>
+              Total cards graded over time
+              {' '}
+              <Tooltip
+                id="tooltip-sets-total"
+                position="bottom"
+                text="This shows how many cards have been graded per week. This is updated every Wednesday."
+              />
+            </>
+          ),
         }, {
           sr: 'Actions',
         }]}
