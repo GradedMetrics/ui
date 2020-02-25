@@ -29,6 +29,21 @@ function Sorter({
    * When the selection changes, determine the new data and send it back to the parent.
    */
   useEffect(() => {
+    const fieldMatch = fields.find(({ key }) => key === sortBy);
+
+    if (!fieldMatch) {
+      // If no field is matched by the sort order, revert to using the field with `isDefault`.
+      let defaultField = fields.find(({ isDefault }) => isDefault);
+
+      if (!defaultField) {
+        // If there is no field with `isDefault`, revert to the first field in the array.
+        [defaultField] = fields;
+      }
+
+      setSortBy(defaultField.key);
+      return;
+    }
+
     const {
       format = (value) => value,
     } = fields.find(({ key }) => key === sortBy);
@@ -48,7 +63,7 @@ function Sorter({
       sortBy,
       sortOrder,
     });
-  }, [sortBy, sortOrder]);
+  }, [data, sortBy, sortOrder]);
 
   return (
     <section className={classes.wrapper}>
@@ -113,6 +128,9 @@ Sorter.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.shape({
     /** A custom format function applied before the value is sorted. */
     format: PropTypes.func,
+
+    /** The default key to use if the URL is malformatted (i.e. the sort value is invalid). */
+    isDefault: PropTypes.bool,
 
     /** The field key to sort by. */
     key: PropTypes.string.isRequired,
