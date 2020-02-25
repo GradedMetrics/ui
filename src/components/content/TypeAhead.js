@@ -15,6 +15,7 @@ function TypeAhead({
   data = [],
   dropdownClassName,
   inputClassName,
+  placeholder = 'Search',
 }) {
   const classes = useStyles(useContext(ThemeContext));
 
@@ -267,7 +268,7 @@ function TypeAhead({
     >
       <input
         className={`${classes.input}${inputClassName ? ` ${inputClassName}` : ''}`}
-        placeholder="Search"
+        placeholder={placeholder}
         ref={inputElem}
         value={query}
         onChange={({ currentTarget }) => setQuery(currentTarget.value)}
@@ -338,6 +339,7 @@ TypeAhead.defaultProps = {
   containerClassName: undefined,
   dropdownClassName: undefined,
   inputClassName: undefined,
+  placeholder: 'Search',
 };
 
 TypeAhead.propTypes = {
@@ -376,6 +378,9 @@ TypeAhead.propTypes = {
 
   /** A custom class name to apply to the input field. */
   inputClassName: PropTypes.string,
+
+  /** A placeholder value to show in the input field. */
+  placeholder: PropTypes.string,
 };
 
 export default TypeAhead;

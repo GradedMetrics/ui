@@ -234,6 +234,7 @@ function GlobalSearch() {
       data={data}
       dropdownClassName={classes.dropdown}
       inputClassName={classes.input}
+      placeholder="Search (e.g. Jungle, Mew, or Fire Energy)"
     />
   );
 }
