@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CardImage from 'components/content/CardImage';
 import Breadcrumb from 'components/content/Breadcrumb';
+import CardPopularityChart from 'components/content/CardPopularityChart';
 import { ThemeContext } from 'contexts/theme';
 import { formatObject } from 'js/keys';
 import { apiGet } from 'js/api';
@@ -47,6 +48,7 @@ function Card() {
     score = 0,
     quality,
     variants = [],
+    grades = {},
   } = data;
 
   const {
@@ -60,7 +62,7 @@ function Card() {
   } = set;
 
   const variantList = variants.map((entry) => (
-    <dd key={entry}>
+    <dd className={classes.variants} key={entry}>
       {entry}
     </dd>
   ));
@@ -90,8 +92,8 @@ function Card() {
 
       <section className={classes.split}>
         <div className={classes.cardGroup}>
-          <div>
-            <dl>
+          <div className={classes.infoGroup}>
+            <dl className={classes.infoGroupMetrics}>
               <dt className={classes.setScore}>
                 Set Score
                 <span className={classes.setScoreNumber}>
@@ -106,7 +108,7 @@ function Card() {
               <dd className={classes.setMetrics}>{`Popularity: ${setPopularity}`}</dd>
             </dl>
 
-            <dl>
+            <dl className={classes.infoGroupMetrics}>
               <dt className={classes.setScore}>
               Card Score
                 <span className={classes.setScoreNumber}>
@@ -122,22 +124,34 @@ function Card() {
             </dl>
           </div>
 
-          <div>
-            <dl>
+          <div className={classes.infoGroup}>
+            <dl className={classes.infoGroupMetrics}>
               <dt className={classes.setScore}>
-              Total graded:
+              Total graded
                 <span className={classes.setScoreNumber}>
+                  {' '}
                   {setCards}
                 </span>
               </dt>
             </dl>
 
-            <dl>
-              <dt className={classes.setScore}>Variants:</dt>
-              {variantList}
-            </dl>
+            {!variantList.length ? (
+              <></>
+            ) : (
+              <dl className={classes.infoGroupMetrics}>
+                <dt className={classes.setScore}>Variants</dt>
+                {variantList}
+              </dl>
+            )}
+          </div>
+
+          <div className={classes.infoGroup}>
+            <CardPopularityChart
+              data={grades}
+            />
           </div>
         </div>
+
 
         <div className={classes.cardImage}>
           <CardImage

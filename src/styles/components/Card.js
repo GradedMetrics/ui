@@ -35,4 +35,15 @@ export default {
     flexGrow: 1,
     marginRight: 50,
   },
+  infoGroup: {
+    display: 'flex',
+  },
+  infoGroupMetrics: {
+    width: '50%',
+  },
+  variants: {
+    fontFamily: '\'Barlow Condensed\', sans-serif',
+    fontSize: 16,
+    margin: 0,
+  },
 };
