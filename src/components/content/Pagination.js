@@ -22,6 +22,18 @@ function Pagination({
   const [page, setPage] = useState(Number(initialPage));
   const isFirstLoad = useRef(true);
 
+  /**
+   * This extracts a portion of the data and applies an `index` to the result.
+   * @param {Number} start - The position in the array to start at.
+   * @param {Number} end - The position in the array to stop at.
+   */
+  function getData(start = 0) {
+    return data.slice(start, start + size).map((entry, index) => ({
+      ...entry,
+      index: index + start,
+    }));
+  }
+
   /** If the data changes after the first load, reset the page to 1.  */
   useEffect(() => {
     if (!data.length) {
@@ -36,7 +48,7 @@ function Pagination({
     }
 
     callback({
-      data: data.slice(0, size),
+      data: getData(),
       page,
     });
     setPage(1);
@@ -51,7 +63,6 @@ function Pagination({
     }
 
     const start = (page - 1) * size;
-    const end = start + size;
 
     if (start > data.length) {
       // If the page is greater than the number of pages available, reset to page 1.
@@ -63,7 +74,7 @@ function Pagination({
     window.scroll(0, 0);
 
     callback({
-      data: data.slice(start, end),
+      data: getData(start),
       page,
     });
   }, [page]);

@@ -31,7 +31,7 @@ function Navigation() {
             <NavLink
               className={classes.link}
               activeClassName={classes.linkActive}
-              to={paths.cards}
+              to={paths.top100Cards()}
             >
               Top 100 Cards
             </NavLink>

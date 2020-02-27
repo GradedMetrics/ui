@@ -2,11 +2,12 @@
  * This maps routes to a given page component for use within the `<Container />` component.
  * @module [{js/routes}pages]
  */
+import Card from 'pages/Card';
 import Error404 from 'pages/Error404';
 import Home from 'pages/Home';
 import Sets from 'pages/Sets';
 import Set from 'pages/Set';
-import Card from 'pages/Card';
+import Top100Cards from 'pages/Top100Cards';
 
 import { paths } from '../routes';
 
@@ -31,6 +32,10 @@ const routes = {
 
   [paths.set()]: {
     component: Set,
+  },
+
+  [paths.top100Cards()]: {
+    component: Top100Cards,
   },
 };
 
