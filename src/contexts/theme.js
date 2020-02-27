@@ -22,6 +22,11 @@ export const themes = {
     key: 'dark',
     ...shared,
 
+    footer: {
+      borderColor: '#232323',
+      color: '#C1BEBE',
+    },
+
     header: {
       background: shared.brandPrimary,
       borderColor: shared.brandPrimaryLight,

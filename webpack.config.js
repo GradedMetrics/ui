@@ -50,7 +50,7 @@ module.exports = (env, argv) => ({
             options: {
               name: '[hash].[ext]',
               publicPath: argv.mode === 'development'
-                ? '/compiled/'
+                ? '/'
                 : 'https://gradedmetrics.com/',
             },
           },

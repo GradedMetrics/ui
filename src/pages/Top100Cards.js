@@ -216,19 +216,22 @@ function Set() {
         This is a list of the top 100 cards with the highest <em>score</em>.
       </p>
       <p>
-        Score is a value between 0 and 10 which is calculated from the card&#39;s difficulty (
+        Score is a value between 0 and 10 which is calculated from the card&#39;s difficulty
+        {' '}
         <Tooltip
           id="tooltip-difficulty"
           position="bottom"
           text={help.difficulty}
         />
-        ) and volatility (
+        {' '}
+        and volatility
+        {' '}
         <Tooltip
           id="tooltip-volatility"
           position="bottom"
           text={help.volatility}
         />
-        ).
+        .
       </p>
       <p>
         The closer the score is to 10, the harder it is for a PSA 10 grade to be achieved,

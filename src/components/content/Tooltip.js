@@ -58,7 +58,7 @@ function Tooltip({
       </span>
       {children || (
         <span className={classes.helper}>
-          What is this?
+          (What is this?)
         </span>
       )}
     </span>
