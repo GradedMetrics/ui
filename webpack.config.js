@@ -1,4 +1,5 @@
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => ({
   devServer: {
@@ -62,7 +63,6 @@ module.exports = (env, argv) => ({
   },
   output: {
     filename: '[name].min.js',
-    path: `${__dirname}/dist/compiled`,
     chunkFilename: '[name].min.js',
     publicPath: '/',
   },
@@ -80,6 +80,12 @@ module.exports = (env, argv) => ({
     runtimeChunk: true,
   },
   plugins: [
-    new FaviconsWebpackPlugin('./src/assets/images/favicon.png')
-  ]
+    new HtmlWebpackPlugin({
+      hash: true,
+      title: 'Graded Metrics',
+      filename: 'index.html',
+      template: './src/index.html',
+    }),
+    new FaviconsWebpackPlugin('./src/assets/images/logo.png'),
+  ],
 });

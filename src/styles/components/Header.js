@@ -1,10 +1,14 @@
+import LogoImage from 'assets/images/logo.png';
+
 export default {
   header: ({ header: headerTheme }) => ({
     alignItems: 'center',
-    backgroundAttachment: 'fixed',
-    backgroundColor: headerTheme.background,
-    backgroundImage: 'url("https://i.gradedmetrics.com/background.png")',
-    backgroundSize: 'cover',
+    background: {
+      attachment: 'fixed',
+      color: headerTheme.background,
+      image: 'url("https://i.gradedmetrics.com/background.png")',
+      size: 'cover',
+    },
     borderBottom: {
       color: headerTheme.borderColor,
       style: 'solid',
@@ -25,7 +29,15 @@ export default {
     zIndex: 3,
   }),
   title: {
+    background: {
+      color: 'transparent',
+      image: `url(${LogoImage})`,
+      position: [0, '50%'],
+      repeat: 'no-repeat',
+      size: 42,
+    },
     flexGrow: 1,
+    padding: [0, 0, 0, 67],
   },
   search: {
     position: 'absolute',
@@ -59,10 +71,12 @@ export default {
   },
   link: ({ navLink: navLinkTheme }) => ({
     alignItems: 'center',
-    backgroundAttachment: 'fixed',
-    backgroundColor: navLinkTheme.background,
-    backgroundImage: 'url("https://i.gradedmetrics.com/background.png")',
-    backgroundSize: 'cover',
+    background: {
+      attachment: 'fixed',
+      color: navLinkTheme.background,
+      image: 'url("https://i.gradedmetrics.com/background.png")',
+      size: 'cover',
+    },
     border: {
       color: 'transparent',
       style: 'solid',
