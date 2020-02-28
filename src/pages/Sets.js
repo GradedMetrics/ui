@@ -38,7 +38,7 @@ function Sets() {
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     initialPage.current = query.get('page') || 1;
-    initialSortBy.current = query.get('sort') || 'year';
+    initialSortBy.current = query.get('sort') || 'popularity';
     initialSortOrder.current = query.get('order') || 'asc';
 
     (async () => {
@@ -89,6 +89,9 @@ function Sets() {
     content = (
       <GenericTable
         tableHeaders={[{
+          colSpan: 2,
+          value: 'Popularity',
+        }, {
           sr: 'Name',
           value: 'Name',
         }, {
@@ -168,6 +171,14 @@ function Sets() {
         }) => ({
           key: `set-${id}`,
           value: [{
+            key: `set-${id}-popularity-rank-change`,
+            value: <RankChange value={popularityChange} />,
+          }, {
+            key: `set-${id}-popularity-rank`,
+            value: (
+              <span>{popularity}</span>
+            ),
+          }, {
             key: `set-${id}-name`,
             value: (
               <>
@@ -198,22 +209,6 @@ function Sets() {
                 <span className={classes.metrics}>{`Quality: ${quality}.`}</span>
                 {' '}
                 <span className={classes.metrics}>{`Difficulty: ${difficulty}.`}</span>
-                {' '}
-                <span className={classes.metrics}>
-                  Popularity:
-                  {' '}
-                  {popularity}
-                  {popularityChange !== 0 ? (
-                    <>
-                      {' '}
-                      <RankChange
-                        inline
-                        value={popularityChange}
-                      />
-                    </>
-                  ) : undefined}
-                  .
-                </span>
               </>
             ),
           }, {
