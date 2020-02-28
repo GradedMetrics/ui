@@ -12,8 +12,9 @@ import RankChange from 'components/content/RankChange';
 import Sorter from 'components/content/Sorter';
 import Tooltip from 'components/content/Tooltip';
 import { ThemeContext } from 'contexts/theme';
-import { formatObjectArray } from 'js/keys';
+import { formatObject, formatObjectArray } from 'js/keys';
 import { apiGet } from 'js/api';
+import { formatYear } from 'js/formats';
 import { pathNames, paths } from 'js/routes';
 import { help } from 'js/text';
 
@@ -45,8 +46,12 @@ function Top100CardsByFewest10s() {
 
     (async () => {
       const keys = await apiGet('keys');
+      const sets = await apiGet('sets');
       const cards = await apiGet('cards-by-fewest-10s');
-      setData(formatObjectArray(keys, cards));
+      setData(formatObjectArray(keys, cards).map(card => ({
+        ...card,
+        set: formatObject(keys, sets[card.set]),
+      })));
     })();
   }, []);
 
@@ -163,7 +168,7 @@ function Top100CardsByFewest10s() {
                       {pathNames.set(setName, setVariant)}
                     </Link>
                     <span className={classes.metrics}>
-                      {setYear}
+                      {formatYear(setYear)}
                     </span>
                   </span>
                 </>
