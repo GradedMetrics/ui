@@ -21,7 +21,7 @@ export default {
     },
     boxSizing: 'border-box',
     color: '#333',
-    fontFamily: '\'Barlow Condensed\', sans-serif',
+    fontFamily: '\'Oxygen\', sans-serif',
     listStyle: 'none',
     margin: 0,
     maxHeight: '50vh',

@@ -12,7 +12,7 @@ export default {
     marginTop: 0,
   },
   setScore: {
-    fontFamily: '\'Barlow Condensed\', sans-serif',
+    fontFamily: '\'Oxygen\', sans-serif',
     fontSize: 24,
   },
   setScoreNumber: {
@@ -21,7 +21,7 @@ export default {
   },
   setMetrics: {
     display: 'inline-block',
-    fontFamily: '\'Barlow Condensed\', sans-serif',
+    fontFamily: '\'Oxygen\', sans-serif',
     fontSize: 16,
     margin: 0,
   },

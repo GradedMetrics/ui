@@ -1,11 +1,11 @@
 export default {
   breadcrumb: {
     display: 'inline-block',
-    fontFamily: '\'Barlow Condensed\', sans-serif',
+    fontFamily: '\'Oxygen\', sans-serif',
     fontSize: '14px',
   },
   wrapper: {
-    margin: [0, 0, 20],
+    margin: [0, 0, 5],
     padding: 0,
   },
   separator: {

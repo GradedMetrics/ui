@@ -5,7 +5,7 @@ export default {
   },
   header: {
     borderBottom: '1px solid #232323',
-    fontFamily: '\'Barlow Condensed\', sans-serif',
+    fontFamily: '\'Oxygen\', sans-serif',
     fontSize: '20px',
     textAlign: 'left',
   },

@@ -1,7 +1,7 @@
 export default {
   bannerTitle: {
     color: '#D97800',
-    fontFamily: '\'Barlow Condensed\', sans-serif',
+    fontFamily: '\'Oxygen\', sans-serif',
     fontSize: '34px',
     padding: '10px 25px',
   },
