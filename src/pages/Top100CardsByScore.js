@@ -48,7 +48,7 @@ function Top100CardsByScore() {
       const keys = await apiGet('keys');
       const sets = await apiGet('sets');
       const cards = await apiGet('cards-by-score');
-      setData(formatObjectArray(keys, cards).map(card => ({
+      setData(formatObjectArray(keys, cards).map((card) => ({
         ...card,
         set: formatObject(keys, sets[card.set]),
       })));
@@ -120,7 +120,7 @@ function Top100CardsByScore() {
           rank = 0,
           rankChange = 0,
           score = 0,
-          set = {},
+          set: cardSet = {},
           variants,
           volatility,
         }) => {
@@ -129,18 +129,18 @@ function Top100CardsByScore() {
             name: setName,
             variant: setVariant,
             year: setYear,
-          } = set;
+          } = cardSet;
 
           return {
             key: `set-${id}`,
             value: [{
               key: `card-${id}-rank-change`,
-              value: <RankChange value={rankChange} />
+              value: <RankChange value={rankChange} />,
             }, {
               key: `card-${id}-rank`,
               value: (
                 <span>{rank}</span>
-              )
+              ),
             }, {
               key: `card-${id}-name`,
               value: (
@@ -173,7 +173,7 @@ function Top100CardsByScore() {
                     </span>
                   </span>
                 </>
-              )
+              ),
             }, {
               key: `set-${id}-score`,
               value: (
@@ -209,7 +209,7 @@ function Top100CardsByScore() {
           }, {
             text: pathNames.top100CardsByScore,
             path: paths.top100CardsByScore(),
-          }
+          },
         ]}
       />
 
@@ -218,7 +218,10 @@ function Top100CardsByScore() {
       </h2>
 
       <p>
-        This is a list of the top 100 cards with the highest <em>score</em>.
+        This is a list of the top 100 cards with the highest
+        {' '}
+        <em>score</em>
+.
       </p>
       <p>
         Score is a value between 0 and 10 which is calculated from the card&#39;s difficulty
