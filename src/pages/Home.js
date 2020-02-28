@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from 'contexts/theme';
 import Tooltip from 'components/content/Tooltip';
-import { paths } from 'js/routes';
+import { pathNames, paths } from 'js/routes';
 import { help } from 'js/text';
 
 // Theme.
@@ -118,7 +118,7 @@ function Home() {
             Provides a popularity ranking for each set (see the
             {' '}
             <Link to={paths.sets()}>
-              Sets
+              {pathNames.sets}
             </Link>
             {' '}
             page);
@@ -134,8 +134,8 @@ function Home() {
             {' '}
             (see the
             {' '}
-            <Link to={paths.top100Cards()}>
-              Top 100 Cards
+            <Link to={paths.top100CardsByScore()}>
+              {pathNames.top100CardsByScore}
             </Link>
             {' '}
             page);

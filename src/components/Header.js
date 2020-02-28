@@ -31,9 +31,18 @@ function Navigation() {
             <NavLink
               className={classes.link}
               activeClassName={classes.linkActive}
-              to={paths.top100Cards()}
+              to={paths.top100CardsByScore()}
             >
-              Top 100 Cards
+              Top 100 Cards by Score
+            </NavLink>
+          </li>
+          <li className={classes.listItem}>
+            <NavLink
+              className={classes.link}
+              activeClassName={classes.linkActive}
+              to={paths.top100CardsByFewest10s()}
+            >
+              Top 100 Cards by Fewest PSA 10 Grades
             </NavLink>
           </li>
         </ul>

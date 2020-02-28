@@ -5,7 +5,7 @@ import Breadcrumb from 'components/content/Breadcrumb';
 import { ThemeContext } from 'contexts/theme';
 import { formatObject } from 'js/keys';
 import { apiGet } from 'js/api';
-import { paths, urlFriendlyName } from 'js/routes';
+import { pathNames, paths, urlFriendlyName } from 'js/routes';
 import { formatYear } from 'js/formats';
 
 // Theme.
@@ -57,6 +57,7 @@ function Card() {
     quality: setQuality,
     difficulty: setDifficulty,
     popularity: setPopularity,
+    variant: setVariant,
   } = set;
 
   const variantList = variants.map((entry) => (
@@ -70,16 +71,16 @@ function Card() {
       <Breadcrumb
         links={[
           {
-            text: 'Home',
+            text: pathNames.home,
             path: paths.home,
           }, {
-            text: 'Sets',
+            text: pathNames.sets,
             path: paths.sets(),
           }, {
-            text: data ? setName : '...',
+            text: data ? pathNames.set(setName, setVariant) : '...',
             path: paths.set(setId, urlFriendlyName(setName)),
           }, {
-            text: data ? name : '...',
+            text: data ? pathNames.card(name) : '...',
             path: '/card',
           },
         ]}

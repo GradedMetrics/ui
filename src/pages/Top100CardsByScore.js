@@ -14,7 +14,7 @@ import Tooltip from 'components/content/Tooltip';
 import { ThemeContext } from 'contexts/theme';
 import { formatObjectArray } from 'js/keys';
 import { apiGet } from 'js/api';
-import { paths } from 'js/routes';
+import { pathNames, paths } from 'js/routes';
 import { help } from 'js/text';
 
 // Theme.
@@ -23,7 +23,7 @@ import style from 'styles/components/Set';
 
 const useStyles = createUseStyles(style);
 
-function Set() {
+function Top100CardsByScore() {
   const classes = useStyles(useContext(ThemeContext));
   const history = useHistory();
   const location = useLocation();
@@ -64,7 +64,7 @@ function Set() {
   }) {
     const q = new URLSearchParams(location.search);
     q.set('page', page);
-    history.push(paths.top100Cards(q.toString()));
+    history.push(paths.top100CardsByScore(q.toString()));
     setPaginatedData(paginated);
   }
 
@@ -81,7 +81,7 @@ function Set() {
     q.set('page', 1);
     q.set('sort', sortBy);
     q.set('order', sortOrder);
-    history.push(paths.top100Cards(q.toString()));
+    history.push(paths.top100CardsByScore(q.toString()));
     setSortedData(sorted);
   }
 
@@ -144,7 +144,7 @@ function Set() {
                     <Link
                       to={paths.card(setId, id)}
                     >
-                      {name}
+                      {pathNames.card(name)}
                     </Link>
                     {number ? ` #${number}` : undefined}
                   </span>
@@ -160,7 +160,7 @@ function Set() {
                 <>
                   <span className={classes.name}>
                     <Link to={paths.set(setId, setName)}>
-                      {setName}
+                      {pathNames.set(setName, setVariant)}
                     </Link>
                     <span className={classes.metrics}>
                       {setYear}
@@ -199,17 +199,17 @@ function Set() {
       <Breadcrumb
         links={[
           {
-            text: 'Home',
+            text: pathNames.home,
             path: paths.home,
           }, {
-            text: 'Top 100 Cards',
-            path: paths.top100Cards(),
+            text: pathNames.top100CardsByScore,
+            path: paths.top100CardsByScore(),
           }
         ]}
       />
 
       <h2 className={classes.setName}>
-        Top 100 Cards
+        Top 100 Cards by Score
       </h2>
 
       <p>
@@ -276,4 +276,4 @@ function Set() {
   );
 }
 
-export default Set;
+export default Top100CardsByScore;

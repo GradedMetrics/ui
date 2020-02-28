@@ -15,7 +15,7 @@ import { ThemeContext } from 'contexts/theme';
 import { formatYear } from 'js/formats';
 import { formatObjectArray } from 'js/keys';
 import { apiGet } from 'js/api';
-import { paths } from 'js/routes';
+import { pathNames, paths } from 'js/routes';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
@@ -182,8 +182,7 @@ function Sets() {
                   <Link
                     to={paths.set(id, name)}
                   >
-                    {name}
-                    {variant ? ` (${variant})` : ''}
+                    {pathNames.set(name, variant)}
                   </Link>
                 </span>
                 <span className={classes.yearCards}>
@@ -246,10 +245,10 @@ function Sets() {
       <Breadcrumb
         links={[
           {
-            text: 'Home',
+            text: pathNames.home,
             path: paths.home,
           }, {
-            text: 'Sets',
+            text: pathNames.sets,
             path: paths.sets(),
           },
         ]}

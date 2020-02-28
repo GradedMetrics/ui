@@ -13,7 +13,7 @@ import Sorter from 'components/content/Sorter';
 import { ThemeContext } from 'contexts/theme';
 import { formatObject } from 'js/keys';
 import { apiGet } from 'js/api';
-import { paths, urlFriendlyName } from 'js/routes';
+import { pathNames, paths, urlFriendlyName } from 'js/routes';
 import { formatYear } from 'js/formats';
 
 // Theme.
@@ -66,6 +66,7 @@ function Set() {
     popularity: setPopularity,
     quality: setQuality,
     score: setScore = 0,
+    variant: setVariant,
   } = data;
 
   /**
@@ -146,7 +147,7 @@ function Set() {
                   <Link
                     to={paths.card(setId, id)}
                   >
-                    {name}
+                    {pathNames.card(name)}
                   </Link>
                 </span>
                 {variants ? <span className={classes.metrics}>{variants.join(', ')}</span> : ''}
@@ -193,20 +194,36 @@ function Set() {
       <Breadcrumb
         links={[
           {
-            text: 'Home',
+            text: pathNames.home,
             path: paths.home,
           }, {
-            text: 'Sets',
+            text: pathNames.sets,
             path: paths.sets(),
           }, {
-            text: data ? setName : '...',
+            text: data ? pathNames.set(setName, setVariant) : '...',
             path: '/set',
           },
         ]}
       />
 
       <h2 className={classes.setName}>{setName}</h2>
-      <p className={classes.setInfo}>{`${formatYear(year)} · ${cards.length} cards`}</p>
+      <p className={classes.setInfo}>
+        {formatYear(year)}
+        {setVariant ? (
+          <>
+            {' '}
+            ·
+            {' '}
+            {setVariant}
+          </>
+        ) : undefined}
+        {' '}
+        ·
+        {' '}
+        {cards.length}
+        {' '}
+        cards
+      </p>
 
       <dl>
         <dt className={classes.setScore}>

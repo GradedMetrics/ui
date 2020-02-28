@@ -7,7 +7,8 @@ import Error404 from 'pages/Error404';
 import Home from 'pages/Home';
 import Sets from 'pages/Sets';
 import Set from 'pages/Set';
-import Top100Cards from 'pages/Top100Cards';
+import Top100CardsByFewest10s from 'pages/Top100CardsByFewest10s';
+import Top100CardsByScore from 'pages/Top100CardsByScore';
 
 import { paths } from '../routes';
 
@@ -34,8 +35,12 @@ const routes = {
     component: Set,
   },
 
-  [paths.top100Cards()]: {
-    component: Top100Cards,
+  [paths.top100CardsByFewest10s()]: {
+    component: Top100CardsByFewest10s,
+  },
+
+  [paths.top100CardsByScore()]: {
+    component: Top100CardsByScore,
   },
 };
 

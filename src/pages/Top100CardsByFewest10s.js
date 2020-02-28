@@ -144,7 +144,7 @@ function Top100CardsByFewest10s() {
                     <Link
                       to={paths.card(setId, id)}
                     >
-                      {name}
+                      {pathNames.card(name)}
                     </Link>
                     {number ? ` #${number}` : undefined}
                   </span>
@@ -160,11 +160,10 @@ function Top100CardsByFewest10s() {
                 <>
                   <span className={classes.name}>
                     <Link to={paths.set(setId, setName)}>
-                      {setName}
+                      {pathNames.set(setName, setVariant)}
                     </Link>
                     <span className={classes.metrics}>
                       {setYear}
-                      {setVariant ? ` · ${setVariant}` : undefined}
                     </span>
                   </span>
                 </>
@@ -199,7 +198,7 @@ function Top100CardsByFewest10s() {
       <Breadcrumb
         links={[
           {
-            text: 'Home',
+            text: pathNames.home,
             path: paths.home,
           }, {
             text: pathNames.top100CardsByFewest10s,
