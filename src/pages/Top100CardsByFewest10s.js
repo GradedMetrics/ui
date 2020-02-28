@@ -10,13 +10,11 @@ import GenericTable from 'components/content/GenericTable';
 import Pagination from 'components/content/Pagination';
 import RankChange from 'components/content/RankChange';
 import Sorter from 'components/content/Sorter';
-import Tooltip from 'components/content/Tooltip';
 import { ThemeContext } from 'contexts/theme';
 import { formatObject, formatObjectArray } from 'js/keys';
 import { apiGet } from 'js/api';
 import { formatYear } from 'js/formats';
 import { pathNames, paths } from 'js/routes';
-import { help } from 'js/text';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
@@ -48,7 +46,7 @@ function Top100CardsByFewest10s() {
       const keys = await apiGet('keys');
       const sets = await apiGet('sets');
       const cards = await apiGet('cards-by-fewest-10s');
-      setData(formatObjectArray(keys, cards).map(card => ({
+      setData(formatObjectArray(keys, cards).map((card) => ({
         ...card,
         set: formatObject(keys, sets[card.set]),
       })));
@@ -120,7 +118,7 @@ function Top100CardsByFewest10s() {
           rank = 0,
           rankChange = 0,
           score = 0,
-          set = {},
+          set: cardSet = {},
           totalGrades = 0,
           variants,
         }) => {
@@ -129,18 +127,18 @@ function Top100CardsByFewest10s() {
             name: setName,
             variant: setVariant,
             year: setYear,
-          } = set;
+          } = cardSet;
 
           return {
             key: `set-${id}`,
             value: [{
               key: `card-${id}-rank-change`,
-              value: <RankChange value={rankChange} />
+              value: <RankChange value={rankChange} />,
             }, {
               key: `card-${id}-rank`,
               value: (
                 <span>{rank}</span>
-              )
+              ),
             }, {
               key: `card-${id}-name`,
               value: (
@@ -172,7 +170,7 @@ function Top100CardsByFewest10s() {
                     </span>
                   </span>
                 </>
-              )
+              ),
             }, {
               key: `set-${id}-score`,
               value: (
@@ -208,7 +206,7 @@ function Top100CardsByFewest10s() {
           }, {
             text: pathNames.top100CardsByFewest10s,
             path: paths.top100CardsByFewest10s(),
-          }
+          },
         ]}
       />
 
