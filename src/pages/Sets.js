@@ -7,6 +7,7 @@ import Chart from 'components/content/Chart';
 import GenericTable from 'components/content/GenericTable';
 import LinkButton from 'components/content/LinkButton';
 import Pagination from 'components/content/Pagination';
+import RankChange from 'components/content/RankChange';
 import Sorter from 'components/content/Sorter';
 import SetIcon from 'components/content/SetIcon';
 import Tooltip from 'components/content/Tooltip';
@@ -157,6 +158,7 @@ function Sets() {
           id,
           name,
           popularity = 0,
+          popularityChange = 0,
           quality,
           score = 0,
           variant,
@@ -198,7 +200,21 @@ function Sets() {
                 {' '}
                 <span className={classes.metrics}>{`Difficulty: ${difficulty}.`}</span>
                 {' '}
-                <span className={classes.metrics}>{`Popularity: ${popularity}.`}</span>
+                <span className={classes.metrics}>
+                  Popularity:
+                  {' '}
+                  {popularity}
+                  {popularityChange !== 0 ? (
+                    <>
+                      {' '}
+                      <RankChange
+                        inline
+                        value={popularityChange}
+                      />
+                    </>
+                  ) : undefined}
+                  .
+                </span>
               </>
             ),
           }, {

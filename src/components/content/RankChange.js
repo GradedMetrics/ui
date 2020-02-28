@@ -9,6 +9,7 @@ import style from 'styles/components/content/RankChange';
 const useStyles = createUseStyles(style);
 
 function RankChange({
+  inline = false,
   value = 0,
 }) {
   const classes = useStyles(useContext(ThemeContext));
@@ -35,6 +36,18 @@ function RankChange({
     symbolPosition = 'bottom';
   }
 
+  if (inline) {
+    return (
+      <span className={`${classes.inlineWrapper}${className ? ` ${className}` : ''}`}>
+        <span className={classes.inlineChange}>
+          (
+          {content}
+          )
+        </span>
+      </span>
+    );
+  }
+
   return (
     <span className={`${classes.wrapper}${className ? ` ${className}` : ''}`}>
       {symbolPosition === 'top' ? (
@@ -42,7 +55,7 @@ function RankChange({
           {symbol}
         </span>
       ) : undefined}
-      <span className={classes.change}>
+      <span className={inline ? classes.inlineChange : classes.change}>
         {content}
       </span>
       {symbolPosition === 'bottom' ? (
@@ -54,7 +67,14 @@ function RankChange({
   );
 }
 
+RankChange.defaultProps = {
+  inline: false,
+};
+
 RankChange.propTypes = {
+  /** Should the component be rendered inline? */
+  inline: PropTypes.bool,
+
   /** The rank change value. */
   value: PropTypes.number.isRequired,
 };
