@@ -6,7 +6,7 @@ export default {
   header: {
     borderBottom: '1px solid #232323',
     fontFamily: '\'Oxygen\', sans-serif',
-    fontSize: '20px',
+    fontSize: 20,
     textAlign: 'left',
   },
   rowSeparator: {
@@ -18,19 +18,20 @@ export default {
   },
   name: {
     display: 'block',
-    fontSize: '16px',
+    fontSize: 16,
   },
   yearCards: {
     color: '#C1BEBE',
-    fontSize: '12px',
+    fontSize: 12,
   },
   score: {
     display: 'block',
     fontFamily: '\'Roboto Mono\', monospace',
+    fontSize: 16,
   },
   metrics: {
     color: '#C1BEBE',
     display: 'inline-block',
-    fontSize: '13px',
+    fontSize: 13,
   },
 };

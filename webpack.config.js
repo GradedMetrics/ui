@@ -1,3 +1,5 @@
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+
 module.exports = (env, argv) => ({
   devServer: {
     contentBase: './dist',
@@ -77,4 +79,7 @@ module.exports = (env, argv) => ({
     },
     runtimeChunk: true,
   },
+  plugins: [
+    new FaviconsWebpackPlugin('./src/assets/images/favicon.png')
+  ]
 });
