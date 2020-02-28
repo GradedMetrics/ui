@@ -24,6 +24,12 @@ export default {
   symbol: {
     display: 'block',
   },
+  symbolNegative: {
+    fill: 'tomato',
+  },
+  symbolPositive: {
+    fill: 'green',
+  },
   change: {
     display: 'block',
 

@@ -1,5 +1,10 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowAltDown,
+  faArrowAltUp,
+} from '@fortawesome/pro-solid-svg-icons';
 import { ThemeContext } from 'contexts/theme';
 
 // Theme.
@@ -26,13 +31,23 @@ function RankChange({
     // Rank has gone up.
     className = classes.positive;
     content = `+${-value}`;
-    symbol = '▲';
+    symbol = (
+      <FontAwesomeIcon
+        className={classes.symbolPositive}
+        icon={faArrowAltUp}
+      />
+    );
     symbolPosition = 'top';
   } else {
     // Rank has gone down.
     className = classes.negative;
     content = `${-value}`;
-    symbol = '▼';
+    symbol = (
+      <FontAwesomeIcon
+        className={classes.symbolNegative}
+        icon={faArrowAltDown}
+      />
+    );
     symbolPosition = 'bottom';
   }
 

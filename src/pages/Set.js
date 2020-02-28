@@ -206,17 +206,11 @@ function Set() {
         ]}
       />
 
-      <h2 className={classes.setName}>{setName}</h2>
+      <h2 className={classes.setName}>
+        {pathNames.set(setName, setVariant)}
+      </h2>
       <p className={classes.setInfo}>
         {formatYear(year)}
-        {setVariant ? (
-          <>
-            {' '}
-            ·
-            {' '}
-            {setVariant}
-          </>
-        ) : undefined}
         {' '}
         ·
         {' '}
