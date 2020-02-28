@@ -100,9 +100,8 @@ function Top100CardsByScore() {
     content = (
       <GenericTable
         tableHeaders={[{
-          sr: 'Weekly rank position',
-        }, {
-          sr: 'Weekly rank position change',
+          colSpan: 2,
+          value: 'Weekly rank',
         }, {
           value: 'Entry',
         }, {

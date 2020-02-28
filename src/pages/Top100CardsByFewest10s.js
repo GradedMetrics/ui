@@ -98,9 +98,8 @@ function Top100CardsByFewest10s() {
     content = (
       <GenericTable
         tableHeaders={[{
-          sr: 'Weekly rank position',
-        }, {
-          sr: 'Weekly rank position change',
+          colSpan: 2,
+          value: 'Weekly rank',
         }, {
           value: 'Entry',
         }, {

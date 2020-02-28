@@ -14,10 +14,16 @@ function GenericTable({
   const classes = useStyles(useContext(ThemeContext));
 
   const headers = tableHeaders.map(({
+    colSpan = 1,
     sr,
     value = '',
   }) => (
-    <th key={sr || value} aria-label={sr || value} className={classes.cells}>
+    <th
+      key={sr || value}
+      aria-label={sr || value}
+      className={classes.cells}
+      colSpan={colSpan}
+    >
       <span aria-hidden="true">{value}</span>
     </th>
   ));
