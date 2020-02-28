@@ -22,6 +22,10 @@ export const themes = {
     key: 'dark',
     ...shared,
 
+    chartLabel: {
+      color: '#C1BEBE',
+    },
+
     footer: {
       borderColor: '#232323',
       color: '#C1BEBE',
