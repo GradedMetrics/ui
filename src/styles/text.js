@@ -11,6 +11,14 @@ const tagStyle = (theme) => ({
   lineHeight: '15px',
   margin: [0, 4],
   padding: [0, 4],
+
+  '&:first-child': {
+    marginLeft: 0,
+  },
+
+  '&:last-child': {
+    marginRight: 0,
+  },
 });
 
 export default {

@@ -125,6 +125,7 @@ function Top100CardsByScore() {
         }) => {
           const {
             id: setId,
+            language: setLanguage,
             name: setName,
             variant: setVariant,
             year: setYear,
@@ -152,10 +153,17 @@ function Top100CardsByScore() {
                     </Link>
                     {number ? ` #${number}` : undefined}
                   </span>
-                  {(variants
-                    ? <span className={classes.metrics}>{variants.join(', ')}</span>
-                    : undefined
-                  )}
+                  <span className={classes.metrics}>
+                    {setLanguage ? (
+                      <>
+                        <span className={classes.languageTag}>
+                          {setLanguage}
+                        </span>
+                        {' · '}
+                      </>
+                    ) : undefined}
+                    {variants ? variants.join(', ') : undefined}
+                  </span>
                 </>
               ),
             }, {
@@ -166,10 +174,10 @@ function Top100CardsByScore() {
                     <Link to={paths.set(setId, setName)}>
                       {pathNames.set(setName, setVariant)}
                     </Link>
-                    <span className={classes.metrics}>
-                      {formatYear(setYear)}
-                      {setVariant ? ` · ${setVariant}` : undefined}
-                    </span>
+                  </span>
+                  <span className={classes.metrics}>
+                    {formatYear(setYear)}
+                    {setVariant ? ` · ${setVariant}` : undefined}
                   </span>
                 </>
               ),
