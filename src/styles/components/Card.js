@@ -1,4 +1,7 @@
+import text from 'styles/text';
+
 export default {
+  ...text,
   name: {
     margin: 0,
     paddingBottom: 0,

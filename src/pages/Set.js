@@ -14,7 +14,7 @@ import { ThemeContext } from 'contexts/theme';
 import { formatObject } from 'js/keys';
 import { apiGet } from 'js/api';
 import { pathNames, paths, urlFriendlyName } from 'js/routes';
-import { formatYear } from 'js/formats';
+import { formatNumber, formatYear } from 'js/formats';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
@@ -244,12 +244,16 @@ function Set() {
             key: 'difficulty',
             text: 'Difficulty',
           }, {
+            format: formatNumber,
             key: 'number',
             text: 'Number',
           }, {
             isDefault: true,
             key: 'index',
             text: 'PSA Default',
+          }, {
+            key: 'popularity',
+            text: 'Popularity',
           }, {
             key: 'quality',
             text: 'Quality',

@@ -52,14 +52,15 @@ function Card() {
   } = data;
 
   const {
-    name: setName,
     cards: setCards,
-    year: setYear,
-    score: setScore = 0,
-    quality: setQuality,
     difficulty: setDifficulty,
+    language: setLanguage,
+    name: setName,
     popularity: setPopularity,
+    quality: setQuality,
+    score: setScore = 0,
     variant: setVariant,
+    year: setYear,
   } = set;
 
   const variantList = variants.map((entry) => (
@@ -89,7 +90,17 @@ function Card() {
       />
 
       <h2 className={classes.name}>{name}</h2>
-      <p className={classes.setInfo}>{`${setName} · ${formatYear(setYear)}`}</p>
+      <p className={classes.setInfo}>
+        {setLanguage ? (
+          <>
+            <span className={classes.languageTag}>
+              {setLanguage}
+            </span>
+            {' · '}
+          </>
+        ) : undefined}
+        {`${setName} · ${formatYear(setYear)}`}
+      </p>
 
       <section className={classes.split}>
         <div className={classes.cardGroup}>

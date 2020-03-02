@@ -2,7 +2,7 @@ import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
 import {
-  LabelList, LineChart, Line, Tooltip, YAxis,
+  CartesianGrid, LabelList, LineChart, Line, Tooltip, YAxis,
 } from 'recharts';
 import PropTypes from 'prop-types';
 import RechartsTooltip from 'components/vendor/RechartsTooltip';
@@ -113,9 +113,18 @@ function Chart({ data }) {
         height={40}
         data={mappedData}
       >
+        <CartesianGrid
+          strokeDasharray="1 1"
+        />
         <YAxis type="number" hide domain={['dataMin', 'dataMax']} />
         <Tooltip cursor={false} content={RechartsTooltip} />
-        <Line type="monotone" dataKey="total" stroke="#D97800" strokeWidth={2}>
+        <Line
+          animationDuration={500}
+          type="monotone"
+          dataKey="total"
+          stroke="#D97800"
+          strokeWidth={2}
+        >
           <LabelList dataKey="total" content={(props) => ChartAxisLabel(props, mappedData)} />
         </Line>
       </LineChart>

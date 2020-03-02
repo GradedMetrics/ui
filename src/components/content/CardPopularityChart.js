@@ -4,6 +4,31 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip,
 } from 'recharts';
 
+function GradeCategoryAxis({
+  index,
+  payload = {},
+  x,
+  y,
+  ...rest
+}) {
+  const { offset } = payload;
+  console.warn(payload);
+
+  if (index === 0) {
+    // Auth.
+    return (
+      <text
+        x={x + offset}
+        y={y + 10}
+        textAnchor="middle"
+        id="foobar"
+      >
+        Auth
+      </text>
+    );
+  }
+}
+
 function CardPopularityChart({
   data,
 }) {
@@ -42,13 +67,33 @@ function CardPopularityChart({
           name = '1';
           break;
 
-        case 'total':
-          name = 'Total';
-          break;
+        case '9':
+          return [
+            ...arr,
+            {
+              name: '9',
+              grade,
+              qualifier,
+            },
+          ];
+
+        case '10':
+          return [
+            ...arr,
+            {
+              name: '10',
+              grade,
+            },
+          ];
 
         case 'auth':
-          name = 'Auth';
-          break;
+          return [
+            ...arr,
+            {
+              name: 'Auth',
+              grade,
+            },
+          ];
 
         default:
           name = key;
@@ -58,13 +103,28 @@ function CardPopularityChart({
       return [
         ...arr,
         {
-          name, grade, half, qualifier,
+          name,
+          grade,
+          half,
+          qualifier,
         },
       ];
     }, []);
 
-    setFormattedData(formatted);
+    setFormattedData([...formatted].sort((a, b) => {
+      if (a.name === 'Auth') {
+        return -1;
+      }
+
+      if (b.name === 'Auth') {
+        return 1;
+      }
+
+      return a < b ? -1 : 1;
+    }));
   }, [data]);
+
+  console.log(formattedData);
 
   return (
     <BarChart
@@ -75,10 +135,17 @@ function CardPopularityChart({
         top: 5, right: 30, left: 20, bottom: 5,
       }}
     >
-
-      <XAxis dataKey="name" />
-      {/* <XAxis dataKey="date" axisLine={false} tickLine={false} interval={0}
-      tick={renderQuarterTick} height={1} scale="band" xAxisId="quarter" /> */}
+      <XAxis dataKey="name" type="category" />
+      <XAxis
+        dataKey="name"
+        axisLine={false}
+        tickLine={false}
+        interval={0}
+        tick={GradeCategoryAxis}
+        height={1}
+        scale="band"
+        xAxisId="quarter"
+      />
       <YAxis />
       <Tooltip />
 
