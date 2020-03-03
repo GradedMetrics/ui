@@ -85,7 +85,7 @@ function Pagination({
 
   // Create the array of page numbers based on the data length and the page size.
   const pages = new Array(Math.round(data.length / size)).fill(1).map((_, index) => index + 1);
-  const lastPage = pages[pages.length - 1];
+  const lastPage = pages[pages.length - 1] || 1;
 
   return (
     <section className={classes.wrapper}>
@@ -114,23 +114,27 @@ function Pagination({
         <span className={classes.pageSelection}>
           Page
           {' '}
-          <select
-            onChange={({ currentTarget }) => setPage(Number(currentTarget.value))}
-            value={page}
-          >
-            {pages.map((number) => (
-              <option
-                key={`page-${number}`}
-                value={number}
-              >
-                {number}
-              </option>
-            ))}
-          </select>
+          {lastPage === 1 ? (
+            <span>1</span>
+          ) : (
+            <select
+              onChange={({ currentTarget }) => setPage(Number(currentTarget.value))}
+              value={page}
+            >
+              {pages.map((number) => (
+                <option
+                  key={`page-${number}`}
+                  value={number}
+                >
+                  {number}
+                </option>
+              ))}
+            </select>
+          )}
           {' '}
           of
           {' '}
-          {pages[pages.length - 1]}
+          {lastPage}
         </span>
         <span className={classes.pageActions}>
           <button

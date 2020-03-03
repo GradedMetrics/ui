@@ -9,10 +9,11 @@ export default {
     background: paginationTheme.background,
     display: 'flex',
     fontSize: 14,
+    height: 26,
     lineHeight: '16px',
     margin: [13, 0, 0],
     width: 240,
-    padding: 4,
+    padding: [0, 4],
   }),
   pageActions: {
     flexBasis: 48,
