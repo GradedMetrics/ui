@@ -270,6 +270,9 @@ function Sets() {
             key: 'quality',
             text: 'Quality',
           }, {
+            key: 'popularityChange',
+            text: 'Rank change',
+          }, {
             key: 'score',
             text: 'Score',
           }, {

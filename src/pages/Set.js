@@ -9,6 +9,7 @@ import Chart from 'components/content/Chart';
 import LinkButton from 'components/content/LinkButton';
 import GenericTable from 'components/content/GenericTable';
 import Pagination from 'components/content/Pagination';
+import RankChange from 'components/content/RankChange';
 import Sorter from 'components/content/Sorter';
 import { ThemeContext } from 'contexts/theme';
 import { formatObject } from 'js/keys';
@@ -38,7 +39,7 @@ function Set() {
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     initialPage.current = query.get('page') || 1;
-    initialSortBy.current = query.get('sort') || 'number';
+    initialSortBy.current = query.get('sort') || 'popularity';
     initialSortOrder.current = query.get('order') || 'asc';
 
     setSortedData();
@@ -110,6 +111,9 @@ function Set() {
     content = (
       <GenericTable
         tableHeaders={[{
+          colSpan: 2,
+          value: 'Popularity',
+        }, {
           sr: 'Number',
           value: '#',
         }, {
@@ -127,20 +131,29 @@ function Set() {
           id,
           name,
           popularity = 0,
+          popularityChange = 0,
           quality,
           score = 0,
           variants,
           total,
           history: cardHistory = [],
         }) => ({
-          key: `set-${id}`,
+          key: `card-${id}`,
           value: [{
-            key: `set-${id}-number`,
+            key: `card-${id}-popularity-rank-change`,
+            value: <RankChange value={popularityChange} />,
+          }, {
+            key: `card-${id}-popularity-rank`,
+            value: (
+              <span>{popularity}</span>
+            ),
+          }, {
+            key: `card-${id}-number`,
             value: (
               <span>{number}</span>
             ),
           }, {
-            key: `set-${id}-name`,
+            key: `card-${id}-name`,
             value: (
               <>
                 <span className={classes.name}>
@@ -154,7 +167,7 @@ function Set() {
               </>
             ),
           }, {
-            key: `set-${id}-score`,
+            key: `card-${id}-score`,
             value: (
               <>
                 <span className={classes.score}>{score}</span>
@@ -166,7 +179,7 @@ function Set() {
               </>
             ),
           }, {
-            key: `set-${id}-graph`,
+            key: `card-${id}-graph`,
             value: (
               <Chart
                 data={[
@@ -176,7 +189,7 @@ function Set() {
               />
             ),
           }, {
-            key: `set-${id}-actions`,
+            key: `card-${id}-actions`,
             value: (
               <LinkButton
                 path={paths.card(setId, id)}
@@ -248,15 +261,18 @@ function Set() {
             key: 'number',
             text: 'Number',
           }, {
-            isDefault: true,
             key: 'index',
             text: 'PSA Default',
           }, {
             key: 'popularity',
+            isDefault: true,
             text: 'Popularity',
           }, {
             key: 'quality',
             text: 'Quality',
+          }, {
+            key: 'popularityChange',
+            text: 'Rank change',
           }, {
             key: 'score',
             text: 'Score',

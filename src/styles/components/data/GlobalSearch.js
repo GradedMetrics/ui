@@ -21,7 +21,7 @@ export default {
     },
     boxSizing: 'border-box',
     height: 40,
-    padding: [0, 0, 3, 3],
+    padding: [0, 3, 3, 3],
   }),
 
   input: {
