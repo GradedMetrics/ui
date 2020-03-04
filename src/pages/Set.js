@@ -128,76 +128,94 @@ function Set() {
         tableData={paginatedData.map(({
           number,
           difficulty,
+          history: cardHistory = [],
           id,
           name,
           popularity = 0,
           popularityChange = 0,
+          psa10Grades = 0,
+          psa10History: cardPSA10History = [],
           quality,
           score = 0,
           variants,
-          total,
-          history: cardHistory = [],
-        }) => ({
-          key: `card-${id}`,
-          value: [{
-            key: `card-${id}-popularity-rank-change`,
-            value: <RankChange value={popularityChange} />,
-          }, {
-            key: `card-${id}-popularity-rank`,
-            value: (
-              <span>{popularity}</span>
-            ),
-          }, {
-            key: `card-${id}-number`,
-            value: (
-              <span>{number}</span>
-            ),
-          }, {
-            key: `card-${id}-name`,
-            value: (
-              <>
-                <span className={classes.name}>
-                  <Link
-                    to={paths.card(setId, id)}
-                  >
-                    {pathNames.card(name)}
-                  </Link>
-                </span>
-                {variants ? <span className={classes.metrics}>{variants.join(', ')}</span> : ''}
-              </>
-            ),
-          }, {
-            key: `card-${id}-score`,
-            value: (
-              <>
-                <span className={classes.score}>{score}</span>
-                <span className={classes.metrics}>{`Quality: ${quality}.`}</span>
-                {' '}
-                <span className={classes.metrics}>{`Difficulty: ${difficulty}.`}</span>
-                {' '}
-                <span className={classes.metrics}>{`Popularity: ${popularity}.`}</span>
-              </>
-            ),
-          }, {
-            key: `card-${id}-graph`,
-            value: (
-              <Chart
-                data={[
-                  total,
-                  ...cardHistory,
-                ].reverse()}
-              />
-            ),
-          }, {
-            key: `card-${id}-actions`,
-            value: (
-              <LinkButton
-                path={paths.card(setId, id)}
-                text="View"
-              />
-            ),
-          }],
-        }))}
+          total = 0,
+        }) => {
+          const chartData = [{
+            psa10Grades,
+            total,
+          }, ...(
+            new Array(7).fill(1).map((_, index) => ({
+              psa10Grades: cardPSA10History[index],
+              total: cardHistory[index],
+            }))
+          )].reverse();
+
+          return {
+            key: `card-${id}`,
+            value: [{
+              key: `card-${id}-popularity-rank-change`,
+              value: <RankChange value={popularityChange} />,
+            }, {
+              key: `card-${id}-popularity-rank`,
+              value: (
+                <span>{popularity}</span>
+              ),
+            }, {
+              key: `card-${id}-number`,
+              value: (
+                <span>{number}</span>
+              ),
+            }, {
+              key: `card-${id}-name`,
+              value: (
+                <>
+                  <span className={classes.name}>
+                    <Link
+                      to={paths.card(setId, id)}
+                    >
+                      {pathNames.card(name)}
+                    </Link>
+                  </span>
+                  {variants ? <span className={classes.metrics}>{variants.join(', ')}</span> : ''}
+                </>
+              ),
+            }, {
+              key: `card-${id}-score`,
+              value: (
+                <>
+                  <span className={classes.score}>{score}</span>
+                  <span className={classes.metrics}>{`Quality: ${quality}.`}</span>
+                  {' '}
+                  <span className={classes.metrics}>{`Difficulty: ${difficulty}.`}</span>
+                  {' '}
+                  <span className={classes.metrics}>{`Popularity: ${popularity}.`}</span>
+                </>
+              ),
+            }, {
+              key: `card-${id}-graph`,
+              value: (
+                <Chart
+                  axes={[{
+                    key: 'total',
+                    label: 'Total graded',
+                  }, {
+                    key: 'psa10Grades',
+                    label: 'PSA 10 population',
+                  }]}
+                  data={chartData}
+                />
+              ),
+            }, {
+              key: `card-${id}-actions`,
+              value: (
+                <LinkButton
+                  path={paths.card(setId, id)}
+                  text="View"
+                />
+              ),
+            }],
+          };
+        })}
       />
     );
   }

@@ -215,10 +215,13 @@ function Sets() {
             key: `set-${id}-graph`,
             value: (
               <Chart
-                data={[
+                axes={[{
+                  key: 'total',
+                  label: 'Total graded',
+                }]}
+                data={[{
                   total,
-                  ...setHistory,
-                ].reverse()}
+                }, ...setHistory.map((entry) => ({ total: entry }))].reverse()}
               />
             ),
           }, {

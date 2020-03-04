@@ -16,10 +16,14 @@ const useStyles = createUseStyles(style);
 
 function ChartAxisLabel({
   index,
-  value,
+  value = 0,
   x,
   y,
-}, data) {
+}, data, axisIndex) {
+  if (axisIndex !== 0) {
+    return undefined;
+  }
+
   const classes = useStyles(useContext(ThemeContext));
 
   if (index > 0 && index < data.length - 1) {
@@ -50,7 +54,11 @@ ChartAxisLabel.propTypes = {
   y: PropTypes.number.isRequired,
 };
 
-function Chart({ data }) {
+function Chart({
+  axes = [],
+  axesLabels = [],
+  data,
+}) {
   const classes = useStyles(useContext(ThemeContext));
   const elem = useRef();
   const timer = useRef();
@@ -100,10 +108,10 @@ function Chart({ data }) {
     );
   }
 
-  const mappedData = data.map((entry) => ({
-    name: 'Total',
-    total: entry,
-  }));
+  const strokes = [
+    'rgba(217, 120, 0, 0.9)',
+    'rgba(0, 151, 52, 0.9)',
+  ];
 
   return (
     <div className={classes.wrapper}>
@@ -111,29 +119,56 @@ function Chart({ data }) {
         className={classes.chart}
         width={chartWidth}
         height={40}
-        data={mappedData}
+        data={data}
       >
         <CartesianGrid
           strokeDasharray="1 1"
         />
-        <YAxis type="number" hide domain={['dataMin', 'dataMax']} />
-        <Tooltip cursor={false} content={RechartsTooltip} />
-        <Line
-          animationDuration={500}
-          type="monotone"
-          dataKey="total"
-          stroke="#D97800"
-          strokeWidth={2}
-        >
-          <LabelList dataKey="total" content={(props) => ChartAxisLabel(props, mappedData)} />
-        </Line>
+        <Tooltip
+          content={(props) => RechartsTooltip(props, axes)}
+          cursor={false}
+        />
+        {axes.map(({ key }) => (
+          <YAxis
+            key={`yaxis-${key}`}
+            yAxisId={key}
+            type="number"
+            hide
+            domain={['dataMin', 'dataMax']}
+          />
+        ))}
+        {axes.map(({ key }, index) => (
+          <Line
+            key={`line-${key}`}
+            animationDuration={500}
+            type="monotone"
+            dataKey={key}
+            stroke={[strokes[index]]}
+            strokeWidth={2}
+            yAxisId={key}
+          >
+            <LabelList
+              content={(props) => ChartAxisLabel(props, data, index)}
+              dataKey={key}
+            />
+          </Line>
+        ))}
       </LineChart>
     </div>
   );
 }
 
 Chart.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.number).isRequired,
+  /** An array of axes. */
+  axes: PropTypes.arrayOf(PropTypes.shape({
+    /** The data key this axis relates to. */
+    key: PropTypes.string.isRequired,
+    /** A label for the axis. */
+    label: PropTypes.string.isRequired,
+  })).isRequired,
+
+  /** The data array. */
+  data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.number)).isRequired,
 };
 
 export default Chart;
