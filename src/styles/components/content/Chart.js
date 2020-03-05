@@ -7,9 +7,14 @@ export default {
       overflow: 'visible',
     },
   },
-  label: ({ chartLabel: chartLabelTheme }) => ({
-    fill: chartLabelTheme.color,
+  label: {
     fontSize: 10,
     lineHeight: '12px',
+  },
+  total: ({ chartColours }) => ({
+    fill: chartColours.totalLabel,
+  }),
+  psa10: ({ chartColours }) => ({
+    fill: chartColours.psa10Label,
   }),
 };

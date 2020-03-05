@@ -2,7 +2,7 @@ import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
 import {
-  CartesianGrid, LabelList, LineChart, Line, Tooltip, YAxis,
+  Bar, CartesianGrid, LabelList, ComposedChart, Line, Tooltip, YAxis,
 } from 'recharts';
 import PropTypes from 'prop-types';
 import RechartsTooltip from 'components/vendor/RechartsTooltip';
@@ -19,27 +19,41 @@ function ChartAxisLabel({
   value = 0,
   x,
   y,
-}, data, axisIndex) {
-  if (axisIndex !== 0) {
-    return undefined;
-  }
-
+}, data, axisKey) {
   const classes = useStyles(useContext(ThemeContext));
 
   if (index > 0 && index < data.length - 1) {
     return <></>;
   }
 
-  const xOffset = index === 0 ? x - 12 : x + 12;
+  let className;
+  let textAnchor;
+  let xOffset;
+  let yOffset;
+
+  if (axisKey === 'total') {
+    className = classes.total;
+    textAnchor = index === 0 ? 'end' : 'start';
+    xOffset = index === 0 ? x - 24 : x + 24;
+    yOffset = y;
+  } else if (axisKey === 'psa10Grades') {
+    className = classes.psa10;
+    textAnchor = 'middle';
+    xOffset = x + 15;
+    yOffset = index === 0 ? 45 : -4;
+  } else {
+    return undefined;
+  }
+
 
   return (
     <g>
       <text
-        className={classes.label}
+        className={`${classes.label} ${className}`}
         dominantBaseline="middle"
         x={xOffset}
-        y={y}
-        textAnchor={index === 0 ? 'end' : 'start'}
+        y={yOffset}
+        textAnchor={textAnchor}
       >
         {value.toLocaleString()}
       </text>
@@ -108,14 +122,9 @@ function Chart({
     );
   }
 
-  const strokes = [
-    'rgba(217, 120, 0, 0.9)',
-    'rgba(0, 151, 52, 0.9)',
-  ];
-
   return (
     <div className={classes.wrapper}>
-      <LineChart
+      <ComposedChart
         className={classes.chart}
         width={chartWidth}
         height={40}
@@ -128,32 +137,60 @@ function Chart({
           content={(props) => RechartsTooltip(props, axes)}
           cursor={false}
         />
-        {axes.map(({ key }) => (
-          <YAxis
-            key={`yaxis-${key}`}
-            yAxisId={key}
-            type="number"
-            hide
-            domain={['dataMin', 'dataMax']}
-          />
-        ))}
-        {axes.map(({ key }, index) => (
-          <Line
-            key={`line-${key}`}
-            animationDuration={500}
-            type="monotone"
-            dataKey={key}
-            stroke={[strokes[index]]}
-            strokeWidth={2}
-            yAxisId={key}
-          >
-            <LabelList
-              content={(props) => ChartAxisLabel(props, data, index)}
-              dataKey={key}
+        {axes.map(({ key, type }) => {
+          let domain = ['dataMin', 'dataMax'];
+
+          if (type === 'bar') {
+            domain = ['dataMin - 5', 'dataMax + 5'];
+          }
+
+          return (
+            <YAxis
+              key={`yaxis-${key}`}
+              yAxisId={key}
+              type="number"
+              hide
+              domain={domain}
             />
-          </Line>
-        ))}
-      </LineChart>
+          );
+        })}
+        {axes.map(({ color, key, type }) => {
+          if (type === 'bar') {
+            return (
+              <Bar
+                key={`line-${key}`}
+                animationDuration={500}
+                barSize={30}
+                dataKey={key}
+                fill={color}
+                yAxisId={key}
+              >
+                <LabelList
+                  content={(props) => ChartAxisLabel(props, data, key)}
+                  dataKey={key}
+                />
+              </Bar>
+            );
+          }
+
+          return (
+            <Line
+              key={`line-${key}`}
+              animationDuration={500}
+              type="monotone"
+              dataKey={key}
+              stroke={color}
+              strokeWidth={2}
+              yAxisId={key}
+            >
+              <LabelList
+                content={(props) => ChartAxisLabel(props, data, key)}
+                dataKey={key}
+              />
+            </Line>
+          );
+        })}
+      </ComposedChart>
     </div>
   );
 }

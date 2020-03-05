@@ -6,10 +6,12 @@ function RechartsTooltip({ payload }, axes) {
     return <></>;
   }
 
-  const parts = axes.map(({ label }, index) => {
-    const {
-      value = 0,
-    } = payload[index];
+  const {
+    payload: payloads = {},
+  } = payload[0];
+
+  const parts = axes.map(({ key, label }) => {
+    const value = payloads[key] || 0;
 
     return (
       <div key={`tooltip-entry-${label}`}>
@@ -34,7 +36,7 @@ RechartsTooltip.defaultProps = {
 
 RechartsTooltip.propTypes = {
   payload: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.number,
+    payload: PropTypes.objectOf(PropTypes.number).isRequired,
   })),
 };
 

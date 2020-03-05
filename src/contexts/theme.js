@@ -22,8 +22,11 @@ export const themes = {
     key: 'dark',
     ...shared,
 
-    chartLabel: {
-      color: '#C1BEBE',
+    chartColours: {
+      psa10: 'rgba(193, 190, 190, 0.3)',
+      psa10Label: '#C1BEBE',
+      total: shared.brandPrimary,
+      totalLabel: shared.brandPrimary,
     },
 
     footer: {

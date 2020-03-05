@@ -24,7 +24,8 @@ import style from 'styles/components/Sets';
 const useStyles = createUseStyles(style);
 
 function Sets() {
-  const classes = useStyles(useContext(ThemeContext));
+  const theme = useContext(ThemeContext);
+  const classes = useStyles(theme);
   const history = useHistory();
   const location = useLocation();
   const initialPage = useRef();
@@ -126,13 +127,6 @@ function Sets() {
                       {' '}
                       closer this is to 100, the scarcer PSA 10 grades are.
                     </div>
-                    <div>
-                      <strong>Popularity</strong>
-                      {' '}
-                      is the set&#39;s rank position against all other sets based on the total
-                      {' '}
-                      number of cards graded.
-                    </div>
                   </>
                 )}
               />
@@ -141,7 +135,7 @@ function Sets() {
         }, {
           value: (
             <>
-              Total cards graded over time
+              Cards graded over time
               {' '}
               <Tooltip
                 id="tooltip-sets-total"
@@ -216,6 +210,7 @@ function Sets() {
             value: (
               <Chart
                 axes={[{
+                  color: theme.chartColours.total,
                   key: 'total',
                   label: 'Total graded',
                 }]}

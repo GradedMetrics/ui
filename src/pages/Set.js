@@ -24,7 +24,8 @@ import style from 'styles/components/Set';
 const useStyles = createUseStyles(style);
 
 function Set() {
-  const classes = useStyles(useContext(ThemeContext));
+  const theme = useContext(ThemeContext);
+  const classes = useStyles(theme);
   const history = useHistory();
   const location = useLocation();
   const { setId } = useParams();
@@ -121,7 +122,7 @@ function Set() {
         }, {
           value: 'Score',
         }, {
-          value: 'Total cards graded over time',
+          value: 'Cards graded over time',
         }, {
           sr: 'Actions',
         }]}
@@ -196,11 +197,14 @@ function Set() {
               value: (
                 <Chart
                   axes={[{
-                    key: 'total',
-                    label: 'Total graded',
-                  }, {
+                    color: theme.chartColours.psa10,
                     key: 'psa10Grades',
                     label: 'PSA 10 population',
+                    type: 'bar',
+                  }, {
+                    color: theme.chartColours.total,
+                    key: 'total',
+                    label: 'Total graded',
                   }]}
                   data={chartData}
                 />
