@@ -134,7 +134,7 @@ function Chart({
           strokeDasharray="1 1"
         />
         <Tooltip
-          content={(props) => RechartsTooltip(props, axes)}
+          content={(props) => RechartsTooltip(props, axes, classes)}
           cursor={false}
         />
         {axes.map(({ key, type }) => {
@@ -205,7 +205,10 @@ Chart.propTypes = {
   })).isRequired,
 
   /** The data array. */
-  data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.number)).isRequired,
+  data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]))).isRequired,
 };
 
 export default Chart;

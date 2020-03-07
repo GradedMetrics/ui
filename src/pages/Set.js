@@ -12,7 +12,7 @@ import Pagination from 'components/content/Pagination';
 import RankChange from 'components/content/RankChange';
 import Sorter from 'components/content/Sorter';
 import { ThemeContext } from 'contexts/theme';
-import { formatObject } from 'js/keys';
+import { formatObject, formatObjectArray } from 'js/keys';
 import { apiGet } from 'js/api';
 import { pathNames, paths, urlFriendlyName } from 'js/routes';
 import { formatNumber, formatYear } from 'js/formats';
@@ -35,6 +35,7 @@ function Set() {
 
   const [data, setData] = useState();
   const [paginatedData, setPaginatedData] = useState();
+  const [parseHistory, setParseHistory] = useState();
   const [sortedData, setSortedData] = useState();
 
   useEffect(() => {
@@ -47,28 +48,29 @@ function Set() {
 
     (async () => {
       const keys = await apiGet('keys');
-      const sets = await apiGet('sets');
       const set = await apiGet(`sets/${setId}`);
+      const sets = await apiGet('sets');
       setData(formatObject(keys, {
         ...sets[setId],
         ...set,
       }));
+      setParseHistory(formatObjectArray(keys, await apiGet('history')));
     })();
   }, [setId]);
 
-  if (!data) {
+  if (!data || !parseHistory) {
     return <p>Loading...</p>;
   }
 
   const {
-    name: setName,
-    year,
     cards,
     difficulty: setDifficulty,
+    name: setName,
     popularity: setPopularity,
     quality: setQuality,
     score: setScore = 0,
     variant: setVariant,
+    year,
   } = data;
 
   /**
@@ -142,10 +144,12 @@ function Set() {
           total = 0,
         }) => {
           const chartData = [{
+            date: parseHistory[parseHistory.length - 1].date,
             psa10Grades,
             total,
           }, ...(
             new Array(7).fill(1).map((_, index) => ({
+              date: parseHistory[parseHistory.length - (2 + index)].date,
               psa10Grades: cardPSA10History[index],
               total: cardHistory[index],
             }))

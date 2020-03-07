@@ -34,6 +34,7 @@ function Sets() {
 
   const [data, setData] = useState();
   const [paginatedData, setPaginatedData] = useState();
+  const [parseHistory, setParseHistory] = useState();
   const [sortedData, setSortedData] = useState();
 
   useEffect(() => {
@@ -46,8 +47,13 @@ function Sets() {
       const keys = await apiGet('keys');
       const sets = await apiGet('sets');
       setData(formatObjectArray(keys, Object.values(sets)));
+      setParseHistory(formatObjectArray(keys, await apiGet('history')));
     })();
   }, []);
+
+  if (!data || !parseHistory) {
+    return <p>Loading...</p>;
+  }
 
   /**
    * Update the paginatedData state and page query string when the page changes.
@@ -215,8 +221,12 @@ function Sets() {
                   label: 'Total graded',
                 }]}
                 data={[{
+                  date: parseHistory[parseHistory.length - 1].date,
                   total,
-                }, ...setHistory.map((entry) => ({ total: entry }))].reverse()}
+                }, ...setHistory.map((entry, index) => ({
+                  date: parseHistory[parseHistory.length - (2 + index)].date,
+                  total: entry,
+                }))].reverse()}
               />
             ),
           }, {

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { formatDate } from 'js/formats';
 
-function RechartsTooltip({ payload }, axes) {
+function RechartsTooltip({ payload }, axes, classes) {
   if (!Array.isArray(payload) || !payload.length) {
     return <></>;
   }
@@ -10,11 +11,14 @@ function RechartsTooltip({ payload }, axes) {
     payload: payloads = {},
   } = payload[0];
 
-  const parts = axes.map(({ key, label }) => {
+  const parts = [...axes].reverse().map(({ key, label }) => {
     const value = payloads[key] || 0;
 
     return (
-      <div key={`tooltip-entry-${label}`}>
+      <div
+        className={`${classes.entry} ${classes[`${key}Label`]}`}
+        key={`tooltip-entry-${label}`}
+      >
         {label}
 :
         {' '}
@@ -23,8 +27,15 @@ function RechartsTooltip({ payload }, axes) {
     );
   });
 
+  const {
+    date,
+  } = payloads;
+
   return (
-    <div>
+    <div className={classes.tooltip}>
+      <div className={classes.tooltipTitle}>
+        {formatDate(new Date(Number(date)))}
+      </div>
       {parts}
     </div>
   );

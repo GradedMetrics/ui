@@ -1,3 +1,48 @@
+/**
+ * Format Date objects.
+ * @param {Date} date - A Date object to format.
+ */
+export const formatDate = (date) => {
+  if (!(date instanceof Date)) {
+    throw new Error('Expected JavaScript Date object to be provided to formatDate.');
+  }
+
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+    'October', 'November', 'December',
+  ];
+
+  const day = date.getDate();
+  const month = date.getMonth();
+  const year = date.getFullYear();
+
+  function getOrdinalSuffix(n) {
+    switch (n) {
+      case 1:
+      case 21:
+      case 31:
+        return 'st';
+
+      case 2:
+      case 22:
+        return 'nd';
+
+      case 3:
+      case 23:
+        return 'rd';
+
+      default:
+        return 'th';
+    }
+  }
+
+  return `${day}${getOrdinalSuffix(day)} ${months[month]}, ${year}`;
+};
+
+/**
+ * Format card numbers for the sake of sortability.
+ * @param {Number|String} number - A card number.
+ */
 export const formatNumber = (number) => {
   if (!number) {
     return 0;
@@ -88,6 +133,7 @@ export const formatYear = (year) => {
 };
 
 export default {
+  formatDate,
   formatNumber,
   formatYear,
 };
