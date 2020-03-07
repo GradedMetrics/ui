@@ -162,6 +162,8 @@ function Sets() {
           name,
           popularity = 0,
           popularityChange = 0,
+          psa10Grades = 0,
+          psa10History,
           quality,
           score = 0,
           variant,
@@ -216,15 +218,22 @@ function Sets() {
             value: (
               <Chart
                 axes={[{
+                  color: theme.chartColours.psa10,
+                  key: 'psa10Grades',
+                  label: 'PSA 10 population',
+                  type: 'bar',
+                }, {
                   color: theme.chartColours.total,
                   key: 'total',
                   label: 'Total graded',
                 }]}
                 data={[{
                   date: parseHistory[parseHistory.length - 1].date,
+                  psa10Grades,
                   total,
                 }, ...setHistory.map((entry, index) => ({
                   date: parseHistory[parseHistory.length - (2 + index)].date,
+                  psa10Grades: psa10History[index],
                   total: entry,
                 }))].reverse()}
               />
