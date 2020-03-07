@@ -33,14 +33,14 @@ function ChartAxisLabel({
 
   if (axisKey === 'total') {
     className = classes.total;
-    textAnchor = index === 0 ? 'end' : 'start';
-    xOffset = index === 0 ? x - 24 : x + 24;
-    yOffset = y;
+    textAnchor = 'middle';
+    xOffset = x;
+    yOffset = index === 0 ? 45 : -4;
   } else if (axisKey === 'psa10Grades') {
     className = classes.psa10;
-    textAnchor = 'middle';
-    xOffset = x + 15;
-    yOffset = index === 0 ? 45 : -4;
+    textAnchor = index === 0 ? 'end' : 'start';
+    xOffset = index === 0 ? x - 11 : x + 39;
+    yOffset = y + 6;
   } else {
     return undefined;
   }
