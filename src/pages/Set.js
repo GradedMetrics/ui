@@ -11,11 +11,13 @@ import GenericTable from 'components/content/GenericTable';
 import Pagination from 'components/content/Pagination';
 import RankChange from 'components/content/RankChange';
 import Sorter from 'components/content/Sorter';
+import Tooltip from 'components/content/Tooltip';
 import { ThemeContext } from 'contexts/theme';
-import { formatObject, formatObjectArray } from 'js/keys';
 import { apiGet } from 'js/api';
-import { pathNames, paths, urlFriendlyName } from 'js/routes';
 import { formatNumber, formatYear } from 'js/formats';
+import { formatObject, formatObjectArray } from 'js/keys';
+import { pathNames, paths, urlFriendlyName } from 'js/routes';
+import { help } from 'js/text';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
@@ -124,7 +126,17 @@ function Set() {
         }, {
           value: 'Score',
         }, {
-          value: 'Cards graded over time',
+          value: (
+            <>
+              Cards graded over time
+              {' '}
+              <Tooltip
+                id="tooltip-sets-total"
+                position="bottom"
+                text={help.cardsGradedOverTime}
+              />
+            </>
+          ),
         }, {
           sr: 'Actions',
         }]}
@@ -192,8 +204,6 @@ function Set() {
                   <span className={classes.metrics}>{`Quality: ${quality}.`}</span>
                   {' '}
                   <span className={classes.metrics}>{`Difficulty: ${difficulty}.`}</span>
-                  {' '}
-                  <span className={classes.metrics}>{`Popularity: ${popularity}.`}</span>
                 </>
               ),
             }, {

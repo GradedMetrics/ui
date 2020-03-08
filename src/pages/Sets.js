@@ -15,6 +15,7 @@ import { ThemeContext } from 'contexts/theme';
 import { formatYear } from 'js/formats';
 import { formatObjectArray } from 'js/keys';
 import { apiGet } from 'js/api';
+import { help } from 'js/text';
 import { pathNames, paths } from 'js/routes';
 
 // Theme.
@@ -115,23 +116,17 @@ function Sets() {
                     <div>
                       <strong>Score</strong>
                       {' '}
-                      is a number between 0 (lowest) and 10 (highest) which determines how
-                      {' '}
-                      difficult it is for PSA 10s to be graded.
+                      {help.score}
                     </div>
                     <div>
                       <strong>Quality</strong>
                       {' '}
-                      is a percentage of cards which have not received a qualifier grade
-                      {' '}
-                      (like MC &mdash; miscut).
+                      {help.quality}
                     </div>
                     <div>
                       <strong>Difficulty</strong>
                       {' '}
-                      is a percentage comparing PSA 8.5 and 9 grades against PSA 10 grades. The
-                      {' '}
-                      closer this is to 100, the scarcer PSA 10 grades are.
+                      {help.difficulty}
                     </div>
                   </>
                 )}
@@ -146,7 +141,7 @@ function Sets() {
               <Tooltip
                 id="tooltip-sets-total"
                 position="bottom"
-                text="This shows how many cards have been graded per week. This is updated every Wednesday."
+                text={help.cardsGradedOverTime}
               />
             </>
           ),
