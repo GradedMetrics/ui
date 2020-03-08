@@ -9,6 +9,8 @@ import React from 'react';
 
 const shared = {
   brandPrimary: '#D97800',
+  brandPrimaryDark: '#B06100',
+  brandPrimaryLight: '#FC9A23',
   brandSecondary: '#009734',
 };
 
@@ -20,14 +22,51 @@ export const themes = {
     key: 'dark',
     ...shared,
 
+    chartColours: {
+      psa10: 'rgba(193, 190, 190, 0.3)',
+      psa10Label: '#C1BEBE',
+      total: shared.brandPrimary,
+      totalLabel: shared.brandPrimary,
+    },
+
+    footer: {
+      borderColor: '#232323',
+      color: '#C1BEBE',
+    },
+
     header: {
       background: shared.brandPrimary,
+      borderColor: shared.brandPrimaryLight,
+    },
+
+    languageTag: {
+      background: '#ffd5a2',
+      color: '#333',
+      shadow: shared.brandPrimary,
+    },
+
+    navLink: {
+      background: shared.brandPrimary,
+      borderColor: shared.brandPrimaryDark,
+      shadow: shared.brandPrimaryLight,
+    },
+
+    pagination: {
+      background: '#323232',
+    },
+
+    paginationButton: {
+      fill: shared.brandSecondary,
+    },
+
+    paginationButtonDisabled: {
+      fill: '#C1BEBE',
     },
 
     tag: {
       background: '#eee',
       color: '#333',
-      shadow: '#e0e0e0',
+      shadow: '#ccc',
     },
   },
 };

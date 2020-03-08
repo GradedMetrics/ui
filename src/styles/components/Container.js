@@ -1,5 +1,8 @@
 export default {
+  wrapper: {
+    padding: [64, 0, 0],
+  },
   container: {
-    margin: '0 25px',
+    padding: [20, 25, 40],
   },
 };

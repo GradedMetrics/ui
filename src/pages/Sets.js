@@ -1,12 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
+import Chart from 'components/content/Chart';
 import GenericTable from 'components/content/GenericTable';
+import LinkButton from 'components/content/LinkButton';
+import Pagination from 'components/content/Pagination';
+import RankChange from 'components/content/RankChange';
+import Sorter from 'components/content/Sorter';
+import SetIcon from 'components/content/SetIcon';
+import Tooltip from 'components/content/Tooltip';
 import { ThemeContext } from 'contexts/theme';
 import { formatYear } from 'js/formats';
 import { formatObjectArray } from 'js/keys';
 import { apiGet } from 'js/api';
-import { paths } from 'js/routes';
+import { help } from 'js/text';
+import { pathNames, paths } from 'js/routes';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
@@ -15,61 +25,172 @@ import style from 'styles/components/Sets';
 const useStyles = createUseStyles(style);
 
 function Sets() {
-  const classes = useStyles(useContext(ThemeContext));
+  const theme = useContext(ThemeContext);
+  const classes = useStyles(theme);
+  const history = useHistory();
+  const location = useLocation();
+  const initialPage = useRef();
+  const initialSortBy = useRef();
+  const initialSortOrder = useRef();
 
   const [data, setData] = useState();
+  const [paginatedData, setPaginatedData] = useState();
+  const [parseHistory, setParseHistory] = useState();
+  const [sortedData, setSortedData] = useState();
 
   useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    initialPage.current = query.get('page') || 1;
+    initialSortBy.current = query.get('sort') || 'popularity';
+    initialSortOrder.current = query.get('order') || 'asc';
+
     (async () => {
       const keys = await apiGet('keys');
       const sets = await apiGet('sets');
       setData(formatObjectArray(keys, Object.values(sets)));
+      setParseHistory(formatObjectArray(keys, await apiGet('history')));
     })();
   }, []);
 
+  if (!data || !parseHistory) {
+    return <p>Loading...</p>;
+  }
+
+  /**
+   * Update the paginatedData state and page query string when the page changes.
+   * @param {Object} - The pagination object which contains the paginated data and new page number.
+   */
+  function handlePageChange({
+    data: paginated,
+    page = 1,
+  }) {
+    const q = new URLSearchParams(location.search);
+    q.set('page', page);
+    history.push(paths.sets(q.toString()));
+    setPaginatedData(paginated);
+  }
+
+  /**
+   * Update the sortedData state and sort query string when the sorter changes.
+   * @param {Object} - The sorter object which contains the sorted data and new sort order.
+   */
+  function handleSorterChange({
+    data: sorted,
+    sortBy,
+    sortOrder,
+  }) {
+    const q = new URLSearchParams(location.search);
+    q.set('page', 1);
+    q.set('sort', sortBy);
+    q.set('order', sortOrder);
+    history.push(paths.sets(q.toString()));
+    setSortedData(sorted);
+  }
+
   let content;
 
-  if (!data) {
+  if (!paginatedData) {
     content = <p>Loading...</p>;
-  } else if (!data.length) {
+  } else if (!paginatedData.length) {
     content = <p>No data found.</p>;
   } else {
     content = (
       <GenericTable
         tableHeaders={[{
+          colSpan: 2,
+          value: 'Popularity',
+        }, {
           sr: 'Name',
           value: 'Name',
         }, {
-          sr: 'GM Score',
-          value: 'GM Score',
+          sr: 'Score',
+          value: (
+            <>
+              Score
+              {' '}
+              <Tooltip
+                id="tooltip-sets-score"
+                position="bottom"
+                text={(
+                  <>
+                    <div>
+                      <strong>Score</strong>
+                      {' '}
+                      {help.score}
+                    </div>
+                    <div>
+                      <strong>Quality</strong>
+                      {' '}
+                      {help.quality}
+                    </div>
+                    <div>
+                      <strong>Difficulty</strong>
+                      {' '}
+                      {help.difficulty}
+                    </div>
+                  </>
+                )}
+              />
+            </>
+          ),
         }, {
-          sr: 'Graph',
+          value: (
+            <>
+              Cards graded over time
+              {' '}
+              <Tooltip
+                id="tooltip-sets-total"
+                position="bottom"
+                text={help.cardsGradedOverTime}
+              />
+            </>
+          ),
         }, {
           sr: 'Actions',
         }]}
-        tableData={data.map(({
+        tableData={paginatedData.map(({
           cards,
           difficulty,
+          difficultySampleSize = 0,
+          icon,
           id,
           name,
           popularity = 0,
+          popularityChange = 0,
+          psa10Grades = 0,
+          psa10History,
           quality,
           score = 0,
           variant,
           year,
+          total,
+          history: setHistory = [],
         }) => ({
           key: `set-${id}`,
           value: [{
+            key: `set-${id}-popularity-rank-change`,
+            value: <RankChange value={popularityChange} />,
+          }, {
+            key: `set-${id}-popularity-rank`,
+            value: (
+              <span>{popularity}</span>
+            ),
+          }, {
             key: `set-${id}-name`,
             value: (
               <>
                 <span className={classes.name}>
+                  {icon
+                    ? (
+                      <>
+                        <SetIcon filename={icon} set={name} />
+                        {' '}
+                      </>
+                    ) : undefined}
                   <Link
                     to={paths.set(id, name)}
                   >
-                    {'Pokemon '}
-                    {name}
-                    {variant ? ` (${variant})` : ''}
+                    {pathNames.set(name, variant)}
                   </Link>
                 </span>
                 <span className={classes.yearCards}>
@@ -85,24 +206,40 @@ function Sets() {
                 <span className={classes.metrics}>{`Quality: ${quality}.`}</span>
                 {' '}
                 <span className={classes.metrics}>{`Difficulty: ${difficulty}.`}</span>
-                {' '}
-                <span className={classes.metrics}>{`Popularity: ${popularity}.`}</span>
               </>
             ),
           }, {
             key: `set-${id}-graph`,
             value: (
-              <span>Graph Placeholder</span>
+              <Chart
+                axes={[{
+                  color: theme.chartColours.psa10,
+                  key: 'psa10Grades',
+                  label: 'PSA 10 population',
+                  type: 'bar',
+                }, {
+                  color: theme.chartColours.total,
+                  key: 'total',
+                  label: 'Total graded',
+                }]}
+                data={[{
+                  date: parseHistory[parseHistory.length - 1].date,
+                  psa10Grades,
+                  total,
+                }, ...setHistory.map((entry, index) => ({
+                  date: parseHistory[parseHistory.length - (2 + index)].date,
+                  psa10Grades: psa10History[index],
+                  total: entry,
+                }))].reverse()}
+              />
             ),
           }, {
             key: `set-${id}-actions`,
             value: (
-              <Link
-                to={paths.set(id, name)}
-                className={classes.buttons}
-              >
-                View
-              </Link>
+              <LinkButton
+                path={paths.set(id, name)}
+                text="View"
+              />
             ),
           }],
         }))}
@@ -115,18 +252,59 @@ function Sets() {
       <Breadcrumb
         links={[
           {
-            text: 'Home',
+            text: pathNames.home,
             path: paths.home,
           }, {
-            text: 'Sets',
-            path: paths.sets,
+            text: pathNames.sets,
+            path: paths.sets(),
           },
         ]}
       />
 
       <h2>Sets</h2>
 
+      {data && data.length ? (
+        <Sorter
+          callback={handleSorterChange}
+          data={data}
+          defaultSortBy={initialSortBy.current}
+          defaultSortOrder={initialSortOrder.current}
+          fields={[{
+            key: 'cards',
+            text: 'Cards',
+          }, {
+            key: 'difficulty',
+            text: 'Difficulty',
+          }, {
+            key: 'popularity',
+            text: 'Popularity',
+          }, {
+            key: 'quality',
+            text: 'Quality',
+          }, {
+            key: 'popularityChange',
+            text: 'Rank change',
+          }, {
+            key: 'score',
+            text: 'Score',
+          }, {
+            key: 'year',
+            format: formatYear,
+            isDefault: true,
+            text: 'Year',
+          }]}
+        />
+      ) : undefined}
+
       {content}
+
+      {sortedData && sortedData.length ? (
+        <Pagination
+          callback={handlePageChange}
+          data={sortedData}
+          initialPage={initialPage.current}
+        />
+      ) : undefined}
     </>
   );
 }

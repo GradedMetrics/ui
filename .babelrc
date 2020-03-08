@@ -39,6 +39,7 @@
       // Module mapping
       ["module-resolver", {
         "alias": {
+          "assets": "./src/assets",
           "components": "./src/components",
           "contexts": "./src/contexts",
           "js": "./src/js",

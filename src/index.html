@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Oxygen|Roboto|Roboto+Mono&display=swap" rel="stylesheet">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  
+  <style type="text/css">
+    #GradedMetrics {
+      outline: none;
+    }
+
+    html, body {
+      background-image: url("https://i.gradedmetrics.com/background.png");
+      background-attachment: fixed;
+      background-color: #0F1113;
+      background-repeat: no-repeat;
+      background-size: cover;
+      box-shadow: inset 0 0 50vh 0 #000;
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    h1 {
+      color: #000;
+      font-family: 'Oxygen', sans-serif;
+      font-size: 36px;
+      font-weight: 400;
+      margin: 0;
+    }
+    
+    h2 {
+      color: #D97800;
+      font-family: 'Oxygen', sans-serif;
+      font-size: 34px;
+      font-weight: 400;
+      margin: 0;
+      padding-bottom: 15px;
+    }
+
+    a, a:visited {
+      color: #009734;
+      text-decoration: none;
+    }
+    
+    a:focus, a:hover {
+      color: #D97800;
+      text-decoration: none;
+    }
+    
+    a:active {
+      color: #FFF;
+    }
+
+    svg:not([class^="recharts"]) path {
+      fill: inherit;
+    }
+
+    select {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: #ccc;
+      background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20512%22%3E%3Cpath%20d%3D%22M41%20288h238c21.4%200%2032.1%2025.9%2017%2041L177%20448c-9.4%209.4-24.6%209.4-33.9%200L24%20329c-15.1-15.1-4.4-41%2017-41z%22%2F%3E%3C%2Fsvg%3E');
+      background-position: calc(100% - 8px) -2px;
+      background-repeat: no-repeat;
+      background-size: 11px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Roboto Mono', monospace;
+      height: 20px;
+      line-height: 20px;
+      opacity: 0.75;
+      padding: 0 24px 0 8px;
+    }
+
+    select:focus {
+      opacity: 1;
+    }
+  </style>
+
+  <base href="/" />
+</head>
+<body>
+  <section id="GradedMetrics" tabindex="-1"></section>
+  <script src="./runtime~app.min.js"></script>
+  <script src="./vendor.min.js"></script>
+  <script src="./app.min.js"></script>
+</body>
+</html>

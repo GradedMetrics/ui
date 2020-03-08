@@ -1,9 +1,12 @@
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = (env, argv) => ({
   devServer: {
     contentBase: './dist',
     historyApiFallback: true,
     host: '127.0.0.1',
-    port: 7002,
+    port: 7001,
   },
   entry: {
     app: ['@babel/polyfill', 'whatwg-fetch', './src/index.js'],
@@ -11,6 +14,7 @@ module.exports = (env, argv) => ({
   },
   resolve: {
     alias: {
+      assets: `${__dirname}/src/assets`,
       components: `${__dirname}/src/components`,
       contexts: `${__dirname}/src/contexts`,
       js: `${__dirname}/src/js`,
@@ -28,7 +32,20 @@ module.exports = (env, argv) => ({
           loader: 'babel-loader',
         },
       }, {
-        test: /\.(woff2?|eot|svg|ttf|md|jpg|png)$/,
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'react-svg-loader',
+            options: {
+              jsx: true,
+            },
+          },
+        ],
+      }, {
+        test: /\.(woff2?|eot|ttf|md|jpg|png)$/,
         exclude: /node_modules/,
         use: [
           {
@@ -36,8 +53,8 @@ module.exports = (env, argv) => ({
             options: {
               name: '[hash].[ext]',
               publicPath: argv.mode === 'development'
-                ? '/compiled/'
-                : 'https://i.gradedmetrics.com/',
+                ? '/'
+                : 'https://gradedmetrics.com/',
             },
           },
         ],
@@ -46,7 +63,6 @@ module.exports = (env, argv) => ({
   },
   output: {
     filename: '[name].min.js',
-    path: `${__dirname}/dist/compiled`,
     chunkFilename: '[name].min.js',
     publicPath: '/',
   },
@@ -63,4 +79,13 @@ module.exports = (env, argv) => ({
     },
     runtimeChunk: true,
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      hash: true,
+      title: 'Graded Metrics',
+      filename: 'index.html',
+      template: './src/index.html',
+    }),
+    new FaviconsWebpackPlugin('./src/assets/images/logo.png'),
+  ],
 });

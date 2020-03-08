@@ -1,3 +1,26 @@
+const tagStyle = (theme) => ({
+  boxShadow: {
+    blur: 1,
+    color: theme.shadow,
+    x: 1,
+    y: 0,
+  },
+  color: theme.color,
+  display: 'inline-block',
+  fontSize: '85%',
+  lineHeight: '15px',
+  margin: [0, 4],
+  padding: [0, 4],
+
+  '&:first-child': {
+    marginLeft: 0,
+  },
+
+  '&:last-child': {
+    marginRight: 0,
+  },
+});
+
 export default {
   mono: {
     fontFamily: '\'Roboto Mono\', monospace',
@@ -5,16 +28,10 @@ export default {
   },
   tag: ({ tag: tagTheme }) => ({
     background: tagTheme.background,
-    boxShadow: {
-      blur: 1,
-      color: tagTheme.shadow,
-      x: 1,
-      y: 1,
-    },
-    color: tagTheme.color,
-    fontSize: 12,
-    lineHeight: '15px',
-    margin: [0, 4],
-    padding: [0, 4],
+    ...tagStyle(tagTheme),
+  }),
+  languageTag: ({ languageTag: languageTagTheme }) => ({
+    background: languageTagTheme.background,
+    ...tagStyle(languageTagTheme),
   }),
 };

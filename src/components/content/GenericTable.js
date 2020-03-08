@@ -14,10 +14,16 @@ function GenericTable({
   const classes = useStyles(useContext(ThemeContext));
 
   const headers = tableHeaders.map(({
+    colSpan = 1,
     sr,
     value = '',
   }) => (
-    <th key={sr} aria-label={sr} className={classes.cells}>
+    <th
+      key={sr || value}
+      aria-label={sr || value}
+      className={classes.cells}
+      colSpan={colSpan}
+    >
       <span aria-hidden="true">{value}</span>
     </th>
   ));
@@ -47,8 +53,11 @@ function GenericTable({
 
 GenericTable.propTypes = {
   tableHeaders: PropTypes.arrayOf(PropTypes.shape({
-    sr: PropTypes.string.isRequired,
-    value: PropTypes.string,
+    sr: PropTypes.string,
+    value: PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.string,
+    ]),
   })).isRequired,
 
   /** This is the table data which is an array of rows. */
