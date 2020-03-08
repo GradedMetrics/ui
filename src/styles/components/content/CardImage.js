@@ -1,5 +1,5 @@
 export default {
   cardImage: {
-    width: '100%',
+    height: 360,
   },
 };
