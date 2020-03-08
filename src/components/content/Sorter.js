@@ -2,6 +2,10 @@ import React, {
   useContext, useEffect, useState,
 } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSortAmountDownAlt,
+} from '@fortawesome/pro-solid-svg-icons';
 import { ThemeContext } from 'contexts/theme';
 
 // Theme.
@@ -79,6 +83,11 @@ function Sorter({
     <section className={classes.wrapper}>
       <div className={classes.sorter}>
         <span className={classes.inner}>
+          <FontAwesomeIcon
+            className={classes.icon}
+            icon={faSortAmountDownAlt}
+          />
+          {' '}
           Sort by
           {' '}
           <select
@@ -102,10 +111,10 @@ function Sorter({
             value={sortOrder}
           >
             <option value="asc">
-              ▲ ascending
+              Ascending
             </option>
             <option value="desc">
-              ▼ descending
+              Descending
             </option>
           </select>
           {' '}

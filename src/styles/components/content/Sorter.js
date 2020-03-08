@@ -18,4 +18,7 @@ export default {
     display: 'block',
     textAlign: 'right',
   },
+  icon: {
+    fill: '#fff',
+  },
 };

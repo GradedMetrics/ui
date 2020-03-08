@@ -60,6 +60,28 @@
     svg:not([class^="recharts"]) path {
       fill: inherit;
     }
+
+    select {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: #ccc;
+      background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20512%22%3E%3Cpath%20d%3D%22M41%20288h238c21.4%200%2032.1%2025.9%2017%2041L177%20448c-9.4%209.4-24.6%209.4-33.9%200L24%20329c-15.1-15.1-4.4-41%2017-41z%22%2F%3E%3C%2Fsvg%3E');
+      background-position: calc(100% - 8px) -2px;
+      background-repeat: no-repeat;
+      background-size: 11px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Roboto Mono', monospace;
+      height: 20px;
+      line-height: 20px;
+      opacity: 0.75;
+      padding: 0 24px 0 8px;
+    }
+
+    select:focus {
+      opacity: 1;
+    }
   </style>
 
   <base href="/" />
