@@ -8,9 +8,10 @@ module.exports = (env, argv) => ({
     host: '127.0.0.1',
     port: 7001,
   },
+  devtool: 'cheap-source-map',
   entry: {
     app: ['@babel/polyfill', 'whatwg-fetch', './src/index.js'],
-    vendor: ['@babel/polyfill', 'react', 'react-dom'],
+    vendor: ['react', 'react-dom'],
   },
   resolve: {
     alias: {

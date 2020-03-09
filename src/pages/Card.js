@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CardImage from 'components/content/CardImage';
 import Breadcrumb from 'components/content/Breadcrumb';
-import CardPopularityChart from 'components/content/CardPopularityChart';
+import PopulationHistoryChart from 'components/content/PopulationHistoryChart';
 import { ThemeContext } from 'contexts/theme';
-import { formatObject } from 'js/keys';
 import { apiGet } from 'js/api';
-import { pathNames, paths, urlFriendlyName } from 'js/routes';
 import { formatYear } from 'js/formats';
+import { getBlankGradesObject } from 'js/grades';
+import { formatObject, formatObjectArray } from 'js/keys';
+import { pathNames, paths, urlFriendlyName } from 'js/routes';
 
 // Theme.
 import { createUseStyles } from 'react-jss';
@@ -20,6 +21,7 @@ function Card() {
   const classes = useStyles(useContext(ThemeContext));
 
   const [data, setData] = useState();
+  const [parseHistory, setParseHistory] = useState();
 
   useEffect(() => {
     (async () => {
@@ -31,25 +33,32 @@ function Card() {
       setData(formatObject(keys, {
         set: sets[setId],
         ...formatObject(keys, set).cards.find(({ id }) => id === cardId),
-        ...card,
+        data: card,
       }));
+
+      setParseHistory(formatObjectArray(keys, await apiGet('history')));
     })();
   }, []);
 
-  if (!data) {
+  if (!data || !parseHistory) {
     return <p>Loading...</p>;
   }
 
   const {
     set = {},
     difficulty,
+    data: cardData,
     name,
     popularity = 0,
-    score = 0,
     quality,
+    score = 0,
     variants = [],
-    grades = {},
   } = data;
+
+  const {
+    history: cardHistory = [],
+    total: grades,
+  } = cardData;
 
   const {
     cards: setCards,
@@ -62,6 +71,8 @@ function Card() {
     variant: setVariant,
     year: setYear,
   } = set;
+
+  const latestParse = parseHistory[parseHistory.length - 1];
 
   const variantList = variants.map((entry) => (
     <dd className={classes.variants} key={entry}>
@@ -158,8 +169,33 @@ function Card() {
           </div>
 
           <div className={classes.infoGroup}>
-            <CardPopularityChart
-              data={grades}
+            <PopulationHistoryChart
+              history={parseHistory.map(({ date }, index, allHistory) => {
+                if (date === latestParse.date) {
+                  return {
+                    date: Number(date),
+                    grades,
+                  };
+                }
+
+                for (let i = index; i < allHistory.length - 1; i += 1) {
+                  const historyMatch = cardHistory.find((
+                    (entry) => entry.date === Number(allHistory[i].date)
+                  ));
+
+                  if (historyMatch) {
+                    return {
+                      date: Number(date),
+                      grades: historyMatch.grades,
+                    };
+                  }
+                }
+
+                return {
+                  date: Number(date),
+                  grades: getBlankGradesObject(),
+                };
+              }).reverse()}
             />
           </div>
         </div>
