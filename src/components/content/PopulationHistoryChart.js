@@ -123,7 +123,6 @@ function PopulationHistoryChart({
       <XAxis
         dataKey="date"
         interval={0}
-
         tick={<CustomisedTickAxis />}
         height={150}
       />

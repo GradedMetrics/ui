@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CardImage from 'components/content/CardImage';
 import Breadcrumb from 'components/content/Breadcrumb';
+import HeaderScore from 'components/content/HeaderScore';
 import PopulationHistoryChart from 'components/content/PopulationHistoryChart';
 import { ThemeContext } from 'contexts/theme';
 import { apiGet } from 'js/api';
@@ -116,35 +117,20 @@ function Card() {
       <section className={classes.split}>
         <div className={classes.cardGroup}>
           <div className={classes.infoGroup}>
-            <dl className={classes.infoGroupMetrics}>
-              <dt className={classes.setScore}>
-                Set Score
-                <span className={classes.setScoreNumber}>
-                  {' '}
-                  {setScore}
-                </span>
-              </dt>
-              <dd className={classes.setMetrics}>{`Quality: ${setQuality}`}</dd>
-              {' · '}
-              <dd className={classes.setMetrics}>{`Difficulty: ${setDifficulty}`}</dd>
-              {' · '}
-              <dd className={classes.setMetrics}>{`Popularity: ${setPopularity}`}</dd>
-            </dl>
-
-            <dl className={classes.infoGroupMetrics}>
-              <dt className={classes.setScore}>
-              Card Score
-                <span className={classes.setScoreNumber}>
-                  {' '}
-                  {score}
-                </span>
-              </dt>
-              <dd className={classes.setMetrics}>{`Quality: ${quality}`}</dd>
-              {' · '}
-              <dd className={classes.setMetrics}>{`Difficulty: ${difficulty}`}</dd>
-              {' · '}
-              <dd className={classes.setMetrics}>{`Popularity: ${popularity}`}</dd>
-            </dl>
+            <HeaderScore
+              title="Set Score"
+              score={score}
+              quality={quality}
+              difficulty={difficulty}
+              popularity={popularity}
+            />
+            <HeaderScore
+              title="Card Score"
+              score={setScore}
+              quality={setQuality}
+              difficulty={setDifficulty}
+              popularity={setPopularity}
+            />
           </div>
 
           <div className={classes.infoGroup}>

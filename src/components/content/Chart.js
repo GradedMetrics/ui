@@ -2,7 +2,7 @@ import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
 import {
-  Bar, CartesianGrid, LabelList, ComposedChart, Line, Tooltip, YAxis,
+  Bar, LabelList, ComposedChart, Line, Tooltip, YAxis,
 } from 'recharts';
 import PropTypes from 'prop-types';
 import RechartsTooltip from 'components/vendor/RechartsTooltip';

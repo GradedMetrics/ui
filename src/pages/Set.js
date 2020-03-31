@@ -6,10 +6,12 @@ import {
 } from 'react-router-dom';
 import Breadcrumb from 'components/content/Breadcrumb';
 import Chart from 'components/content/Chart';
+import HeaderScore from 'components/content/HeaderScore';
 import LinkButton from 'components/content/LinkButton';
 import GenericTable from 'components/content/GenericTable';
 import Pagination from 'components/content/Pagination';
 import RankChange from 'components/content/RankChange';
+import Scores from 'components/content/Scores';
 import Sorter from 'components/content/Sorter';
 import Tooltip from 'components/content/Tooltip';
 import { ThemeContext } from 'contexts/theme';
@@ -200,10 +202,11 @@ function Set() {
               key: `card-${id}-score`,
               value: (
                 <>
-                  <span className={classes.score}>{score}</span>
-                  <span className={classes.metrics}>{`Quality: ${quality}.`}</span>
-                  {' '}
-                  <span className={classes.metrics}>{`Difficulty: ${difficulty}.`}</span>
+                  <Scores
+                    score={score}
+                    quality={quality}
+                    difficulty={difficulty}
+                  />
                 </>
               ),
             }, {
@@ -268,20 +271,14 @@ function Set() {
         cards
       </p>
 
-      <dl>
-        <dt className={classes.setScore}>
-          GM Score
-          <span className={classes.setScoreNumber}>
-            {' '}
-            {setScore}
-          </span>
-        </dt>
-        <dd className={classes.setMetrics}>{`Quality: ${setQuality}`}</dd>
-        {' · '}
-        <dd className={classes.setMetrics}>{`Difficulty: ${setDifficulty}`}</dd>
-        {' · '}
-        <dd className={classes.setMetrics}>{`Popularity: ${setPopularity}`}</dd>
-      </dl>
+
+      <HeaderScore
+        title="GM Score"
+        score={setScore}
+        quality={setQuality}
+        difficulty={setDifficulty}
+        popularity={setPopularity}
+      />
 
       {cards && cards.length ? (
         <Sorter
