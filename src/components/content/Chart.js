@@ -70,7 +70,6 @@ ChartAxisLabel.propTypes = {
 
 function Chart({
   axes = [],
-  axesLabels = [],
   data,
 }) {
   const classes = useStyles(useContext(ThemeContext));

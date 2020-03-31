@@ -9,8 +9,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import CustomisedTickAxis from 'components/content/CustomisedTickAxis';
 import { ThemeContext } from 'contexts/theme';
-import { formatDate } from 'js/formats';
 import {
   combineGradeObjects,
   flattenGradesObject,
@@ -121,19 +121,18 @@ function PopulationHistoryChart({
       />
       <Tooltip />
       <XAxis
-        angle={90}
         dataKey="date"
         interval={0}
-        label="Date"
-        textAnchor="start"
-        tickFormatter={(date) => formatDate(new Date(date))}
+
+        tick={<CustomisedTickAxis />}
+        height={150}
       />
       <YAxis
         interval="preserveStartEnd"
         type="number"
         domain={[0, (dataMax) => Math.round(dataMax * 1.1)]}
       />
-      <Legend />
+      <Legend verticalAlign="top" />
       {dataKeys.map((gradeKey) => (
         <Line
           key={`line-${gradeKey}`}
@@ -143,7 +142,6 @@ function PopulationHistoryChart({
           name={formatGradeKey(gradeKey)}
           stroke={chartPSAGrades[gradeKey]}
           strokeWidth={2}
-          // yAxisId={key}
         />
       ))}
     </LineChart>
