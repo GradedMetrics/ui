@@ -129,9 +129,6 @@ function Chart({
         height={40}
         data={data}
       >
-        <CartesianGrid
-          strokeDasharray="1 1"
-        />
         <Tooltip
           content={(props) => RechartsTooltip(props, axes, classes)}
           cursor={false}
