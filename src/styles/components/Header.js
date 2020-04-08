@@ -44,7 +44,7 @@ export default {
     padding: [0, 0, 0, 67],
 
     '&:visited, &:focus, &:hover, &:active': {
-      color: '#000'
+      color: '#000',
     },
   },
   search: {
