@@ -12,10 +12,18 @@ function CustomisedTickAxis({ x = 0, y = 0, payload }) {
   );
 }
 
+CustomisedTickAxis.defaultProps = {
+  x: 0,
+  y: 0,
+  payload: {},
+};
+
 CustomisedTickAxis.propTypes = {
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  payload: PropTypes.number.isRequired,
+  x: PropTypes.number,
+  y: PropTypes.number,
+  payload: PropTypes.shape({
+    value: PropTypes.number.isRequired,
+  }),
 };
 
 export default CustomisedTickAxis;

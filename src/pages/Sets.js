@@ -8,8 +8,9 @@ import GenericTable from 'components/content/GenericTable';
 import LinkButton from 'components/content/LinkButton';
 import Pagination from 'components/content/Pagination';
 import RankChange from 'components/content/RankChange';
-import Sorter from 'components/content/Sorter';
+import Scores from 'components/content/Scores';
 import SetIcon from 'components/content/SetIcon';
+import Sorter from 'components/content/Sorter';
 import Tooltip from 'components/content/Tooltip';
 import { ThemeContext } from 'contexts/theme';
 import { formatYear } from 'js/formats';
@@ -202,10 +203,11 @@ function Sets() {
             key: `set-${id}-score`,
             value: (
               <>
-                <span className={classes.score}>{score}</span>
-                <span className={classes.metrics}>{`Quality: ${quality}.`}</span>
-                {' '}
-                <span className={classes.metrics}>{`Difficulty: ${difficulty}.`}</span>
+                <Scores
+                  score={score}
+                  quality={quality}
+                  difficulty={difficulty}
+                />
               </>
             ),
           }, {
