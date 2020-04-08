@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { ThemeContext } from 'contexts/theme';
 // Theme.
@@ -14,8 +14,32 @@ function CardImage({
 }) {
   const classes = useStyles(useContext(ThemeContext));
 
+  const [isPlaceholder, setPlaceholder] = useState();
+
+  /**
+   * If image url is 404 then this function is triggered, setting isPlaceholder to true
+   */
+  function handleImageError() {
+    setPlaceholder(true);
+  }
+
+  /**
+   * If isPlaceholder is false then the full image is loaded.  If the image cannot be found, onError
+   * is triggered which runs handleImageError and sets isPlaceholder to true.  Only the span is
+   * returned and a placeholder image is populated through the stylesheet
+   */
+  if (!isPlaceholder) {
+    return (
+      <img
+        className={classes.cardImage}
+        alt={description}
+        onError={handleImageError}
+        src={`https://i.gradedmetrics.com/raw/${setId}/${cardId}.jpg`}
+      />
+    );
+  }
   return (
-    <img className={classes.cardImage} src={`https://i.gradedmetrics.com/raw/${setId}/${cardId}.jpg`} alt={description} />
+    <span className={classes.placeholder} />
   );
 }
 
