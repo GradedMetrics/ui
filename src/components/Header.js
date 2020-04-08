@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import GlobalSearch from 'components/data/GlobalSearch';
 import { ThemeContext } from 'contexts/theme';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { paths } from 'js/routes';
 
 // Theme.
@@ -15,7 +15,14 @@ function Navigation() {
 
   return (
     <header className={classes.header}>
-      <h1 className={classes.title}>Graded Metrics</h1>
+      <h1 className={classes.titleContainer}>
+        <Link
+          className={classes.title}
+          to={paths.home}
+        >
+          Graded Metrics
+        </Link>
+      </h1>
       <nav className={classes.navigation}>
         <ul className={classes.list}>
           <li className={classes.listItem}>

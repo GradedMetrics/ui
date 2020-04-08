@@ -28,6 +28,9 @@ export default {
     width: '100%',
     zIndex: 3,
   }),
+  titleContainer: {
+    flexGrow: 1,
+  },
   title: {
     background: {
       color: 'transparent',
@@ -36,8 +39,13 @@ export default {
       repeat: 'no-repeat',
       size: 42,
     },
-    flexGrow: 1,
+    color: '#000',
+    display: 'inline-block',
     padding: [0, 0, 0, 67],
+
+    '&:visited, &:focus, &:hover, &:active': {
+      color: '#000'
+    },
   },
   search: {
     position: 'absolute',
