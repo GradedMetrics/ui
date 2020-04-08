@@ -50,6 +50,7 @@ function Card() {
     difficulty,
     data: cardData,
     name,
+    number,
     popularity = 0,
     quality,
     score = 0,
@@ -191,7 +192,7 @@ function Card() {
           <CardImage
             setId={parseInt(setId, 36)}
             cardId={parseInt(cardId, 36)}
-            description="Card"
+            description={`${name} (#${number} · ${setName} · ${formatYear(setYear)})`}
           />
         </div>
       </section>
