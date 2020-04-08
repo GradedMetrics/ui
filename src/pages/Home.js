@@ -19,29 +19,37 @@ function Home() {
   return (
     <>
       <h2>Welcome</h2>
-      <article>
-        <p>
+      <article className={classes.welcomeContainer}>
+        <p className={classes.welcome}>
           Welcome to Graded Metrics, a website dedicated to untangling, analysing and providing
           {' '}
-          statistics for PSA-graded Pokémon cards.
+          statistics for 
+          <img
+            className={classes.psaSmall}
+            src={PSALogo}
+            alt="PSA"
+          />
+          -graded Pokémon cards.
         </p>
-        <p>
-          Graded Metrics is not associated with or endorsed by PSA in any way, we simply make use of
-          {' '}
-          their public-facing
-          {' '}
-          <a
-            href="https://www.psacard.com/pop"
-            rel="noopener noreferrer"
-          >
-            Population Report
-          </a>
-          {' '}
-          to provide you with time-based metrics.
-        </p>
-        <p>
-          Data is updated on a weekly basis every Wednesday.
-        </p>
+        <aside className={classes.welcomeAside}>
+          <p>
+            Graded Metrics is not associated with or endorsed by PSA in any way, we simply make use of
+            {' '}
+            their public-facing
+            {' '}
+            <a
+              href="https://www.psacard.com/pop"
+              rel="noopener noreferrer"
+            >
+              Population Report
+            </a>
+            {' '}
+            to provide you with time-based metrics.
+          </p>
+          <p>
+            Data is updated on a weekly basis every Wednesday.
+          </p>
+        </aside>
       </article>
       <article>
         <h3>What is PSA?</h3>
