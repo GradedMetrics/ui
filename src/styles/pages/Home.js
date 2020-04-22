@@ -5,7 +5,12 @@ export default {
     textAlign: 'center',
   },
   banner: ({ banner: bannerTheme }) => ({
-    background: bannerTheme.background,
+    background: {
+      attachment: 'fixed',
+      color: bannerTheme.background,
+      image: 'url("https://i.gradedmetrics.com/background.png")',
+      size: 'cover',
+    },
     color: bannerTheme.color,
     padding: '7px 15px',
   }),
