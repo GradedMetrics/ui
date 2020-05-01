@@ -18,12 +18,12 @@ function Home() {
 
   return (
     <>
-      <h2>Welcome</h2>
+      <h2 className={classes.title}>Graded Metrics</h2>
       <article className={classes.welcomeContainer}>
         <p className={classes.welcome}>
           Welcome to Graded Metrics, a website dedicated to untangling, analysing and providing
           {' '}
-          statistics for 
+          statistics for
           <img
             className={classes.psaSmall}
             src={PSALogo}
@@ -33,7 +33,8 @@ function Home() {
         </p>
         <aside className={classes.welcomeAside}>
           <p>
-            Graded Metrics is not associated with or endorsed by PSA in any way, we simply make use of
+            Graded Metrics is not associated with or endorsed by PSA in any way,
+            we simply make use of
             {' '}
             their public-facing
             {' '}
@@ -51,15 +52,15 @@ function Home() {
           </p>
         </aside>
       </article>
-      <article>
-        <h3>What is PSA?</h3>
+      <article className={classes.siteInfo}>
+        <h3 className={classes.banner}>What is PSA?</h3>
         <div
           className={classes.psa}
           style={{
             backgroundImage: `url(${PSALogo})`,
           }}
         >
-          <p>
+          <p className={classes.infoText}>
             Professional Sports Authenticator, PSA, is the
             {' '}
             <em>
@@ -88,14 +89,14 @@ function Home() {
           </p>
         </div>
       </article>
-      <article>
-        <h3>What does Graded Metrics do?</h3>
-        <p>
+      <article className={classes.siteInfo}>
+        <h3 className={classes.banner}>What does Graded Metrics do?</h3>
+        <p className={classes.infoText}>
           Along with providing a searchable database of all the Pokémon sets, cards, coins and
           {' '}
           stickers PSA grades, Graded Metrics also...
         </p>
-        <ul>
+        <ul className={classes.infoTextUl}>
           <li>
             Calculates the difficulty
             {' '}

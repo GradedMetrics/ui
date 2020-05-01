@@ -70,6 +70,11 @@ export const themes = {
       borderColor: shared.brandPrimaryLight,
     },
 
+    banner: {
+      background: shared.brandPrimary,
+      color: '#333',
+    },
+
     languageTag: {
       background: '#ffd5a2',
       color: '#333',
