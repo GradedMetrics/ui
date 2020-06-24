@@ -84,7 +84,7 @@ function Pagination({
   }
 
   // Create the array of page numbers based on the data length and the page size.
-  const pages = new Array(Math.round(data.length / size)).fill(1).map((_, index) => index + 1);
+  const pages = new Array(Math.ceil(data.length / size)).fill(1).map((_, index) => index + 1);
   const lastPage = pages[pages.length - 1] || 1;
 
   return (
